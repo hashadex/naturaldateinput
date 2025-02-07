@@ -2,17 +2,14 @@ package me.hashadex.naturaldateinput.parseresults;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.regex.MatchResult;
 
-public class DateParseResult extends AbstractParseResult {
-    private LocalDate resultDate;
+public class DateParseResult extends ParseResult {
+    public final LocalDate result;
 
-    public DateParseResult(LocalDateTime referenceDateTime, String originalString, int matchStartIndex, int matchEndIndex, LocalDate resultDate) {
-        super(referenceDateTime, originalString, matchStartIndex, matchEndIndex);
+    public DateParseResult(LocalDateTime reference, String source, MatchResult matchInfo, LocalDate result) {
+        super(reference, source, matchInfo);
 
-        this.resultDate = resultDate;
-    }
-
-    public LocalDate getResultDate() {
-        return resultDate;
+        this.result = result;
     }
 }
