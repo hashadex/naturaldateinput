@@ -1,17 +1,21 @@
-package me.hashadex.naturaldateinput.parseresults;
+package me.hashadex.naturaldateinput;
 
 import java.time.LocalDateTime;
 import java.util.regex.MatchResult;
 
-public abstract class ParseResult {
+public class ParseResult<T> {
     public final LocalDateTime reference;
     public final String source;
     public final MatchResult matchInfo;
 
-    protected ParseResult(LocalDateTime reference, String source, MatchResult matchInfo) {
+    public final T result;
+
+    protected ParseResult(LocalDateTime reference, String source, MatchResult matchInfo, T result) {
         this.reference = reference;
         this.source = source;
         this.matchInfo = matchInfo;
+
+        this.result = result;
     }
 
     public int getMatchStartIndex() {
