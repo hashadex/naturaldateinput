@@ -1,8 +1,10 @@
 package me.hashadex.naturaldateinput.parsers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
-import me.hashadex.naturaldateinput.parseresults.DateParseResult;
+import me.hashadex.naturaldateinput.ParseResult;
 
 public abstract class DateParser extends Parser {
     public DateParser(String regex, int flags) {
@@ -11,6 +13,28 @@ public abstract class DateParser extends Parser {
 
     public DateParser(String regex) {
         super(regex);
+    }
+
+    protected static boolean isWithinYearRange(int year) {
+        return year >= 1900 && year <= 2200; // This is the range supported by Todoist
+    }
+
+    protected static boolean isWithinMonthRange(int month) {
+        return month >= 1 && month <= 12;
+    }
+
+    protected static boolean isWithinDayRange(int day) {
+        return day >= 1 && day <= 31;
+    }
+
+    protected static int normalizeYear(int year) {
+        year = Math.abs(year);
+
+        if (year < 100) {
+            return 2000 + year;
+        } else {
+            return year;
+        }
     }
 
     public abstract ArrayList<ParseResult<LocalDate>> parse(String input, LocalDateTime reference);
