@@ -12,6 +12,10 @@ public abstract class Parser {
         pattern = Pattern.compile(regex, flags);
     }
 
+    protected Parser(String regex) {
+        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+    }
+
     public Pattern getPattern() {
         return pattern;
     }

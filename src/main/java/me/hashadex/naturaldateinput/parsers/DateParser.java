@@ -9,5 +9,9 @@ public abstract class DateParser extends Parser {
         super(regex, flags);
     }
 
+    public DateParser(String regex) {
+        super(regex);
+    }
+
     public abstract ArrayList<ParseResult<LocalDate>> parse(String input, LocalDateTime reference);
 }
