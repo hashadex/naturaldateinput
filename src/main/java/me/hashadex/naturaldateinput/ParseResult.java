@@ -10,7 +10,7 @@ public class ParseResult<T> {
 
     public final T result;
 
-    protected ParseResult(LocalDateTime reference, String source, MatchResult matchInfo, T result) {
+    public ParseResult(LocalDateTime reference, String source, MatchResult matchInfo, T result) {
         this.reference = reference;
         this.source = source;
         this.matchInfo = matchInfo;
