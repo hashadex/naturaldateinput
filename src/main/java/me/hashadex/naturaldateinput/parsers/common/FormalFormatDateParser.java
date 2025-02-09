@@ -95,7 +95,7 @@ public class FormalFormatDateParser extends DateParser {
                     }
 
                     results.add(
-                        new ParseResult<LocalDate>(reference, input, match, resolveDate(block3, block2, block1))
+                        new ParseResult<LocalDate>(reference, input, match, getLocalDate(block3, block2, block1))
                     );
                 } else {
                     // DD/MM/YYYY or
