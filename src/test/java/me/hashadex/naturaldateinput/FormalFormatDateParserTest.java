@@ -30,7 +30,11 @@ public class FormalFormatDateParserTest {
         LocalDateTime reference = LocalDateTime.of(2025, 9, 2, 0, 0, 0);
 
         DateTimeFormatter ddmmyyyy = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter ddmmyy = DateTimeFormatter.ofPattern("dd.MM.yy");
+
         DateTimeFormatter mmddyyyy = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter mmddyy = DateTimeFormatter.ofPattern("MM/dd/yy");
+
         DateTimeFormatter yyyymmdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         DateTimeFormatter ddmm = DateTimeFormatter.ofPattern("dd/MM");
@@ -48,9 +52,11 @@ public class FormalFormatDateParserTest {
             assertAll(
                 // dayMonthParser
                 () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmmyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmmyy), reference).get(0).result()),
                 () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmm), reference).get(0).result()),
                 // monthDayParser
                 () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmddyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmddyy), reference).get(0).result()),
                 () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmdd), reference).get(0).result())
             );
         } else {
@@ -58,11 +64,15 @@ public class FormalFormatDateParserTest {
                 // dayMonthParser
                 () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmmyyyy), reference).get(0).result()),
                 () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(mmddyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmmyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(mmddyy), reference).get(0).result()),
                 () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmm), reference).get(0).result()),
                 () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(mmdd), reference).get(0).result()),
                 // monthDayParser
                 () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(ddmmyyyy), reference).get(0).result()),
                 () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmddyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(ddmmyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmddyy), reference).get(0).result()),
                 () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(ddmm), reference).get(0).result()),
                 () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmdd), reference).get(0).result())
             );
