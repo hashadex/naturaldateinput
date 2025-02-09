@@ -90,12 +90,12 @@ public class FormalFormatDateParser extends DateParser {
 
                 if (isWithinYearRange(block1)) {
                     // YYYY/MM/DD
-                    if (!isWithinMonthRange(block2) || !isWithinYearRange(block3)) {
+                    if (!isWithinMonthRange(block2) || !isWithinDayRange(block3)) {
                         continue;
                     }
 
                     results.add(
-                        new ParseResult<LocalDate>(reference, input, match, resolveDate(block1, block2, block3))
+                        new ParseResult<LocalDate>(reference, input, match, resolveDate(block3, block2, block1))
                     );
                 } else {
                     // DD/MM/YYYY or
