@@ -20,7 +20,7 @@ public class FormalFormatDateParserTest {
         if (results.size() == 0) {
             return null;
         } else {
-            return results.get(0).result;
+            return results.get(0).result();
         }
     }
 
