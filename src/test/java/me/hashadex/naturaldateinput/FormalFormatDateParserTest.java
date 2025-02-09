@@ -34,7 +34,7 @@ public class FormalFormatDateParserTest {
     private FormalFormatDateParser dayMonthParser = new FormalFormatDateParser(DateFormat.DAY_MONTH);
     private FormalFormatDateParser monthDayParser = new FormalFormatDateParser(DateFormat.MONTH_DAY);
 
-    public static Stream<Arguments> provideArgumentsForTestParse() {
+    public static Stream<Arguments> provideArgumentsForTestParser() {
         return Stream.of(
             Arguments.of(LocalDate.of(2025, 12, 31), false),
             Arguments.of(LocalDate.of(2025, 10, 10), false),
@@ -43,7 +43,7 @@ public class FormalFormatDateParserTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideArgumentsForTestParse")
+    @MethodSource("provideArgumentsForTestParser")
     void testParser(LocalDate testQuery, boolean ambiguous) {
         assertAll(
             () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(yyyymmdd), reference).get(0).result()),
