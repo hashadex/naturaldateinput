@@ -16,14 +16,6 @@ public abstract class Parser {
         this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
     }
 
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public String getRegex() {
-        return pattern.pattern();
-    }
-
     protected ArrayList<MatchResult> findAllMatches(String input) {
         Matcher matcher = pattern.matcher(input);
         ArrayList<MatchResult> matchList = new ArrayList<MatchResult>();
