@@ -10,8 +10,8 @@ import me.hashadex.naturaldateinput.parsers.DateParser;
 
 public class FormalFormatDateParser extends DateParser {
     public enum DateFormat {
-        DayMonth,
-        MonthDay
+        DAY_MONTH,
+        MONTH_DAY
     }
 
     private final DateFormat preferredFormat;
@@ -45,7 +45,7 @@ public class FormalFormatDateParser extends DateParser {
             return getLocalDate(block2, block1, year);
         } else {
             // Use preferred format
-            if (preferredFormat == DateFormat.DayMonth) {
+            if (preferredFormat == DateFormat.DAY_MONTH) {
                 // DD/MM
                 return getLocalDate(block1, block2, year);
             } else {

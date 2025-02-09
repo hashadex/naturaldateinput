@@ -31,8 +31,8 @@ public class FormalFormatDateParserTest {
     private DateTimeFormatter ddmm = DateTimeFormatter.ofPattern("dd/MM");
     private DateTimeFormatter mmdd = DateTimeFormatter.ofPattern("MM/dd");
 
-    private FormalFormatDateParser dayMonthParser = new FormalFormatDateParser(DateFormat.DayMonth);
-    private FormalFormatDateParser monthDayParser = new FormalFormatDateParser(DateFormat.MonthDay);
+    private FormalFormatDateParser dayMonthParser = new FormalFormatDateParser(DateFormat.DAY_MONTH);
+    private FormalFormatDateParser monthDayParser = new FormalFormatDateParser(DateFormat.MONTH_DAY);
 
     public static Stream<Arguments> provideArgumentsForTestParse() {
         return Stream.of(
