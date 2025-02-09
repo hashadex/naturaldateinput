@@ -25,7 +25,8 @@ public class FormalFormatDateParser extends DateParser {
             "[\\/\\.-]" +                     // delimeter
             "(\\d{1,2})" +                    // second block
             "(?:[\\/\\.-](\\d{4}|\\d{2}))?" + // optional delimeter + third block
-            "\\b"                             // word boundary
+            "\\b" +                           // word boundary
+            "(?![\\/\\.-])"                   // negative lookahead
         );
 
         this.preferredFormat = preferredFormat;
