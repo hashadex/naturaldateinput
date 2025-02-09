@@ -1,4 +1,4 @@
-package me.hashadex.naturaldateinput.parsers.common;
+package me.hashadex.naturaldateinput;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import me.hashadex.naturaldateinput.ParseResult;
+import me.hashadex.naturaldateinput.parsers.common.FormalFormatDateParser;
 import me.hashadex.naturaldateinput.parsers.common.FormalFormatDateParser.DateFormat;
 
 public class FormalFormatDateParserTest {
