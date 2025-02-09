@@ -1,3 +1,4 @@
+# JAVA
 # Compiled class file
 *.class
 
@@ -23,6 +24,7 @@
 hs_err_pid*
 replay_pid*
 
+# MAVEN
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -40,3 +42,6 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# VSCODE
+.vscode/
