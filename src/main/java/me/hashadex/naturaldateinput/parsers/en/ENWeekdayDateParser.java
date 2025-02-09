@@ -48,6 +48,7 @@ public class ENWeekdayDateParser extends DateParser {
         );
     }
 
+    @Override
     public ArrayList<ParseResult<LocalDate>> parse(String input, LocalDateTime reference) {
         ArrayList<ParseResult<LocalDate>> results = new ArrayList<>();
         ArrayList<MatchResult> matches = findAllMatches(input);
