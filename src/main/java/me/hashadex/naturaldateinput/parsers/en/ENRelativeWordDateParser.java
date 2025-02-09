@@ -32,7 +32,7 @@ public class ENRelativeWordDateParser extends DateParser {
 
     public ENRelativeWordDateParser() {
         super(
-            "\\b(" + keySetToRegexAlternate(wordOffsets.keySet()) + ")\\b"
+            "\\b(?<word>" + keySetToRegexAlternate(wordOffsets.keySet()) + ")\\b"
         );
     }
 
@@ -47,7 +47,7 @@ public class ENRelativeWordDateParser extends DateParser {
                     reference,
                     input,
                     match,
-                    reference.plusDays(wordOffsets.get(match.group(1).toLowerCase())).toLocalDate()
+                    reference.plusDays(wordOffsets.get(match.group("word").toLowerCase())).toLocalDate()
                 )
             );
         }

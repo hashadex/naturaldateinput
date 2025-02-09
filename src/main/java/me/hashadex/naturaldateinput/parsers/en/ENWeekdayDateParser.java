@@ -40,11 +40,11 @@ public class ENWeekdayDateParser extends DateParser {
 
     public ENWeekdayDateParser() {
         super(
-            "\\b" +                                                       // word boundary
-            "(?:on |the ){0,2}" +                                         // optionally match "on the"
-            "(?:(next) )?" +                                              // next modifier
-            "(" + keySetToRegexAlternate(weekdayNameMap.keySet()) + ")" + // weekday
-            "\\b"                                                         // word boundary
+            "\\b" +                                                                 // word boundary
+            "(?:on |the ){0,2}" +                                                   // optionally match "on the"
+            "(?:(?<modifier>next) )?" +                                             // next modifier
+            "(?<weekday>" + keySetToRegexAlternate(weekdayNameMap.keySet()) + ")" + // weekday
+            "\\b"                                                                   // word boundary
         );
     }
 
@@ -56,11 +56,11 @@ public class ENWeekdayDateParser extends DateParser {
         for (MatchResult match : matches) {
             boolean nextModifier = false;
 
-            if (match.group(1) != null) {
+            if (match.group("modifier") != null) {
                 nextModifier = true;
             }
 
-            DayOfWeek selected = weekdayNameMap.get(match.group(2).toLowerCase());
+            DayOfWeek selected = weekdayNameMap.get(match.group("weekday").toLowerCase());
 
             LocalDate result = reference.toLocalDate().with(
                 TemporalAdjusters.nextOrSame(selected)
