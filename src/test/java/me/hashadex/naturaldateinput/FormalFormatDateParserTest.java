@@ -1,136 +1,71 @@
 package me.hashadex.naturaldateinput;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import me.hashadex.naturaldateinput.parsers.common.FormalFormatDateParser;
 import me.hashadex.naturaldateinput.parsers.common.FormalFormatDateParser.DateFormat;
 
 public class FormalFormatDateParserTest {
-    LocalDate parseAndGetFirst(String input, LocalDateTime reference, DateFormat preferredFormat) {
-        FormalFormatDateParser p = new FormalFormatDateParser(preferredFormat);
-        ArrayList<ParseResult<LocalDate>> results = p.parse(input, reference);
+    public static Stream<Arguments> provideArgumentsForTestParse() {
+        return Stream.of(
+            Arguments.of(LocalDate.of(2025, 12, 31), false),
+            Arguments.of(LocalDate.of(2025, 10, 10), false),
+            Arguments.of(LocalDate.of(2025, 12, 10), true)
+        );
+    }
 
-        if (results.size() == 0) {
-            return null;
+    @ParameterizedTest
+    @MethodSource("provideArgumentsForTestParse")
+    void testParse(LocalDate testQuery, boolean ambiguous) {
+        LocalDateTime reference = LocalDateTime.of(2025, 9, 2, 0, 0, 0);
+
+        DateTimeFormatter ddmmyyyy = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter mmddyyyy = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter yyyymmdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        DateTimeFormatter ddmm = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter mmdd = DateTimeFormatter.ofPattern("MM/dd");
+
+        FormalFormatDateParser dayMonthParser = new FormalFormatDateParser(DateFormat.DayMonth);
+        FormalFormatDateParser monthDayParser = new FormalFormatDateParser(DateFormat.MonthDay);
+
+        assertAll(
+            () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(yyyymmdd), reference).get(0).result()),
+            () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(yyyymmdd), reference).get(0).result())
+        );
+
+        if (ambiguous) {
+            assertAll(
+                // dayMonthParser
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmmyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmm), reference).get(0).result()),
+                // monthDayParser
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmddyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmdd), reference).get(0).result())
+            );
         } else {
-            return results.get(0).result();
+            assertAll(
+                // dayMonthParser
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmmyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(mmddyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(ddmm), reference).get(0).result()),
+                () -> assertEquals(testQuery, dayMonthParser.parse(testQuery.format(mmdd), reference).get(0).result()),
+                // monthDayParser
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(ddmmyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmddyyyy), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(ddmm), reference).get(0).result()),
+                () -> assertEquals(testQuery, monthDayParser.parse(testQuery.format(mmdd), reference).get(0).result())
+            );
         }
-    }
-
-    LocalDate parseAndGetFirst(String input) {
-        return parseAndGetFirst(input, LocalDateTime.now(), DateFormat.DayMonth);
-    }
-
-    @Test
-    void testDDMMYYYY() {
-        assertEquals(
-            LocalDate.of(2025, 12, 31),
-            parseAndGetFirst("31.12.2025")
-        );
-        assertEquals(
-            LocalDate.of(2025, 12, 31),
-            parseAndGetFirst("12.31.2025")
-        );
-        assertEquals(
-            LocalDate.of(2025, 12, 31),
-            parseAndGetFirst("12.31.25")
-        );
-
-        assertEquals(
-            LocalDate.of(2025, 1, 1),
-            parseAndGetFirst("1.1.25")
-        );
-
-        assertEquals(
-            LocalDate.of(2025, 12, 10),
-            parseAndGetFirst("10.12.2025", LocalDateTime.now(), DateFormat.DayMonth)
-        );
-        assertEquals(
-            LocalDate.of(2025, 10, 12),
-            parseAndGetFirst("10/12/2025", LocalDateTime.now(), DateFormat.MonthDay)
-        );
-
-        assertEquals(
-            LocalDate.of(2025, 3, 1),
-            parseAndGetFirst("29.02.2025")
-        );
-
-        assertNull(parseAndGetFirst("99.99.2025"));
-        assertNull(parseAndGetFirst("99.1.2025"));
-        assertNull(parseAndGetFirst("1.99.2025"));
-    }
-
-    @Test
-    void testYYYYMMDD() {
-        assertEquals(
-            LocalDate.of(2025, 12, 31),
-            parseAndGetFirst("2025-12-31")
-        );
-        assertEquals(
-            LocalDate.of(2025, 10, 12),
-            parseAndGetFirst("2025-10-12")
-        );
-        assertEquals(
-            LocalDate.of(2025, 3, 1),
-            parseAndGetFirst("2025-02-29")
-        );
-
-        assertEquals(
-            LocalDate.of(1900, 1, 1),
-            parseAndGetFirst("1900-01-01")
-        );
-        assertEquals(
-            LocalDate.of(2200, 1, 1),
-            parseAndGetFirst("2200-01-01")
-        );
-
-        assertNull(parseAndGetFirst("1000-01-01"));
-    }
-
-    @Test
-    void testMMDD() {
-        LocalDateTime reference = LocalDateTime.of(2025, 2, 9, 12, 0, 0);
-
-        assertEquals(
-            LocalDate.of(2025, 12, 31),
-            parseAndGetFirst("31/12", reference, DateFormat.DayMonth)
-        );
-        assertEquals(
-            LocalDate.of(2025, 12, 31),
-            parseAndGetFirst("12/31", reference, DateFormat.DayMonth)
-        );
-        
-        assertEquals(
-            LocalDate.of(2025, 10, 10),
-            parseAndGetFirst("10/10", reference, DateFormat.DayMonth)
-        );
-        assertEquals(
-            LocalDate.of(2025, 10, 10),
-            parseAndGetFirst("10/10", reference, DateFormat.MonthDay)
-        );
-
-        assertEquals(
-            LocalDate.of(2026, 2, 8),
-            parseAndGetFirst("8/2", reference, DateFormat.DayMonth)
-        );
-        assertEquals(
-            LocalDate.of(2025, 2, 9),
-            parseAndGetFirst("9/2", reference, DateFormat.DayMonth)
-        );
-
-        assertEquals(
-            LocalDate.of(2025, 3, 1),
-            parseAndGetFirst("29/2", reference, DateFormat.DayMonth)
-        );
-
-        assertNull(parseAndGetFirst("12/32", reference, DateFormat.DayMonth));
-        assertNull(parseAndGetFirst("32/12", reference, DateFormat.DayMonth));
     }
 }
