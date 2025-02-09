@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import me.hashadex.naturaldateinput.parsers.en.ENRelativeWordDateParser;
 
 public class ENRelativeWordDateParserTest {
-    private LocalDateTime reference = LocalDateTime.of(2025, 2, 9, 0, 0, 0);
-    private ENRelativeWordDateParser parser = new ENRelativeWordDateParser();
+    private final LocalDateTime reference = LocalDateTime.of(2025, 2, 9, 0, 0, 0);
+    private final ENRelativeWordDateParser parser = new ENRelativeWordDateParser();
 
     @Test
     void testParser() {

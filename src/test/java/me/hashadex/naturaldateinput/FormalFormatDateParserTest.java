@@ -18,21 +18,21 @@ import me.hashadex.naturaldateinput.parsers.common.FormalFormatDateParser;
 import me.hashadex.naturaldateinput.parsers.common.FormalFormatDateParser.DateFormat;
 
 public class FormalFormatDateParserTest {
-    private LocalDateTime reference = LocalDateTime.of(2025, 9, 2, 0, 0, 0);
+    private final LocalDateTime reference = LocalDateTime.of(2025, 9, 2, 0, 0, 0);
 
-    private DateTimeFormatter ddmmyyyy = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    private DateTimeFormatter ddmmyy = DateTimeFormatter.ofPattern("dd.MM.yy");
+    private final DateTimeFormatter ddmmyyyy = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private final DateTimeFormatter ddmmyy = DateTimeFormatter.ofPattern("dd.MM.yy");
 
-    private DateTimeFormatter mmddyyyy = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    private DateTimeFormatter mmddyy = DateTimeFormatter.ofPattern("MM/dd/yy");
+    private final DateTimeFormatter mmddyyyy = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private final DateTimeFormatter mmddyy = DateTimeFormatter.ofPattern("MM/dd/yy");
 
-    private DateTimeFormatter yyyymmdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final DateTimeFormatter yyyymmdd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private DateTimeFormatter ddmm = DateTimeFormatter.ofPattern("dd/MM");
-    private DateTimeFormatter mmdd = DateTimeFormatter.ofPattern("MM/dd");
+    private final DateTimeFormatter ddmm = DateTimeFormatter.ofPattern("dd/MM");
+    private final DateTimeFormatter mmdd = DateTimeFormatter.ofPattern("MM/dd");
 
-    private FormalFormatDateParser dayMonthParser = new FormalFormatDateParser(DateFormat.DAY_MONTH);
-    private FormalFormatDateParser monthDayParser = new FormalFormatDateParser(DateFormat.MONTH_DAY);
+    private final FormalFormatDateParser dayMonthParser = new FormalFormatDateParser(DateFormat.DAY_MONTH);
+    private final FormalFormatDateParser monthDayParser = new FormalFormatDateParser(DateFormat.MONTH_DAY);
 
     public static Stream<Arguments> provideArgumentsForTestParser() {
         return Stream.of(
