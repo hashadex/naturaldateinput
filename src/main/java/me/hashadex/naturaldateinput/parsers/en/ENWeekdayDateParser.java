@@ -40,11 +40,11 @@ public class ENWeekdayDateParser extends DateParser {
 
     public ENWeekdayDateParser() {
         super(
-            "\\b" +                                                                 // word boundary
-            "(?:on |the ){0,2}" +                                                   // optionally match "on the"
-            "(?:(?<modifier>next) )?" +                                             // next modifier
+            "\\b" +                                                               // word boundary
+            "(?:on |the ){0,2}" +                                                 // optionally match "on the"
+            "(?:(?<modifier>next) )?" +                                           // next modifier
             "(?<weekday>" + keySetToRegexAlternate(weekdayNames.keySet()) + ")" + // weekday
-            "\\b"                                                                   // word boundary
+            "\\b"                                                                 // word boundary
         );
     }
 
