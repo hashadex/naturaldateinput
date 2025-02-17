@@ -38,6 +38,10 @@ public abstract class DateParser extends Parser {
         }
     }
 
+    protected static LocalDate safeGetLocalDate(int day, int month, int year) {
+        return LocalDate.of(normalizeYear(year), month, 1).plusDays(day - 1);
+    }
+
     protected static String keySetToRegexAlternate(Set<String> set) {
         return String.join("|", set);
     }

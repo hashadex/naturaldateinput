@@ -32,25 +32,21 @@ public class FormalFormatDateParser extends DateParser {
         this.preferredFormat = preferredFormat;
     }
 
-    private LocalDate getLocalDate(int day, int month, int year) {
-        return LocalDate.of(normalizeYear(year), month, 1).plusDays(day - 1);
-    }
-
     private LocalDate resolveDate(int block1, int block2, int year) {
         if (isWithinMonthRange(block2) && !isWithinMonthRange(block1)) {
             // DD/MM
-            return getLocalDate(block1, block2, year);
+            return safeGetLocalDate(block1, block2, year);
         } else if (isWithinMonthRange(block1) && !isWithinMonthRange(block2)) {
             // MM/DD
-            return getLocalDate(block2, block1, year);
+            return safeGetLocalDate(block2, block1, year);
         } else {
             // Use preferred format
             if (preferredFormat == DateFormat.DAY_MONTH) {
                 // DD/MM
-                return getLocalDate(block1, block2, year);
+                return safeGetLocalDate(block1, block2, year);
             } else {
                 // MM/DD
-                return getLocalDate(block2, block1, year);
+                return safeGetLocalDate(block2, block1, year);
             }
         }
     }
@@ -96,7 +92,7 @@ public class FormalFormatDateParser extends DateParser {
                     }
 
                     results.add(
-                        new ParseResult<LocalDate>(reference, input, match, getLocalDate(block3, block2, block1))
+                        new ParseResult<LocalDate>(reference, input, match, safeGetLocalDate(block3, block2, block1))
                     );
                 } else {
                     // DD/MM/YYYY or
