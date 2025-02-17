@@ -21,7 +21,6 @@ public class ENTimeUnitLaterDateParser extends DateParser {
     }
 
     public ENTimeUnitLaterDateParser() {
-        //\b(?:in |after )?(\d+) (day|week|month|year)s?(?: later| after| from now| henceforth |forward |out)?\b
         super(
             "\\b" +                                                                 // word boundary
             "(?:in |after )?" +                                                     // optionally match "in" or "after"
