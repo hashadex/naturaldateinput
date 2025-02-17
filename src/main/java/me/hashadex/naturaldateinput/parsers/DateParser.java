@@ -38,7 +38,7 @@ public abstract class DateParser extends Parser {
         }
     }
 
-    protected static LocalDate safeGetLocalDate(int day, int month, int year) {
+    protected static LocalDate safeGetLocalDate(int year, int month, int day) {
         return LocalDate.of(normalizeYear(year), month, 1).plusDays(day - 1);
     }
 
