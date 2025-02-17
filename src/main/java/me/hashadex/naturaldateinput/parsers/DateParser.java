@@ -2,6 +2,7 @@ package me.hashadex.naturaldateinput.parsers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -40,6 +41,10 @@ public abstract class DateParser extends Parser {
 
     protected static LocalDate safeGetLocalDate(int year, int month, int day) {
         return LocalDate.of(normalizeYear(year), month, 1).plusDays(day - 1);
+    }
+
+    protected static LocalDate safeGetLocalDate(int year, Month month, int day) {
+        return safeGetLocalDate(year, month.getValue(), day);
     }
 
     protected static String keySetToRegexAlternate(Set<String> set) {
