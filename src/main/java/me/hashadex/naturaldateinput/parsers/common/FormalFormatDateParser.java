@@ -17,16 +17,15 @@ public class FormalFormatDateParser extends DateParser {
     private final DateFormat preferredFormat;
 
     public FormalFormatDateParser(DateFormat preferredFormat) {
-        // (?<![\/\.-])\b(\d{1,2}|\d{4})[\/\.-](\d{1,2})(?:[\/\.-](\d{4}|\d{2}))?\b
         super(
-            "(?<![\\/\\.-])" +                // negative lookbehind
-            "\\b" +                           // word boundary
-            "(\\d{1,2}|\\d{4})" +             // first block
-            "[\\/\\.-]" +                     // delimeter
-            "(\\d{1,2})" +                    // second block
-            "(?:[\\/\\.-](\\d{4}|\\d{2}))?" + // optional delimeter + third block
-            "\\b" +                           // word boundary
-            "(?![\\/\\.-])"                   // negative lookahead
+            "(?<![\\/\\.-])" +                  // negative lookbehind
+            "\\b" +                             // word boundary
+            "(\\d{1,2}|\\d{4})" +               // first block
+            "[\\/\\.-]" +                       // delimeter
+            "(\\d{1,2})" +                      // second block
+            "(?:[\\/\\.-](\\d{4}|\\d{1,2}))?" + // optional delimeter + third block
+            "\\b" +                             // word boundary
+            "(?![\\/\\.-])"                     // negative lookahead
         );
 
         this.preferredFormat = preferredFormat;
