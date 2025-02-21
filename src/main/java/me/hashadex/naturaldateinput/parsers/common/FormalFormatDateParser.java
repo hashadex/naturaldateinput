@@ -31,6 +31,18 @@ public class FormalFormatDateParser extends DateParser {
         this.preferredFormat = preferredFormat;
     }
 
+    private boolean isValidDayMonthPair(int block1, int block2) {
+        if (isWithinMonthRange(block1) && isWithinMonthRange(block2)) {
+            return true;
+        } else if (isWithinDayRange(block1) && isWithinMonthRange(block2)) {
+            return true;
+        } else if (isWithinMonthRange(block1) && isWithinDayRange(block2)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private LocalDate resolveDate(int block1, int block2, int year) {
         if (isWithinMonthRange(block2) && !isWithinMonthRange(block1)) {
             // DD/MM
@@ -73,7 +85,7 @@ public class FormalFormatDateParser extends DateParser {
                 // Two blocks
                 // DD/MM
                 // MM/DD
-                if (!isWithinDayRange(block1) || !isWithinDayRange(block2)) {
+                if (!isValidDayMonthPair(block1, block2)) {
                     continue;
                 }
 
@@ -86,7 +98,7 @@ public class FormalFormatDateParser extends DateParser {
 
                 if (isWithinYearRange(block1)) {
                     // YYYY/MM/DD
-                    if (!isWithinMonthRange(block2) || !isWithinDayRange(block3)) {
+                    if (!isValidDayMonthPair(block2, block3)) {
                         continue;
                     }
 
@@ -96,7 +108,7 @@ public class FormalFormatDateParser extends DateParser {
                 } else {
                     // DD/MM/YYYY or
                     // MM/DD/YYYY
-                    if (!isWithinDayRange(block1) || !isWithinDayRange(block2)) {
+                    if (!isValidDayMonthPair(block1, block2)) {
                         continue;
                     }
 
