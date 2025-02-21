@@ -60,7 +60,7 @@ public class ENMonthDateParser extends DateParser {
             "(?:" +
             " (\\d{4}|\\d{1,2})(?:th|st|nd|rd)?" +                        // optional ambiguous group 3 + optional ordinal indicator
             "\\b" +                                                       // word boundary
-            "(?:,? (\\d{4})\\b)?" +                                       // optional year group
+            "(?:,? (?<year>\\d{4})\\b)?" +                                // optional year group
             ")?"
         );
     }
@@ -108,7 +108,7 @@ public class ENMonthDateParser extends DateParser {
         ArrayList<MatchResult> matches = findAllMatches(input);
 
         for (MatchResult match : matches) {
-            Month month = months.get(match.group("month"));
+            Month month = months.get(match.group("month").toLowerCase());
 
             LocalDate result;
 
