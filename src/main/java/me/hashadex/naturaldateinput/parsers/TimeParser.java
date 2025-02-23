@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import me.hashadex.naturaldateinput.ParseResult;
 
 public abstract class TimeParser extends Parser {
-    public TimeParser(String regex, int flags) {
+    protected TimeParser(String regex, int flags) {
         super(regex, flags);
     }
 
-    public TimeParser(String regex) {
+    protected TimeParser(String regex) {
         super(regex);
     }
 
