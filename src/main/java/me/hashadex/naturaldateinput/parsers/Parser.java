@@ -1,37 +1,28 @@
 package me.hashadex.naturaldateinput.parsers;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Optional;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import me.hashadex.naturaldateinput.ParsedComponent;
 
 public abstract class Parser {
-    private final Pattern pattern;
+    protected final Pattern pattern;
 
     protected Parser(String regex, int flags) {
         pattern = Pattern.compile(regex, flags);
     }
 
     protected Parser(String regex) {
-        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
     }
 
-    protected ArrayList<MatchResult> findAllMatches(String input) {
-        Matcher matcher = pattern.matcher(input);
-        ArrayList<MatchResult> matchList = new ArrayList<MatchResult>();
-
-        while (matcher.find()) {
-            matchList.add(matcher.toMatchResult());
-        }
-
-        return matchList;
-    }
-
-    protected static boolean isWithinYearRange(int year) {
-        return year >= 1900 && year <= 2200; // This is the range supported by Todoist
+    protected static boolean is4DigitNumber(int number) {
+        return number >= 1000 && number <= 9999;
     }
 
     protected static boolean isWithinMonthRange(int month) {
@@ -43,8 +34,6 @@ public abstract class Parser {
     }
 
     protected static int normalizeYear(int year) {
-        year = Math.abs(year);
-
         if (year < 100) {
             return 2000 + year;
         } else {
@@ -52,15 +41,16 @@ public abstract class Parser {
         }
     }
 
-    protected static LocalDate safeGetLocalDate(int year, int month, int day) {
-        return LocalDate.of(normalizeYear(year), month, 1).plusDays(day - 1);
-    }
+    protected abstract Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source);
 
-    protected static LocalDate safeGetLocalDate(int year, Month month, int day) {
-        return safeGetLocalDate(year, month.getValue(), day);
-    }
+    public Stream<ParsedComponent> parse(String input, LocalDateTime reference) {
+        ArrayList<ParsedComponent> results = new ArrayList<>();
+        Matcher matcher = pattern.matcher(input);
 
-    protected static String keySetToRegexAlternate(Set<String> set) {
-        return String.join("|", set);
+        while (matcher.find()) {
+            parseMatch(matcher.toMatchResult(), reference, input).ifPresent(result -> results.add(result));
+        }
+
+        return results.stream();
     }
 }
