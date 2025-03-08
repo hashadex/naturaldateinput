@@ -2,123 +2,142 @@ package me.hashadex.naturaldateinput.parsers.common;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.Month;
+import java.time.YearMonth;
+import java.util.Optional;
 import java.util.regex.MatchResult;
 
-import me.hashadex.naturaldateinput.ParseResult;
-import me.hashadex.naturaldateinput.parsers.DateParser;
+import me.hashadex.naturaldateinput.ParsedComponent;
+import me.hashadex.naturaldateinput.parsers.Parser;
 
-public class FormalFormatDateParser extends DateParser {
+public class FormalFormatDateParser extends Parser {
     public enum DateFormat {
         DAY_MONTH,
         MONTH_DAY
     }
 
-    private final DateFormat preferredFormat;
+    private final DateFormat preferredDateFormat;
 
-    public FormalFormatDateParser(DateFormat preferredFormat) {
+    public FormalFormatDateParser(DateFormat preferredDateFormat) {
         super(
-            "(?<![\\/\\.-])" +                  // negative lookbehind
-            "\\b" +                             // word boundary
-            "(\\d{1,2}|\\d{4})" +               // first block
-            "[\\/\\.-]" +                       // delimeter
-            "(\\d{1,2})" +                      // second block
-            "(?:[\\/\\.-](\\d{4}|\\d{1,2}))?" + // optional delimeter + third block
-            "\\b" +                             // word boundary
-            "(?![\\/\\.-])"                     // negative lookahead
+            """
+            (?<=^|\\s)                     # Left boundary check
+            (?<block1>\\d{4}|\\d{1,2})     # First block (4 digit year or month/day)
+            (?<delimeter>[\\.\\/\\-])      # Delimeter
+            (?<block2>\\d{1,2})            # Second block (month/day)
+            (?:
+                \\k<delimeter>             # Match only if the second delimeter equals the first
+                (?<block3>\\d{4}|\\d{1,2}) # Optional third block (4 digit year or month/day)
+            )?
+            (?=$|\\s)                      # Right boundary check
+            """
         );
 
-        this.preferredFormat = preferredFormat;
+        this.preferredDateFormat = preferredDateFormat;
     }
 
-    private boolean isValidDayMonthPair(int block1, int block2) {
-        if (isWithinMonthRange(block1) && isWithinMonthRange(block2)) {
-            return true;
-        } else if (isWithinDayRange(block1) && isWithinMonthRange(block2)) {
-            return true;
-        } else if (isWithinMonthRange(block1) && isWithinDayRange(block2)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private LocalDate resolveDate(int block1, int block2, int year) {
-        if (isWithinMonthRange(block2) && !isWithinMonthRange(block1)) {
+    @Override
+    protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
+        int block1 = Integer.parseInt(match.group("block1"));
+        int block2 = Integer.parseInt(match.group("block2"));
+        
+        // Check that all blocks (except year blocks) are in range 1-31
+        if (match.group("block3") == null) {
             // DD/MM
-            return safeGetLocalDate(year, block2, block1);
-        } else if (isWithinMonthRange(block1) && !isWithinMonthRange(block2)) {
             // MM/DD
-            return safeGetLocalDate(year, block1, block2);
+            if (!isWithinDayRange(block1) || !isWithinDayRange(block2)) {
+                return Optional.empty();
+            }
         } else {
-            // Use preferred format
-            if (preferredFormat == DateFormat.DAY_MONTH) {
-                // DD/MM
-                return safeGetLocalDate(year, block2, block1);
+            int block3 = Integer.parseInt(match.group("block3"));
+
+            if (is4DigitNumber(block1)) {
+                // YYYY-MM-DD
+                if (!isWithinDayRange(block2) || !isWithinDayRange(block3)) {
+                    return Optional.empty();
+                }
             } else {
-                // MM/DD
-                return safeGetLocalDate(year, block1, block2);
+                // DD/MM/YYYY
+                // MM/DD/YYYY
+                if (!isWithinDayRange(block1) || !isWithinDayRange(block2)) {
+                    return Optional.empty();
+                } 
             }
         }
-    }
 
-    private LocalDate resolveDate(int block1, int block2, LocalDateTime reference) {
-        LocalDate result = resolveDate(block1, block2, reference.getYear());
+        // Check for YYYY-MM-DD
+        if (match.group("block3") != null) {
+            int block3 = Integer.parseInt(match.group("block3"));
+
+            if (is4DigitNumber(block1) && isWithinMonthRange(block2) && isWithinDayRange(block3)) {
+                YearMonth yearMonth = YearMonth.of(block1, block2);
+
+                if (block3 <= yearMonth.lengthOfMonth()) {
+                    return Optional.of(
+                        new ParsedComponent(reference, source, match, yearMonth.atDay(block3))
+                    );
+                } else {
+                    return Optional.empty();
+                }
+            }
+        }
+
+        // At this point, the date must be of format:
+        // DD/MM
+        // DD/MM/YYYY
+        // MM/DD
+        // MM/DD/YYYY
+
+        // Check if at least one block is within month range
+        if (!isWithinMonthRange(block1) && !isWithinMonthRange(block2)) {
+            return Optional.empty();
+        }
+
+        // Find which block is month and which is day
+        Month month;
+        int day;
+
+        if (!isWithinMonthRange(block1)) {
+            // DD/MM
+            month = Month.of(block2);
+            day = block1;
+        } else if (!isWithinMonthRange(block2)) {
+            // MM/DD
+            month = Month.of(block1);
+            day = block2;
+        } else {
+            // Ambiguous, like 03/05
+            if (preferredDateFormat == DateFormat.DAY_MONTH) {
+                month = Month.of(block2);
+                day = block1;
+            } else {
+                month = Month.of(block1);
+                day = block2;
+            }
+        }
+
+        // Check if day is valid for current month
+        if (day > month.maxLength()) {
+            return Optional.empty();
+        }
+
+        // Assemble the date
+        int year;
+
+        if (match.group("block3") != null) {
+            year = normalizeYear(Integer.parseInt(match.group("block3")));
+        } else {
+            year = reference.getYear();
+        }
+
+        LocalDate result = LocalDate.of(year, month, day);
 
         if (result.isBefore(reference.toLocalDate())) {
             result = result.plusYears(1);
         }
 
-        return result;
-    }
-
-    @Override
-    public ArrayList<ParseResult<LocalDate>> parse(String input, LocalDateTime reference) {
-        ArrayList<ParseResult<LocalDate>> results = new ArrayList<>();
-        ArrayList<MatchResult> matches = findAllMatches(input);
-
-        for (MatchResult match : matches) {
-            int block1 = Integer.parseInt(match.group(1));
-            int block2 = Integer.parseInt(match.group(2));
-
-            if (match.group(3) == null) {
-                // Two blocks
-                // DD/MM
-                // MM/DD
-                if (!isValidDayMonthPair(block1, block2)) {
-                    continue;
-                }
-
-                results.add(
-                    new ParseResult<LocalDate>(reference, input, match, resolveDate(block1, block2, reference))
-                );
-            } else {
-                // Three blocks
-                int block3 = Integer.parseInt(match.group(3));
-
-                if (isWithinYearRange(block1)) {
-                    // YYYY/MM/DD
-                    if (!isValidDayMonthPair(block2, block3)) {
-                        continue;
-                    }
-
-                    results.add(
-                        new ParseResult<LocalDate>(reference, input, match, safeGetLocalDate(block1, block2, block3))
-                    );
-                } else {
-                    // DD/MM/YYYY or
-                    // MM/DD/YYYY
-                    if (!isValidDayMonthPair(block1, block2)) {
-                        continue;
-                    }
-
-                    results.add(
-                        new ParseResult<LocalDate>(reference, input, match, resolveDate(block1, block2, block3))
-                    );
-                }
-            }
-        }
-
-        return results;
+        return Optional.of(
+            new ParsedComponent(reference, source, match, result)
+        );
     }
 }
