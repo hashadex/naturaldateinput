@@ -69,6 +69,14 @@ public class FormalFormatDateParserTest extends ParserTest {
 
     @ParameterizedTest
     @MethodSource({"provideUnambiguousDates", "provideAmbiguousDates"})
+    void parse_DayMonth_ReturnsValidDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M");
+
+        assertParsedDateEquals(date, formatter.format(date));
+    }
+
+    @ParameterizedTest
+    @MethodSource({"provideUnambiguousDates", "provideAmbiguousDates"})
     void parse_MonthDayYear_ReturnsValidDate(LocalDate date) {
         setupMonthDayParser();
 
@@ -83,14 +91,6 @@ public class FormalFormatDateParserTest extends ParserTest {
         setupMonthDayParser();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M.d.yy");
-
-        assertParsedDateEquals(date, formatter.format(date));
-    }
-
-    @ParameterizedTest
-    @MethodSource({"provideUnambiguousDates", "provideAmbiguousDates"})
-    void parse_DayMonth_ReturnsValidDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M");
 
         assertParsedDateEquals(date, formatter.format(date));
     }
