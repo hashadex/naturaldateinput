@@ -2,7 +2,7 @@ package me.hashadex.naturaldateinput.parsers.templates;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
@@ -10,9 +10,9 @@ import me.hashadex.naturaldateinput.ParsedComponent;
 import me.hashadex.naturaldateinput.parsers.Parser;
 
 public abstract class RelativeWordDateParser extends Parser {
-    private HashMap<String, Integer> wordOffsets;
+    private Map<String, Integer> wordOffsets;
 
-    protected RelativeWordDateParser(HashMap<String, Integer> wordOffsets) {
+    protected RelativeWordDateParser(Map<String, Integer> wordOffsets) {
         super(
             """
             (?<=^|\\s) # Left boundary check
