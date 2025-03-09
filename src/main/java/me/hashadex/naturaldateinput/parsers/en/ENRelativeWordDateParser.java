@@ -1,23 +1,13 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.MatchResult;
 
-import me.hashadex.naturaldateinput.ParseResult;
-import me.hashadex.naturaldateinput.parsers.DateParser;
+import me.hashadex.naturaldateinput.parsers.templates.RelativeWordDateParser;
 
-public class ENRelativeWordDateParser extends DateParser {
+public class ENRelativeWordDateParser extends RelativeWordDateParser {
     private static HashMap<String, Integer> wordOffsets = new HashMap<>();
 
     static {
-        // Init wordOffsets
-        // 0 = today
-        // 1 = tomorrow (today + 1 day)
-        // -1 = yesterday (today - 1 day)
-
         // today
         wordOffsets.put("today", 0);
         wordOffsets.put("tod", 0);
@@ -31,27 +21,6 @@ public class ENRelativeWordDateParser extends DateParser {
     }
 
     public ENRelativeWordDateParser() {
-        super(
-            "\\b(?<word>" + keySetToRegexAlternate(wordOffsets.keySet()) + ")\\b"
-        );
-    }
-
-    @Override
-    public ArrayList<ParseResult<LocalDate>> parse(String input, LocalDateTime reference) {
-        ArrayList<ParseResult<LocalDate>> results = new ArrayList<>();
-        ArrayList<MatchResult> matches = findAllMatches(input);
-
-        for (MatchResult match : matches) {
-            results.add(
-                new ParseResult<LocalDate>(
-                    reference,
-                    input,
-                    match,
-                    reference.plusDays(wordOffsets.get(match.group("word").toLowerCase())).toLocalDate()
-                )
-            );
-        }
-
-        return results;
+        super(wordOffsets);
     }
 }

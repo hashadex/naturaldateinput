@@ -7,9 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import me.hashadex.naturaldateinput.parsers.DateParserTest;
+import me.hashadex.naturaldateinput.parsers.ParserTest;
 
-public class ENRelativeWordDateParserTest extends DateParserTest {
+public class ENRelativeWordDateParserTest extends ParserTest {
     private LocalDate referenceDate;
 
     @Override
