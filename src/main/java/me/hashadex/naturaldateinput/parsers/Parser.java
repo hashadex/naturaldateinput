@@ -3,6 +3,7 @@ package me.hashadex.naturaldateinput.parsers;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +40,10 @@ public abstract class Parser {
         } else {
             return year;
         }
+    }
+
+    protected static String setToRegexAlternate(Set<String> set) {
+        return String.join("|", set);
     }
 
     protected abstract Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source);
