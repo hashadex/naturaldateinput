@@ -3,45 +3,111 @@ package me.hashadex.naturaldateinput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
 public class ParsedComponent {
     private final LocalDateTime reference;
+
     private final String source;
-    private final MatchResult matchInfo;
+    private final int startIndex;
+    private final int endIndex;
 
-    private final LocalDate date;
-    private final LocalTime time;
+    private final LocalDate startDate;
+    private final LocalTime startTime;
 
-    private ParsedComponent(LocalDateTime reference, String source, MatchResult matchInfo, LocalDate date, LocalTime time) {
-        Objects.requireNonNull(reference);
-        Objects.requireNonNull(source);
-        Objects.requireNonNull(matchInfo);
+    private final LocalDate endDate;
+    private final LocalTime endTime;
 
-        this.reference = reference;
-        this.source = source;
-        this.matchInfo = matchInfo;
+    public static class Builder {
+        private LocalDateTime reference;
 
-        this.date = date;
-        this.time = time;
+        private String source;
+        private int startIndex;
+        private int endIndex;
+
+        private LocalDate startDate;
+        private LocalTime startTime;
+
+        private LocalDate endDate;
+        private LocalTime endTime;
+
+        public Builder(LocalDateTime reference, String source, int startIndex, int endIndex) {
+            this.reference = reference;
+
+            this.source = source;
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+        }
+
+        public Builder(LocalDateTime reference, String source, MatchResult matchResult) {
+            this(reference, source, matchResult.start(), matchResult.end());
+        }
+
+        public Builder start(LocalDate start) {
+            this.startDate = start;
+
+            return this;
+        }
+
+        public Builder start(LocalTime start) {
+            this.startTime = start;
+
+            return this;
+        }
+
+        public Builder start(LocalDateTime start) {
+            this.start(start.toLocalDate());
+            this.start(start.toLocalTime());
+
+            return this;
+        }
+
+        public Builder end(LocalDate end) {
+            this.endDate = end;
+
+            return this;
+        }
+
+        public Builder end(LocalTime end) {
+            this.endTime = end;
+
+            return this;
+        }
+
+        public Builder end(LocalDateTime end) {
+            this.end(end.toLocalDate());
+            this.end(end.toLocalTime());
+
+            return this;
+        }
+
+        public ParsedComponent build() throws IllegalArgumentException {
+            if (
+                startDate == null &&
+                startTime == null &&
+                endDate == null &&
+                endTime == null
+            ) {
+                throw new IllegalArgumentException("At least one date/time field must be non-null");
+            }
+
+            return new ParsedComponent(this);
+        }
     }
 
-    public ParsedComponent(LocalDateTime reference, String source, MatchResult matchInfo, LocalDate date) {
-        this(reference, source, matchInfo, date, null);
+    private ParsedComponent(Builder builder) {
+        this.reference = builder.reference;
 
-        Objects.requireNonNull(date);
-    }
+        this.source = builder.source;
+        this.startIndex = builder.startIndex;
+        this.endIndex = builder.endIndex;
 
-    public ParsedComponent(LocalDateTime reference, String source, MatchResult matchInfo, LocalTime time) {
-        this(reference, source, matchInfo, null, time);
+        this.startDate = builder.startDate;
+        this.startTime = builder.startTime;
 
-        Objects.requireNonNull(time);
-    }
-
-    public ParsedComponent(LocalDateTime reference, String source, MatchResult matchInfo, LocalDateTime dateTime) {
-        this(reference, source, matchInfo, dateTime.toLocalDate(), dateTime.toLocalTime());
+        this.endDate = builder.endDate;
+        this.endTime = builder.endTime;
     }
 
     public LocalDateTime getReference() {
@@ -52,27 +118,31 @@ public class ParsedComponent {
         return source;
     }
 
-    public String getText() {
-        return matchInfo.group();
-    }
-
     public int getStartIndex() {
-        return matchInfo.start();
+        return startIndex;
     }
 
     public int getEndIndex() {
-        return matchInfo.end();
+        return endIndex;
     }
 
-    public MatchResult getMatchInfo() {
-        return matchInfo;
+    public String getText() {
+        return source.substring(startIndex, endIndex);
     }
 
-    public Optional<LocalDate> getDate() {
-        return Optional.ofNullable(date);
+    public Optional<LocalDate> getStartDate() {
+        return Optional.ofNullable(startDate);
     }
 
-    public Optional<LocalTime> getTime() {
-        return Optional.ofNullable(time);
+    public Optional<LocalTime> getStartTime() {
+        return Optional.ofNullable(startTime);
+    }
+
+    public Optional<LocalDate> getEndDate() {
+        return Optional.ofNullable(endDate);
+    }
+
+    public Optional<LocalTime> getEndTime() {
+        return Optional.ofNullable(endTime);
     }
 }
