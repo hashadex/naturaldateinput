@@ -7,7 +7,6 @@ import java.time.YearMonth;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
-import me.hashadex.naturaldateinput.ParsedComponent;
 import me.hashadex.naturaldateinput.parsers.Parser;
 
 public class FormalFormatDateParser extends Parser {
@@ -74,7 +73,7 @@ public class FormalFormatDateParser extends Parser {
 
                 if (block3 <= yearMonth.lengthOfMonth()) {
                     return Optional.of(
-                        new ParsedComponent.Builder(reference, source, match).start(yearMonth.atDay(block3)).build()
+                        new ParsedComponentBuilder(reference, source, match).start(yearMonth.atDay(block3)).build()
                     );
                 } else {
                     return Optional.empty();
@@ -136,8 +135,11 @@ public class FormalFormatDateParser extends Parser {
             result = result.plusYears(1);
         }
 
+        // return Optional.of(
+        //     new ParsedComponent.Builder(reference, source, match).start(result).build()
+        // );
         return Optional.of(
-            new ParsedComponent.Builder(reference, source, match).start(result).build()
+            new ParsedComponentBuilder(reference, source, match).start(result).build()
         );
     }
 }

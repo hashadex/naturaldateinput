@@ -1,6 +1,8 @@
 package me.hashadex.naturaldateinput.parsers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
@@ -9,10 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import me.hashadex.naturaldateinput.ParsedComponent;
-
 public abstract class Parser {
-    protected final Pattern pattern;
+    private final Pattern pattern;
 
     protected Parser(String regex, int flags) {
         pattern = Pattern.compile(regex, flags);
@@ -20,6 +20,141 @@ public abstract class Parser {
 
     protected Parser(String regex) {
         this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
+    }
+
+    public static final class ParsedComponent {
+        private final LocalDateTime reference;
+    
+        private final String source;
+        private final int startIndex;
+        private final int endIndex;
+    
+        private final LocalDate startDate;
+        private final LocalTime startTime;
+    
+        private final LocalDate endDate;
+        private final LocalTime endTime;
+
+        private ParsedComponent(ParsedComponentBuilder builder) {
+            this.reference = builder.reference;
+
+            this.source = builder.source;
+            this.startIndex = builder.startIndex;
+            this.endIndex = builder.endIndex;
+
+            this.startDate = builder.startDate;
+            this.startTime = builder.startTime;
+
+            this.endDate = builder.endDate;
+            this.endTime = builder.endTime;
+        }
+    
+        public LocalDateTime getReference() {
+            return reference;
+        }
+    
+        public String getSource() {
+            return source;
+        }
+    
+        public int getStartIndex() {
+            return startIndex;
+        }
+    
+        public int getEndIndex() {
+            return endIndex;
+        }
+    
+        public String getText() {
+            return source.substring(startIndex, endIndex);
+        }
+    
+        public Optional<LocalDate> getStartDate() {
+            return Optional.ofNullable(startDate);
+        }
+    
+        public Optional<LocalTime> getStartTime() {
+            return Optional.ofNullable(startTime);
+        }
+    
+        public Optional<LocalDate> getEndDate() {
+            return Optional.ofNullable(endDate);
+        }
+    
+        public Optional<LocalTime> getEndTime() {
+            return Optional.ofNullable(endTime);
+        }
+    }
+
+    protected static final class ParsedComponentBuilder {
+        private LocalDateTime reference;
+    
+        private String source;
+        private int startIndex;
+        private int endIndex;
+    
+        private LocalDate startDate;
+        private LocalTime startTime;
+    
+        private LocalDate endDate;
+        private LocalTime endTime;
+
+        public ParsedComponentBuilder(LocalDateTime reference, String source, int startIndex, int endIndex) {
+            this.reference = reference;
+            
+            this.source = source;
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+        }
+
+        public ParsedComponentBuilder(LocalDateTime reference, String source, MatchResult matchResult) {
+            this(reference, source, matchResult.start(), matchResult.end());
+        }
+
+        public ParsedComponentBuilder start(LocalDate date) {
+            this.startDate = date;
+            return this;
+        }
+
+        public ParsedComponentBuilder start(LocalTime time) {
+            this.startTime = time;
+            return this;
+        }
+
+        public ParsedComponentBuilder start(LocalDateTime dateTime) {
+            this.start(dateTime.toLocalDate());
+            this.start(dateTime.toLocalTime());
+            return this;
+        }
+
+        public ParsedComponentBuilder end(LocalDate date) {
+            this.endDate = date;
+            return this;
+        }
+
+        public ParsedComponentBuilder end(LocalTime time) {
+            this.endTime = time;
+            return this;
+        }
+
+        public ParsedComponentBuilder end(LocalDateTime dateTime) {
+            this.end(dateTime.toLocalDate());
+            this.end(dateTime.toLocalTime());
+            return this;
+        }
+
+        public ParsedComponent build() {
+            if (
+                this.startDate == null &&
+                this.startTime == null &&
+                this.endDate == null &&
+                this.endTime == null
+            ) {
+                throw new IllegalArgumentException("At least one date/time field must be non-null");
+            }
+
+            return new ParsedComponent(this);
+        }
     }
 
     protected static boolean is4DigitNumber(int number) {
