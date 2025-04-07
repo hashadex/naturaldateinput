@@ -12,16 +12,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public abstract class Parser {
-    private final Pattern pattern;
-
-    protected Parser(String regex, int flags) {
-        pattern = Pattern.compile(regex, flags);
-    }
-
-    protected Parser(String regex) {
-        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
-    }
-
     public static final class ParsedComponent {
         private final LocalDateTime reference;
     
@@ -155,6 +145,16 @@ public abstract class Parser {
 
             return new ParsedComponent(this);
         }
+    }
+
+    private final Pattern pattern;
+
+    protected Parser(String regex, int flags) {
+        pattern = Pattern.compile(regex, flags);
+    }
+
+    protected Parser(String regex) {
+        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
     }
 
     protected static boolean is4DigitNumber(int number) {
