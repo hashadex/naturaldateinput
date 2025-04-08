@@ -147,7 +147,7 @@ public abstract class Parser {
         }
     }
 
-    private final Pattern pattern;
+    protected final Pattern pattern;
 
     protected Parser(String regex, int flags) {
         pattern = Pattern.compile(regex, flags);
