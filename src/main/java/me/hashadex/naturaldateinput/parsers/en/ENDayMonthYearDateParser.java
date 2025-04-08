@@ -3,8 +3,8 @@ package me.hashadex.naturaldateinput.parsers.en;
 import me.hashadex.naturaldateinput.constants.ENConstants;
 import me.hashadex.naturaldateinput.parsers.templates.MonthNameDateParser;
 
-public class ENMonthNameDateParser extends MonthNameDateParser {
-    public ENMonthNameDateParser() {
+public class ENDayMonthYearDateParser extends MonthNameDateParser {
+    public ENDayMonthYearDateParser() {
         super(
             """
             (?<=^|\\s)         # Left boundary check
