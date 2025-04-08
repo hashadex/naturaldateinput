@@ -1,0 +1,84 @@
+package me.hashadex.naturaldateinput.parsers.templates;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.MonthDay;
+import java.time.YearMonth;
+import java.util.Map;
+import java.util.Optional;
+import java.util.regex.MatchResult;
+
+import me.hashadex.naturaldateinput.parsers.Parser;
+
+public abstract class MonthNameDateParser extends Parser {
+    private final Map<String, Month> monthMap;
+
+    protected MonthNameDateParser(String regex, Map<String, Month> monthMap, int flags) {
+        super(regex, flags);
+
+        this.monthMap = monthMap;
+    }
+
+    protected MonthNameDateParser(String regex, Map<String, Month> monthMap) {
+        super(regex);
+
+        this.monthMap = monthMap;
+    }
+
+    @Override
+    protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
+        Month month = monthMap.get(match.group("month"));
+
+        int startIndex = match.start();
+        int endIndex = match.end();
+
+        int year = reference.getYear();
+        boolean yearSetExplicitly = false;
+        if (match.group("year") != null) {
+            year = Integer.parseInt(match.group("year"));
+            yearSetExplicitly = true;
+        }
+
+        int day = 1;
+        if (match.group("day") != null) {
+            day = Integer.parseInt(match.group("day"));
+
+            if (!YearMonth.of(year, month).isValidDay(day)) {
+                day = 1;
+
+                Map<String, Integer> namedGroups = pattern.namedGroups();
+
+                // Shift indexes to not include invalid day
+                // e.g. [32 Apr 2025] => 32 [Apr 2025]
+                if (namedGroups.get("day") < namedGroups.get("month")) {
+                    // Day capturing group is before the month
+                    startIndex = match.start("month");
+                } else {
+                    // Day capturing group is after the month
+                    endIndex = match.end("month");
+                }
+
+                // If the year is not adjacent to month (e.g. April 8, 2025)
+                // act as if the year capturing group is null
+                // [April 32, 2025] => [April] 32, 2025
+                if (Math.abs(namedGroups.get("month") - namedGroups.get("year")) > 1) {
+                    year = reference.getYear();
+                    yearSetExplicitly = false;
+                }
+            }
+        }
+
+        // Assemble the date
+        LocalDate result = MonthDay.of(month, day).atYear(year);
+
+        if (result.isBefore(reference.toLocalDate()) && !yearSetExplicitly) {
+            result = result.plusYears(1);
+        }
+
+        // Return the date
+        return Optional.of(
+            new ParsedComponentBuilder(reference, source, startIndex, endIndex).start(result).build()
+        );
+    }
+}
