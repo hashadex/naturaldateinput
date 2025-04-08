@@ -187,9 +187,9 @@ public abstract class Parser {
         ArrayList<ParsedComponent> results = new ArrayList<>();
         Matcher matcher = pattern.matcher(input);
 
-        while (matcher.find()) {
-            parseMatch(matcher.toMatchResult(), reference, input).ifPresent(result -> results.add(result));
-        }
+        matcher.results().forEach(
+            match -> parseMatch(match, reference, input).ifPresent(result -> results.add(result))
+        );
 
         return results.stream();
     }
