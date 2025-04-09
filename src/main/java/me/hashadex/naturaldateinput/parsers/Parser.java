@@ -3,7 +3,6 @@ package me.hashadex.naturaldateinput.parsers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.MatchResult;
@@ -184,13 +183,9 @@ public abstract class Parser {
     protected abstract Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source);
 
     public Stream<ParsedComponent> parse(String input, LocalDateTime reference) {
-        ArrayList<ParsedComponent> results = new ArrayList<>();
         Matcher matcher = pattern.matcher(input);
 
-        matcher.results().forEach(
-            match -> parseMatch(match, reference, input).ifPresent(result -> results.add(result))
-        );
-
-        return results.stream();
+        return matcher.results()
+            .flatMap(match -> parseMatch(matcher, reference, input).stream());
     }
 }
