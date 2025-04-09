@@ -7,20 +7,21 @@ public class ENDayMonthYearDateParser extends MonthNameDateParser {
     public ENDayMonthYearDateParser() {
         super(
             """
-            (?<=^|\\s)         # Left boundary check
+            (?<=^|\\s)           # Left boundary check
             (?:
                 (?<day>\\d{1,2}) # Day
                 (?:%s)?          # Optionally match ordinal indicator
                 (?:\\sof)?       # Optionally match " of" (e.g. 8th of April)
                 \\s
             )?
-            (?<month>%s)       # Month
+            (?<month>%s)         # Month
             (?:
                 ,?               # Optionally match comma after month
                 \\s
+                (?:of\\s)?       # Optionally match " of"
                 (?<year>\\d{4})  # Year
             )?
-            (?=$|\\s)          # Right boundary check
+            (?=$|\\s)            # Right boundary check
             """.formatted(
                 setToRegexAlternate(ENConstants.ordinalIndicators),
                 setToRegexAlternate(ENConstants.monthMap.keySet())
