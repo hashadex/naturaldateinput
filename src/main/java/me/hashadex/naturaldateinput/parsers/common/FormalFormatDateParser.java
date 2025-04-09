@@ -122,22 +122,21 @@ public class FormalFormatDateParser extends Parser {
 
         // Assemble the date
         int year;
+        boolean yearSetExplicitly = false;
 
         if (match.group("block3") != null) {
             year = normalizeYear(Integer.parseInt(match.group("block3")));
+            yearSetExplicitly = true;
         } else {
             year = reference.getYear();
         }
 
         LocalDate result = LocalDate.of(year, month, day);
 
-        if (result.isBefore(reference.toLocalDate())) {
+        if (result.isBefore(reference.toLocalDate()) && !yearSetExplicitly) {
             result = result.plusYears(1);
         }
 
-        // return Optional.of(
-        //     new ParsedComponent.Builder(reference, source, match).start(result).build()
-        // );
         return Optional.of(
             new ParsedComponentBuilder(reference, source, match).start(result).build()
         );
