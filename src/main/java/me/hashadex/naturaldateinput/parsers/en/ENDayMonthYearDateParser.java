@@ -9,16 +9,16 @@ public class ENDayMonthYearDateParser extends MonthNameDateParser {
             """
             (?<=^|\\s)         # Left boundary check
             (?:
-              (?<day>\\d{1,2}) # Day
-              (?:%s)?          # Optionally match ordinal indicator
-              (?:\\sof)?       # Optionally match " of" (e.g. 8th of April)
-              \\s
+                (?<day>\\d{1,2}) # Day
+                (?:%s)?          # Optionally match ordinal indicator
+                (?:\\sof)?       # Optionally match " of" (e.g. 8th of April)
+                \\s
             )?
             (?<month>%s)       # Month
             (?:
-              ,?               # Optionally match comma after month
-              \\s
-              (?<year>\\d{4})  # Year
+                ,?               # Optionally match comma after month
+                \\s
+                (?<year>\\d{4})  # Year
             )?
             (?=$|\\s)          # Right boundary check
             """.formatted(
