@@ -3,6 +3,7 @@ package me.hashadex.naturaldateinput.parsers.common;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.MonthDay;
 import java.time.YearMonth;
 import java.util.Optional;
 import java.util.regex.MatchResult;
@@ -131,7 +132,7 @@ public class FormalFormatDateParser extends Parser {
             year = reference.getYear();
         }
 
-        LocalDate result = LocalDate.of(year, month, day);
+        LocalDate result = MonthDay.of(month, day).atYear(year);
 
         if (result.isBefore(reference.toLocalDate()) && !yearSetExplicitly) {
             result = result.plusYears(1);
