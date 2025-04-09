@@ -53,10 +53,12 @@ public abstract class MonthNameDateParser extends Parser {
                 // e.g. [32 Apr 2025] => 32 [Apr 2025]
                 if (namedGroups.get("day") < namedGroups.get("month")) {
                     // Day capturing group is before the month
-                    startIndex = match.start("month");
+                    // Shift start index to start index of the capturing group that is after the day group
+                    startIndex = match.start(namedGroups.get("day") + 1);
                 } else {
                     // Day capturing group is after the month
-                    endIndex = match.end("month");
+                    // Shift end index to end index of the capturing group that is before the day group
+                    endIndex = match.end(namedGroups.get("day") - 1);
                 }
 
                 // If the year is not adjacent to month (e.g. April 8, 2025)
