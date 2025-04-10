@@ -6,32 +6,31 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
-import me.hashadex.naturaldateinput.ParsedComponent;
 import me.hashadex.naturaldateinput.parsers.Parser;
 
 public abstract class RelativeWordDateParser extends Parser {
-    private Map<String, Integer> wordOffsets;
+    private final Map<String, Integer> relativeWordOffsetMap;
 
-    protected RelativeWordDateParser(Map<String, Integer> wordOffsets) {
-        super(
-            """
-            (?<=^|\\s) # Left boundary check
-            (?<word>%s)
-            (?=$|\\s) # Right boundary check
-            """.formatted(setToRegexAlternate(wordOffsets.keySet()))
-        );
+    protected RelativeWordDateParser(String regex, Map<String, Integer> relativeWordOffsetMap, int flags) {
+        super(regex, flags);
 
-        this.wordOffsets = wordOffsets;
+        this.relativeWordOffsetMap = relativeWordOffsetMap;
+    }
+
+    protected RelativeWordDateParser(String regex, Map<String, Integer> relativeWordOffsetMap) {
+        super(regex);
+
+        this.relativeWordOffsetMap = relativeWordOffsetMap;
     }
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
-        String word = match.group("word").toLowerCase();
-        int offset = wordOffsets.get(word);
-        LocalDate result = reference.toLocalDate().plusDays(offset);
+        LocalDate result = reference.toLocalDate().plusDays(
+            relativeWordOffsetMap.get(match.group("word"))
+        );
 
         return Optional.of(
-            new ParsedComponent(reference, source, match, result)
+            new ParsedComponentBuilder(reference, source, match).start(result).build()
         );
     }
 }

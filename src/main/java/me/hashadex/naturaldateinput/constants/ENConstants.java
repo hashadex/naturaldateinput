@@ -8,6 +8,7 @@ import static java.util.Map.entry;
 
 public class ENConstants {
     public static final Map<String, Month> monthMap;
+    public static final Map<String, Integer> relativeWordOffsetMap;
     public static final Set<String> ordinalIndicators;
 
     static {
@@ -60,6 +61,19 @@ public class ENConstants {
             entry("december", Month.DECEMBER),
             entry("dec\\.", Month.DECEMBER),
             entry("dec", Month.DECEMBER)
+        );
+
+        relativeWordOffsetMap = Map.of(
+            // yesterday
+            "yesterday", -1,
+            "ytd", -1,
+            // today
+            "today", 0,
+            "tod", 0,
+            // tomorrow
+            "tomorrow", 1,
+            "tmrw", 1,
+            "tmr", 1
         );
 
         ordinalIndicators = Set.of("th", "st", "nd", "rd");
