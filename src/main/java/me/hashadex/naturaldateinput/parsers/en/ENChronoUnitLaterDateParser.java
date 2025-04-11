@@ -7,19 +7,19 @@ public class ENChronoUnitLaterDateParser extends ChronoUnitLaterDateParser {
     public ENChronoUnitLaterDateParser() {
         super(
             """
-            (?<=^|\\s)
+            (?<=^|\\s)          # Left boundary check
             (?:
-                (?:in|after)
+                (?:in|after)    # Optionally match "in" or "after" (e.g "in 10 days")
                 \\s
             )?
-            (?<amount>\\d+)
+            (?<amount>\\d+)     # Amount of units we need to add to reference date
             \\s
-            (?<unit>%s)s?
+            (?<unit>%s)s?       # Units (e.g. days, weeks, months)
             (?:
                 \\s
-                (?:later|after)
+                (?:later|after) # Optionally match "later" or "after" (e.g. "10 days later")
             )?
-            (?=$|\\s)
+            (?=$|\\s)           # Right boundary check
             """.formatted(
                 setToRegexAlternate(ENConstants.chronoUnitMap.keySet())
             ),
