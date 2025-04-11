@@ -37,7 +37,7 @@ public class FormalFormatParser extends Parser {
     }
 
     @Override
-    protected Optional<ParsedComponent> parseMatch(LocalDateTime reference, String source, MatchResult match) {
+    protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         int block1 = Integer.parseInt(match.group("block1"));
         int block2 = Integer.parseInt(match.group("block2"));
         

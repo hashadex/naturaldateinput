@@ -24,7 +24,7 @@ public abstract class RelativeWordParser extends Parser {
     }
 
     @Override
-    protected Optional<ParsedComponent> parseMatch(LocalDateTime reference, String source, MatchResult match) {
+    protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         LocalDate result = reference.toLocalDate().plusDays(
             relativeWordOffsetMap.get(match.group("word"))
         );

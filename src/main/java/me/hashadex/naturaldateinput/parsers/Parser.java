@@ -180,12 +180,12 @@ public abstract class Parser {
         return String.join("|", set);
     }
 
-    protected abstract Optional<ParsedComponent> parseMatch(LocalDateTime reference, String source, MatchResult match);
+    protected abstract Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source);
 
     public Stream<ParsedComponent> parse(String input, LocalDateTime reference) {
         Matcher matcher = pattern.matcher(input);
 
         return matcher.results()
-            .flatMap(match -> parseMatch(reference, input, matcher).stream());
+            .flatMap(match -> parseMatch(matcher, reference, input).stream());
     }
 }

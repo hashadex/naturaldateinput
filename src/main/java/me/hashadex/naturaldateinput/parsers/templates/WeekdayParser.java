@@ -27,7 +27,7 @@ public abstract class WeekdayParser extends Parser {
     }
 
     @Override
-    protected Optional<ParsedComponent> parseMatch(LocalDateTime reference, String source, MatchResult match) {
+    protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         boolean nextModifier = false;
 
         if (match.group("nextmodifier") != null) {
