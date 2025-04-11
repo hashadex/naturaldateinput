@@ -1,5 +1,28 @@
 package me.hashadex.naturaldateinput.constants;
 
+import static java.time.Month.JANUARY;
+import static java.time.Month.FEBRUARY;
+import static java.time.Month.MARCH;
+import static java.time.Month.APRIL;
+import static java.time.Month.MAY;
+import static java.time.Month.JUNE;
+import static java.time.Month.JULY;
+import static java.time.Month.AUGUST;
+import static java.time.Month.SEPTEMBER;
+import static java.time.Month.OCTOBER;
+import static java.time.Month.NOVEMBER;
+import static java.time.Month.DECEMBER;
+
+import static java.time.temporal.ChronoUnit.DECADES;
+import static java.time.temporal.ChronoUnit.YEARS;
+import static java.time.temporal.ChronoUnit.MONTHS;
+import static java.time.temporal.ChronoUnit.WEEKS;
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.HALF_DAYS;
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.SECONDS;
+
 import static java.util.Map.entry;
 
 import java.time.Month;
@@ -16,53 +39,53 @@ public class ENConstants {
     static {
         monthMap = Map.ofEntries(
             // January
-            entry("january", Month.JANUARY),
-            entry("jan\\.", Month.JANUARY),
-            entry("jan", Month.JANUARY),
+            entry("january", JANUARY),
+            entry("jan\\.", JANUARY),
+            entry("jan", JANUARY),
             // February
-            entry("february", Month.FEBRUARY),
-            entry("feb\\.", Month.FEBRUARY),
-            entry("feb", Month.FEBRUARY),
+            entry("february", FEBRUARY),
+            entry("feb\\.", FEBRUARY),
+            entry("feb", FEBRUARY),
             // March
-            entry("march", Month.MARCH),
-            entry("mar\\.", Month.MARCH),
-            entry("mar", Month.MARCH),
+            entry("march", MARCH),
+            entry("mar\\.", MARCH),
+            entry("mar", MARCH),
             // April
-            entry("april", Month.APRIL),
-            entry("apr\\.", Month.APRIL),
-            entry("apr", Month.APRIL),
+            entry("april", APRIL),
+            entry("apr\\.", APRIL),
+            entry("apr", APRIL),
             // May
-            entry("may", Month.MAY),
-            entry("may\\.", Month.MAY),
-            entry("may", Month.MAY),
+            entry("may", MAY),
+            entry("may\\.", MAY),
+            entry("may", MAY),
             // June
-            entry("june", Month.JUNE),
-            entry("jun\\.", Month.JUNE),
-            entry("jun", Month.JUNE),
+            entry("june", JUNE),
+            entry("jun\\.", JUNE),
+            entry("jun", JUNE),
             // July
-            entry("july", Month.JULY),
-            entry("jul\\.", Month.JULY),
-            entry("jul", Month.JULY),
+            entry("july", JULY),
+            entry("jul\\.", JULY),
+            entry("jul", JULY),
             // August
-            entry("august", Month.AUGUST),
-            entry("aug\\.", Month.AUGUST),
-            entry("aug", Month.AUGUST),
+            entry("august", AUGUST),
+            entry("aug\\.", AUGUST),
+            entry("aug", AUGUST),
             // September
-            entry("september", Month.SEPTEMBER),
-            entry("sep\\.", Month.SEPTEMBER),
-            entry("sep", Month.SEPTEMBER),
+            entry("september", SEPTEMBER),
+            entry("sep\\.", SEPTEMBER),
+            entry("sep", SEPTEMBER),
             // October
-            entry("october", Month.OCTOBER),
-            entry("oct\\.", Month.OCTOBER),
-            entry("oct", Month.OCTOBER),
+            entry("october", OCTOBER),
+            entry("oct\\.", OCTOBER),
+            entry("oct", OCTOBER),
             // November
-            entry("november", Month.NOVEMBER),
-            entry("nov\\.", Month.NOVEMBER),
-            entry("nov", Month.NOVEMBER),
+            entry("november", NOVEMBER),
+            entry("nov\\.", NOVEMBER),
+            entry("nov", NOVEMBER),
             // December
-            entry("december", Month.DECEMBER),
-            entry("dec\\.", Month.DECEMBER),
-            entry("dec", Month.DECEMBER)
+            entry("december", DECEMBER),
+            entry("dec\\.", DECEMBER),
+            entry("dec", DECEMBER)
         );
 
         relativeWordOffsetMap = Map.of(
@@ -79,16 +102,16 @@ public class ENConstants {
         );
 
         chronoUnitMap = Map.of(
-            "decade", ChronoUnit.DECADES,
-            "year", ChronoUnit.YEARS,
-            "month", ChronoUnit.MONTHS,
-            "week", ChronoUnit.WEEKS,
-            "day", ChronoUnit.DAYS,
-            "half-day", ChronoUnit.HALF_DAYS,
-            "halfday", ChronoUnit.HALF_DAYS,
-            "hour", ChronoUnit.HOURS,
-            "minute", ChronoUnit.MINUTES,
-            "seconds", ChronoUnit.SECONDS
+            "decade", DECADES,
+            "year", YEARS,
+            "month", MONTHS,
+            "week", WEEKS,
+            "day", DAYS,
+            "half-day", HALF_DAYS,
+            "halfday", HALF_DAYS,
+            "hour", HOURS,
+            "minute", MINUTES,
+            "seconds", SECONDS
         );
 
         ordinalIndicators = Set.of("th", "st", "nd", "rd");
