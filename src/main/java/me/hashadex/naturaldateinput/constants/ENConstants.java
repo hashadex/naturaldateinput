@@ -1,14 +1,16 @@
 package me.hashadex.naturaldateinput.constants;
 
+import static java.util.Map.entry;
+
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Set;
-
-import static java.util.Map.entry;
 
 public class ENConstants {
     public static final Map<String, Month> monthMap;
     public static final Map<String, Integer> relativeWordOffsetMap;
+    public static final Map<String, ChronoUnit> chronoUnitMap;
     public static final Set<String> ordinalIndicators;
 
     static {
@@ -74,6 +76,19 @@ public class ENConstants {
             "tomorrow", 1,
             "tmrw", 1,
             "tmr", 1
+        );
+
+        chronoUnitMap = Map.of(
+            "decade", ChronoUnit.DECADES,
+            "year", ChronoUnit.YEARS,
+            "month", ChronoUnit.MONTHS,
+            "week", ChronoUnit.WEEKS,
+            "day", ChronoUnit.DAYS,
+            "half-day", ChronoUnit.HALF_DAYS,
+            "halfday", ChronoUnit.HALF_DAYS,
+            "hour", ChronoUnit.HOURS,
+            "minute", ChronoUnit.MINUTES,
+            "seconds", ChronoUnit.SECONDS
         );
 
         ordinalIndicators = Set.of("th", "st", "nd", "rd");
