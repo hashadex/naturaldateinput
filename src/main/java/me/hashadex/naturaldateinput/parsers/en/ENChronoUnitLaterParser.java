@@ -1,10 +1,10 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.constants.ENConstants;
-import me.hashadex.naturaldateinput.parsers.templates.ChronoUnitLaterDateParser;
+import me.hashadex.naturaldateinput.parsers.templates.ChronoUnitLaterParser;
 
-public class ENChronoUnitLaterDateParser extends ChronoUnitLaterDateParser {
-    public ENChronoUnitLaterDateParser() {
+public class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
+    public ENChronoUnitLaterParser() {
         super(
             """
             (?<=^|\\s)          # Left boundary check

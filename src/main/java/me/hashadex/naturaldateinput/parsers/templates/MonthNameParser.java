@@ -11,16 +11,16 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public abstract class MonthNameDateParser extends Parser {
+public abstract class MonthNameParser extends Parser {
     private final Map<String, Month> monthMap;
 
-    protected MonthNameDateParser(String regex, Map<String, Month> monthMap, int flags) {
+    protected MonthNameParser(String regex, Map<String, Month> monthMap, int flags) {
         super(regex, flags);
 
         this.monthMap = monthMap;
     }
 
-    protected MonthNameDateParser(String regex, Map<String, Month> monthMap) {
+    protected MonthNameParser(String regex, Map<String, Month> monthMap) {
         super(regex);
 
         this.monthMap = monthMap;

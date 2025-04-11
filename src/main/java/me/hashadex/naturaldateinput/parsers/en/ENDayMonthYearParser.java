@@ -1,10 +1,10 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.constants.ENConstants;
-import me.hashadex.naturaldateinput.parsers.templates.MonthNameDateParser;
+import me.hashadex.naturaldateinput.parsers.templates.MonthNameParser;
 
-public class ENDayMonthYearDateParser extends MonthNameDateParser {
-    public ENDayMonthYearDateParser() {
+public class ENDayMonthYearParser extends MonthNameParser {
+    public ENDayMonthYearParser() {
         super(
             """
             (?<=^|\\s)           # Left boundary check

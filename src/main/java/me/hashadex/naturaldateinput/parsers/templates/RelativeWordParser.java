@@ -8,16 +8,16 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public abstract class RelativeWordDateParser extends Parser {
+public abstract class RelativeWordParser extends Parser {
     private final Map<String, Integer> relativeWordOffsetMap;
 
-    protected RelativeWordDateParser(String regex, Map<String, Integer> relativeWordOffsetMap, int flags) {
+    protected RelativeWordParser(String regex, Map<String, Integer> relativeWordOffsetMap, int flags) {
         super(regex, flags);
 
         this.relativeWordOffsetMap = relativeWordOffsetMap;
     }
 
-    protected RelativeWordDateParser(String regex, Map<String, Integer> relativeWordOffsetMap) {
+    protected RelativeWordParser(String regex, Map<String, Integer> relativeWordOffsetMap) {
         super(regex);
 
         this.relativeWordOffsetMap = relativeWordOffsetMap;

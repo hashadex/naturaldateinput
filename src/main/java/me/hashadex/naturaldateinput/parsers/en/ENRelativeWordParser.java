@@ -1,10 +1,10 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.constants.ENConstants;
-import me.hashadex.naturaldateinput.parsers.templates.RelativeWordDateParser;
+import me.hashadex.naturaldateinput.parsers.templates.RelativeWordParser;
 
-public class ENRelativeWordDateParser extends RelativeWordDateParser {
-    public ENRelativeWordDateParser() {
+public class ENRelativeWordParser extends RelativeWordParser {
+    public ENRelativeWordParser() {
         super(
             """
             (?<=^|\\s)  # Left boundary check

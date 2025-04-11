@@ -1,10 +1,10 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.constants.ENConstants;
-import me.hashadex.naturaldateinput.parsers.templates.WeekdayDateParser;
+import me.hashadex.naturaldateinput.parsers.templates.WeekdayParser;
 
-public abstract class ENWeekdayDateParser extends WeekdayDateParser {
-    public ENWeekdayDateParser() {
+public abstract class ENWeekdayParser extends WeekdayParser {
+    public ENWeekdayParser() {
         super(
             """
             (?<=^|\\s)                # Left boundary check

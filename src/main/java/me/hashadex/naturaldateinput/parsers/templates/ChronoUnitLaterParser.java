@@ -8,16 +8,16 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public abstract class ChronoUnitLaterDateParser extends Parser{
+public abstract class ChronoUnitLaterParser extends Parser{
     private final Map<String, ChronoUnit> chronoUnitMap;
 
-    protected ChronoUnitLaterDateParser(String regex, Map<String, ChronoUnit> chronoUnitMap, int flags) {
+    protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap, int flags) {
         super(regex, flags);
 
         this.chronoUnitMap = chronoUnitMap;
     }
 
-    protected ChronoUnitLaterDateParser(String regex, Map<String, ChronoUnit> chronoUnitMap) {
+    protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap) {
         super(regex);
 
         this.chronoUnitMap = chronoUnitMap;

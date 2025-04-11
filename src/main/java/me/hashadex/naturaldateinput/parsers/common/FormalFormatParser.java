@@ -10,7 +10,7 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public class FormalFormatDateParser extends Parser {
+public class FormalFormatParser extends Parser {
     public enum DateFormat {
         DAY_MONTH,
         MONTH_DAY
@@ -18,7 +18,7 @@ public class FormalFormatDateParser extends Parser {
 
     private final DateFormat preferredDateFormat;
 
-    public FormalFormatDateParser(DateFormat preferredDateFormat) {
+    public FormalFormatParser(DateFormat preferredDateFormat) {
         super(
             """
             (?<=^|\\s)                     # Left boundary check

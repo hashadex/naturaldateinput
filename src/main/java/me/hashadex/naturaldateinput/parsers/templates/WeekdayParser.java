@@ -11,16 +11,16 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public abstract class WeekdayDateParser extends Parser {
+public abstract class WeekdayParser extends Parser {
     private final Map<String, DayOfWeek> weekdayMap;
 
-    protected WeekdayDateParser(String regex, Map<String, DayOfWeek> weekdayMap, int flags) {
+    protected WeekdayParser(String regex, Map<String, DayOfWeek> weekdayMap, int flags) {
         super(regex, flags);
 
         this.weekdayMap = weekdayMap;
     }
 
-    protected WeekdayDateParser(String regex, Map<String, DayOfWeek> weekdayMap) {
+    protected WeekdayParser(String regex, Map<String, DayOfWeek> weekdayMap) {
         super(regex);
 
         this.weekdayMap = weekdayMap;
