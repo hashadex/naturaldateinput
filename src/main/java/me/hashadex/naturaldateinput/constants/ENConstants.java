@@ -25,6 +25,15 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import static java.util.Map.entry;
 
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.TUESDAY;
+import static java.time.DayOfWeek.WEDNESDAY;
+import static java.time.DayOfWeek.THURSDAY;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
+
+import java.time.DayOfWeek;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -34,6 +43,7 @@ public class ENConstants {
     public static final Map<String, Month> monthMap;
     public static final Map<String, Integer> relativeWordOffsetMap;
     public static final Map<String, ChronoUnit> chronoUnitMap;
+    public static final Map<String, DayOfWeek> weekdayMap;
     public static final Set<String> ordinalIndicators;
 
     static {
@@ -112,6 +122,30 @@ public class ENConstants {
             "hour", HOURS,
             "minute", MINUTES,
             "seconds", SECONDS
+        );
+
+        weekdayMap = Map.ofEntries(
+            // Monday
+            entry("monday", MONDAY),
+            entry("mon", MONDAY),
+            // Tuesday
+            entry("tuesday", TUESDAY),
+            entry("tue", TUESDAY),
+            // Wednesday
+            entry("wednesday", WEDNESDAY),
+            entry("wed", WEDNESDAY),
+            // Thursday
+            entry("thursday", THURSDAY),
+            entry("thu", THURSDAY),
+            // Friday
+            entry("friday", FRIDAY),
+            entry("fri", FRIDAY),
+            // Saturday
+            entry("saturday", SATURDAY),
+            entry("sat", SATURDAY),
+            // Sunday
+            entry("sunday", SUNDAY)
+            // "sun" is not in the map to avoid confusion with the Sun (the star)
         );
 
         ordinalIndicators = Set.of("th", "st", "nd", "rd");
