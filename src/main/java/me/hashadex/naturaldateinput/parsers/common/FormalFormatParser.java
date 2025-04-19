@@ -34,7 +34,7 @@ public class FormalFormatParser extends Parser {
             """
         );
 
-        this.preferredDateFormat = Objects.requireNonNull(preferredDateFormat);
+        this.preferredDateFormat = Objects.requireNonNull(preferredDateFormat, "preferredDateFormat must not be null");
     }
 
     @Override

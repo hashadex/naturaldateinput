@@ -90,9 +90,9 @@ public abstract class Parser {
         private LocalTime endTime;
 
         public ParsedComponentBuilder(LocalDateTime reference, String source, int startIndex, int endIndex) {
-            this.reference = Objects.requireNonNull(reference);
+            this.reference = Objects.requireNonNull(reference, "reference must not be null");
             
-            this.source = Objects.requireNonNull(source);
+            this.source = Objects.requireNonNull(source, "source must not be null");
             this.startIndex = startIndex;
             this.endIndex = endIndex;
         }
@@ -101,8 +101,8 @@ public abstract class Parser {
             this(
                 reference,
                 source,
-                Objects.requireNonNull(matchResult).start(),
-                Objects.requireNonNull(matchResult).end()
+                Objects.requireNonNull(matchResult, "matchResult must not be null").start(),
+                matchResult.end() // No need to call requireNonNull twice
             );
         }
 
@@ -189,9 +189,16 @@ public abstract class Parser {
     protected abstract Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source);
 
     public Stream<ParsedComponent> parse(String input, LocalDateTime reference) {
+        Objects.requireNonNull(input, "input must not be null");
+        Objects.requireNonNull(reference, "reference must not be null");
+
         Matcher matcher = pattern.matcher(input);
 
         return matcher.results()
             .flatMap(match -> parseMatch(matcher, reference, input).stream());
+    }
+
+    public Stream<ParsedComponent> parse(String input) {
+        return parse(input, LocalDateTime.now());
     }
 }
