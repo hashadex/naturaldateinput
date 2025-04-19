@@ -93,12 +93,17 @@ public abstract class Parser {
             this.reference = Objects.requireNonNull(reference);
             
             this.source = Objects.requireNonNull(source);
-            this.startIndex = Objects.requireNonNull(startIndex);
-            this.endIndex = Objects.requireNonNull(endIndex);
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
         }
 
         public ParsedComponentBuilder(LocalDateTime reference, String source, MatchResult matchResult) {
-            this(reference, source, matchResult.start(), matchResult.end());
+            this(
+                reference,
+                source,
+                Objects.requireNonNull(matchResult).start(),
+                Objects.requireNonNull(matchResult).end()
+            );
         }
 
         public ParsedComponentBuilder start(LocalDate date) {
