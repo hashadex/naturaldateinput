@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.MonthDay;
 import java.time.YearMonth;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
@@ -33,7 +34,7 @@ public class FormalFormatParser extends Parser {
             """
         );
 
-        this.preferredDateFormat = preferredDateFormat;
+        this.preferredDateFormat = Objects.requireNonNull(preferredDateFormat);
     }
 
     @Override
