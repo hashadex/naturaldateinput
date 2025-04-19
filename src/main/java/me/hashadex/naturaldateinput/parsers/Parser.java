@@ -3,6 +3,7 @@ package me.hashadex.naturaldateinput.parsers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.MatchResult;
@@ -89,11 +90,11 @@ public abstract class Parser {
         private LocalTime endTime;
 
         public ParsedComponentBuilder(LocalDateTime reference, String source, int startIndex, int endIndex) {
-            this.reference = reference;
+            this.reference = Objects.requireNonNull(reference);
             
-            this.source = source;
-            this.startIndex = startIndex;
-            this.endIndex = endIndex;
+            this.source = Objects.requireNonNull(source);
+            this.startIndex = Objects.requireNonNull(startIndex);
+            this.endIndex = Objects.requireNonNull(endIndex);
         }
 
         public ParsedComponentBuilder(LocalDateTime reference, String source, MatchResult matchResult) {
