@@ -74,6 +74,62 @@ public abstract class Parser {
         public Optional<LocalTime> getEndTime() {
             return Optional.ofNullable(endTime);
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof ParsedComponent)) {
+                return false;
+            }
+
+            ParsedComponent component = (ParsedComponent) obj;
+
+            return (
+                reference.equals(component.getReference()) &&
+
+                source.equals(component.getSource()) &&
+                startIndex == component.getStartIndex() &&
+                endIndex == component.getEndIndex() &&
+
+                getStartDate().equals(component.getStartDate()) &&
+                getStartTime().equals(component.getStartTime()) &&
+
+                getEndDate().equals(component.getEndDate()) &&
+                getEndTime().equals(component.getEndTime())
+            );
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder(
+                "'%s' -> ".formatted(source.substring(startIndex, endIndex))
+            );
+
+            getStartDate().ifPresentOrElse(
+                startDate -> sb.append(startDate),
+                () -> sb.append("???")
+            );
+            getStartTime().ifPresent(
+                startTime -> {
+                    sb.append("T");
+                    sb.append(startTime);
+                }
+            );
+
+            sb.append("-");
+
+            getEndDate().ifPresentOrElse(
+                endDate -> sb.append(endDate),
+                () -> sb.append("???")
+            );
+            getEndTime().ifPresent(
+                endTime -> {
+                    sb.append("T");
+                    sb.append(endTime);
+                }
+            );
+
+            return sb.toString();
+        }
     }
 
     protected static final class ParsedComponentBuilder {
