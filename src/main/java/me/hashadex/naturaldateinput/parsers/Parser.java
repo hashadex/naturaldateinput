@@ -99,6 +99,23 @@ public abstract class Parser {
         }
 
         @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+
+            result = prime * result + ((reference == null) ? 0 : reference.hashCode());
+            result = prime * result + ((source == null) ? 0 : source.hashCode());
+            result = prime * result + startIndex;
+            result = prime * result + endIndex;
+            result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+            result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
+            result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+            result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+            
+            return result;
+        }
+
+        @Override
         public String toString() {
             StringBuilder sb = new StringBuilder(
                 "'%s' -> ".formatted(source.substring(startIndex, endIndex))
