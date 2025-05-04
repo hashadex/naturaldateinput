@@ -12,6 +12,40 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public abstract class Parser {
+    protected final Pattern pattern;
+
+    protected Parser(String regex, int flags) {
+        pattern = Pattern.compile(regex, flags);
+    }
+
+    protected Parser(String regex) {
+        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
+    }
+
+    protected static boolean is4DigitNumber(int number) {
+        return number >= 1000 && number <= 9999;
+    }
+
+    protected static boolean isWithinMonthRange(int month) {
+        return month >= 1 && month <= 12;
+    }
+
+    protected static boolean isWithinDayRange(int day) {
+        return day >= 1 && day <= 31;
+    }
+
+    protected static int normalizeYear(int year) {
+        if (year < 100) {
+            return 2000 + year;
+        } else {
+            return year;
+        }
+    }
+
+    protected static String setToRegexAlternate(Set<String> set) {
+        return String.join("|", set);
+    }
+
     public static final class ParsedComponent {
         private final LocalDateTime reference;
     
@@ -223,40 +257,6 @@ public abstract class Parser {
 
             return new ParsedComponent(this);
         }
-    }
-
-    protected final Pattern pattern;
-
-    protected Parser(String regex, int flags) {
-        pattern = Pattern.compile(regex, flags);
-    }
-
-    protected Parser(String regex) {
-        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
-    }
-
-    protected static boolean is4DigitNumber(int number) {
-        return number >= 1000 && number <= 9999;
-    }
-
-    protected static boolean isWithinMonthRange(int month) {
-        return month >= 1 && month <= 12;
-    }
-
-    protected static boolean isWithinDayRange(int day) {
-        return day >= 1 && day <= 31;
-    }
-
-    protected static int normalizeYear(int year) {
-        if (year < 100) {
-            return 2000 + year;
-        } else {
-            return year;
-        }
-    }
-
-    protected static String setToRegexAlternate(Set<String> set) {
-        return String.join("|", set);
     }
 
     protected abstract Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source);
