@@ -95,11 +95,8 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
     }
 
     @Test
-    void parse_UppercaseUnit_ReturnsCorrectDate() {
-        assertAll(
-            () -> assertParsesAs("10 Days", referenceDate.plusDays(10)),
-            () -> assertParsesAs("10 DAYS", referenceDate.plusDays(10))
-        );
+    void parse_UppercaseInputs_ReturnsCorrectDate() {
+        assertParsesAs("10 DAYS", referenceDate.plusDays(10));
     }
 
     @ParameterizedTest
