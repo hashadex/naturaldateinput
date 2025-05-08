@@ -67,7 +67,6 @@ public class ENConstants {
             // May
             entry("may", MAY),
             entry("may\\.", MAY),
-            entry("may", MAY),
             // June
             entry("june", JUNE),
             entry("jun\\.", JUNE),
