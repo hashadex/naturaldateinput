@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.constants.ENConstants;
 import me.hashadex.naturaldateinput.parsers.ParserTest;
@@ -99,5 +100,25 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
             () -> assertParsesAs("10 Days", referenceDate.plusDays(10)),
             () -> assertParsesAs("10 DAYS", referenceDate.plusDays(10))
         );
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "invalid",
+        "1 invaliddays",
+        "1 invalidweeks",
+        "1 invalidmonths",
+        "1 invalidyears",
+        "1 daysinvalid",
+        "1 weeksinvalid",
+        "1 monthsinvalid",
+        "1 yearsinvalid",
+        "-1 days",
+        "-1 weeks",
+        "-1 months",
+        "-1 years"
+    })
+    void parse_InvalidInputs_ReturnsNoResults(String input) {
+        assertDoesNotParse(input);
     }
 }
