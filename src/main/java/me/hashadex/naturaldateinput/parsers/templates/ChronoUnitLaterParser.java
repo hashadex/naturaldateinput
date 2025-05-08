@@ -8,7 +8,7 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public abstract class ChronoUnitLaterParser extends Parser{
+public abstract class ChronoUnitLaterParser extends Parser {
     private final Map<String, ChronoUnit> chronoUnitMap;
 
     protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap, int flags) {
