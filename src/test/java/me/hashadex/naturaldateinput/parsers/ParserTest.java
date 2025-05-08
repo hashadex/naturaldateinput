@@ -64,12 +64,26 @@ public abstract class ParserTest {
     }
 
     protected void assertParsesAs(String input, LocalDateTime expectedStartDateTime, LocalDateTime expectedEndDateTime) {
+        LocalDate expectedStartDate = null;
+        LocalTime expectedStartTime = null;
+        if (expectedStartDateTime != null) {
+            expectedStartDate = expectedStartDateTime.toLocalDate();
+            expectedStartTime = expectedStartDateTime.toLocalTime();
+        }
+
+        LocalDate expectedEndDate = null;
+        LocalTime expectedEndTime = null;
+        if (expectedEndDateTime != null) {
+            expectedEndDate = expectedEndDateTime.toLocalDate();
+            expectedEndTime = expectedEndDateTime.toLocalTime();
+        }
+        
         assertParsesAs(
             input,
-            expectedStartDateTime.toLocalDate(),
-            expectedStartDateTime.toLocalTime(),
-            expectedEndDateTime.toLocalDate(),
-            expectedEndDateTime.toLocalTime()
+            expectedStartDate,
+            expectedStartTime,
+            expectedEndDate,
+            expectedEndTime
         );
     }
 
