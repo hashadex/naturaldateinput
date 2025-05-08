@@ -26,7 +26,7 @@ public abstract class ChronoUnitLaterParser extends Parser {
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         int amount = Integer.parseInt(match.group("amount")); // TODO: support for cardinal numbers (one, two, etc.)
-        ChronoUnit unit = chronoUnitMap.get(match.group("unit"));
+        ChronoUnit unit = chronoUnitMap.get(match.group("unit").toLowerCase());
 
         LocalDateTime result = reference.plus(amount, unit);
 

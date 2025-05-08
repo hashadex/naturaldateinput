@@ -265,7 +265,7 @@ public abstract class Parser {
         Objects.requireNonNull(input, "input must not be null");
         Objects.requireNonNull(reference, "reference must not be null");
 
-        Matcher matcher = pattern.matcher(input.toLowerCase());
+        Matcher matcher = pattern.matcher(input);
 
         return matcher.results()
             .flatMap(match -> parseMatch(matcher, reference, input).stream());
