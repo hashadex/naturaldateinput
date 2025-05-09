@@ -34,7 +34,7 @@ public abstract class WeekdayParser extends Parser {
             nextModifier = true;
         }
 
-        DayOfWeek weekday = weekdayMap.get(match.group("weekday"));
+        DayOfWeek weekday = weekdayMap.get(match.group("weekday").toLowerCase());
 
         TemporalAdjuster adjuster;
         if (nextModifier) {
