@@ -30,7 +30,7 @@ public abstract class WeekdayParser extends Parser {
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         boolean nextModifier = false;
 
-        if (match.group("nextmodifier") != null) {
+        if (match.namedGroups().containsKey("nextmodifier") && match.group("nextmodifier") != null) {
             nextModifier = true;
         }
 
