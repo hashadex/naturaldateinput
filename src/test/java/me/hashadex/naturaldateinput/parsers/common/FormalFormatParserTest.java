@@ -107,7 +107,7 @@ public class FormalFormatParserTest extends ParserTest {
             "1/-1",
             "10.10.10.10",
         })
-        void parse_InvalidInputs_ReturnsEmptyArrayList(String input) {
+        void parse_InvalidInputs_ReturnsNoResults(String input) {
             assertDoesNotParse(input);
         }
     }
