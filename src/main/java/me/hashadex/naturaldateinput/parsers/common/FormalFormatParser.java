@@ -70,13 +70,17 @@ public class FormalFormatParser extends Parser {
         if (match.group("block3") != null) {
             int block3 = Integer.parseInt(match.group("block3"));
 
-            if (is4DigitNumber(block1) && isWithinMonthRange(block2) && isWithinDayRange(block3)) {
-                YearMonth yearMonth = YearMonth.of(block1, block2);
+            if (is4DigitNumber(block1)) {
+                if (isWithinMonthRange(block2) && isWithinDayRange(block3)) {
+                    YearMonth yearMonth = YearMonth.of(block1, block2);
 
-                if (block3 <= yearMonth.lengthOfMonth()) {
-                    return Optional.of(
-                        new ParsedComponentBuilder(reference, source, match).start(yearMonth.atDay(block3)).build()
-                    );
+                    if (block3 <= yearMonth.lengthOfMonth()) {
+                        return Optional.of(
+                            new ParsedComponentBuilder(reference, source, match).start(yearMonth.atDay(block3)).build()
+                        );
+                    } else {
+                        return Optional.empty();
+                    }
                 } else {
                     return Optional.empty();
                 }

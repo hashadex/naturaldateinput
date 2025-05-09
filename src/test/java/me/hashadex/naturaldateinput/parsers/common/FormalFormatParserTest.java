@@ -99,6 +99,8 @@ public class FormalFormatParserTest extends ParserTest {
             "invalid20.02.2025invalid",
             "9999-99-99",
             "2025-31-31",
+            "2025-13-10",
+            "2025-10-32",
             "99.99.9999",
             "31.31.2025",
             "31.31.99",
