@@ -88,6 +88,10 @@ public abstract class Parser {
         public int getEndIndex() {
             return endIndex;
         }
+
+        public int getLength() {
+            return endIndex - startIndex;
+        }
     
         public String getText() {
             return source.substring(startIndex, endIndex);
