@@ -28,7 +28,7 @@ public abstract class MonthNameParser extends Parser {
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
-        Month month = monthMap.get(match.group("month"));
+        Month month = monthMap.get(match.group("month").toLowerCase());
 
         int startIndex = match.start();
         int endIndex = match.end();
