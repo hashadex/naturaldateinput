@@ -21,7 +21,7 @@ public class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
             )?
             (?=$|\\s)           # Right boundary check
             """.formatted(
-                setToRegexAlternate(ENConstants.chronoUnitMap.keySet())
+                toRegexAlternate(ENConstants.chronoUnitMap.keySet())
             ),
             ENConstants.chronoUnitMap
         );

@@ -11,7 +11,7 @@ public class ENRelativeWordParser extends RelativeWordParser {
             (?<word>%s) # Relative word (like today, tomorrow, etc.)
             (?=$|\\s)   # Right boundary check
             """.formatted(
-                setToRegexAlternate(ENConstants.relativeWordOffsetMap.keySet())
+                toRegexAlternate(ENConstants.relativeWordOffsetMap.keySet())
             ),
             ENConstants.relativeWordOffsetMap
         );

@@ -50,50 +50,50 @@ public class ENConstants {
         monthMap = Map.ofEntries(
             // January
             entry("january", JANUARY),
-            entry("jan\\.", JANUARY),
+            entry("jan.", JANUARY),
             entry("jan", JANUARY),
             // February
             entry("february", FEBRUARY),
-            entry("feb\\.", FEBRUARY),
+            entry("feb.", FEBRUARY),
             entry("feb", FEBRUARY),
             // March
             entry("march", MARCH),
-            entry("mar\\.", MARCH),
+            entry("mar.", MARCH),
             entry("mar", MARCH),
             // April
             entry("april", APRIL),
-            entry("apr\\.", APRIL),
+            entry("apr.", APRIL),
             entry("apr", APRIL),
             // May
             entry("may", MAY),
-            entry("may\\.", MAY),
+            entry("may.", MAY),
             // June
             entry("june", JUNE),
-            entry("jun\\.", JUNE),
+            entry("jun.", JUNE),
             entry("jun", JUNE),
             // July
             entry("july", JULY),
-            entry("jul\\.", JULY),
+            entry("jul.", JULY),
             entry("jul", JULY),
             // August
             entry("august", AUGUST),
-            entry("aug\\.", AUGUST),
+            entry("aug.", AUGUST),
             entry("aug", AUGUST),
             // September
             entry("september", SEPTEMBER),
-            entry("sep\\.", SEPTEMBER),
+            entry("sep.", SEPTEMBER),
             entry("sep", SEPTEMBER),
             // October
             entry("october", OCTOBER),
-            entry("oct\\.", OCTOBER),
+            entry("oct.", OCTOBER),
             entry("oct", OCTOBER),
             // November
             entry("november", NOVEMBER),
-            entry("nov\\.", NOVEMBER),
+            entry("nov.", NOVEMBER),
             entry("nov", NOVEMBER),
             // December
             entry("december", DECEMBER),
-            entry("dec\\.", DECEMBER),
+            entry("dec.", DECEMBER),
             entry("dec", DECEMBER)
         );
 

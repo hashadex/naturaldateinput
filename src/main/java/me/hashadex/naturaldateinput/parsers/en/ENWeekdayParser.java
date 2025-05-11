@@ -16,7 +16,7 @@ public class ENWeekdayParser extends WeekdayParser {
             (?<weekday>%s)            # Weekday
             (?=$|\\s)                 # Right boundary check
             """.formatted(
-                setToRegexAlternate(ENConstants.weekdayMap.keySet())
+                toRegexAlternate(ENConstants.weekdayMap.keySet())
             ),
             ENConstants.weekdayMap
         );

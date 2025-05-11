@@ -3,12 +3,13 @@ package me.hashadex.naturaldateinput.parsers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class Parser {
@@ -42,8 +43,10 @@ public abstract class Parser {
         }
     }
 
-    protected static String setToRegexAlternate(Set<String> set) {
-        return String.join("|", set);
+    protected static String toRegexAlternate(Collection<String> collection) {
+        return collection.stream()
+            .map(Pattern::quote)
+            .collect(Collectors.joining("|"));
     }
 
     public static final class ParsedComponent {

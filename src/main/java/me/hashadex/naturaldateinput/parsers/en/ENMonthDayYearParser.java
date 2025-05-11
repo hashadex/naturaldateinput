@@ -22,8 +22,8 @@ public class ENMonthDayYearParser extends MonthNameParser{
             )?
             (?=$|\\s) # Right boundary check
             """.formatted(
-                setToRegexAlternate(ENConstants.monthMap.keySet()),
-                setToRegexAlternate(ENConstants.ordinalIndicators)
+                toRegexAlternate(ENConstants.monthMap.keySet()),
+                toRegexAlternate(ENConstants.ordinalIndicators)
             ),
             ENConstants.monthMap
         );
