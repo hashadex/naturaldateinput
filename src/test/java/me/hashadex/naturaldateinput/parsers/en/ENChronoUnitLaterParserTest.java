@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import me.hashadex.naturaldateinput.constants.ENConstants;
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 
 public class ENChronoUnitLaterParserTest extends ParserTest {
@@ -31,10 +29,6 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
 
     public static IntStream provideAmounts() {
         return IntStream.of(0, 1, 2, 10, 365);
-    }
-
-    public static Stream<String> provideUnits() {
-        return ENConstants.chronoUnitMap.keySet().stream();
     }
 
     @ParameterizedTest
