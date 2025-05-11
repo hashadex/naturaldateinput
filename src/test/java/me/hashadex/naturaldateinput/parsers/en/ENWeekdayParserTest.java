@@ -311,7 +311,7 @@ public class ENWeekdayParserTest extends ParserTest {
     }
 
     @Test
-    void parse_UppercaseInputs_ReturnsCorrectDate() {
+    void parse_UppercaseWeekday_Parses() {
         reference = ThisWeek.MONDAY.date.atStartOfDay();
 
         assertParses("MONDAY");

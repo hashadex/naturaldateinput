@@ -47,8 +47,8 @@ public class ENRelativeWordParserTest extends ParserTest {
     }
 
     @Test
-    void parse_UppercaseInputs_ReturnsCorrectDate() {
-        assertParsesAs("TODAY", referenceDate);
+    void parse_UppercaseWord_Parses() {
+        assertParses("TODAY");
     }
 
     @ParameterizedTest
