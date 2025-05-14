@@ -34,13 +34,7 @@ public abstract class ParserTest {
         );
     }
 
-    protected void assertParsesAs(
-        String input,
-        LocalDate expectedStartDate,
-        LocalTime expectedStartTime,
-        LocalDate expectedEndDate,
-        LocalTime expectedEndTime
-    ) {
+    protected void assertParsesAs(String input, LocalDate expectedDate, LocalTime expectedTime) {
         List<ParsedComponent> results = parser.parse(input, reference).toList();
 
         assertEquals(1, results.size(), "Expected exactly one result, but found: " + results.size());
@@ -48,54 +42,20 @@ public abstract class ParserTest {
         ParsedComponent result = results.get(0);
 
         assertAll(
-            () -> assertEquals(expectedStartDate, result.getStartDate().orElse(null)),
-            () -> assertEquals(expectedStartTime, result.getStartTime().orElse(null)),
-            () -> assertEquals(expectedEndDate, result.getEndDate().orElse(null)),
-            () -> assertEquals(expectedEndTime, result.getEndTime().orElse(null))
+            () -> assertEquals(expectedDate, result.getDate().orElse(null)),
+            () -> assertEquals(expectedTime, result.getTime().orElse(null))
         );
     }
 
-    protected void assertParsesAs(String input, LocalDate expectedStartDate, LocalDate expectedEndDate) {
-        assertParsesAs(input, expectedStartDate, null, expectedEndDate, null);
+    protected void assertParsesAs(String input, LocalDate expectedDate) {
+        assertParsesAs(input, expectedDate, null);
     }
 
-    protected void assertParsesAs(String input, LocalTime expectedStartTime, LocalTime expectedEndTime) {
-        assertParsesAs(input, null, expectedStartTime, null, expectedEndTime);
+    protected void assertParsesAs(String input, LocalTime expectedTime) {
+        assertParsesAs(input, null, expectedTime);
     }
 
-    protected void assertParsesAs(String input, LocalDateTime expectedStartDateTime, LocalDateTime expectedEndDateTime) {
-        LocalDate expectedStartDate = null;
-        LocalTime expectedStartTime = null;
-        if (expectedStartDateTime != null) {
-            expectedStartDate = expectedStartDateTime.toLocalDate();
-            expectedStartTime = expectedStartDateTime.toLocalTime();
-        }
-
-        LocalDate expectedEndDate = null;
-        LocalTime expectedEndTime = null;
-        if (expectedEndDateTime != null) {
-            expectedEndDate = expectedEndDateTime.toLocalDate();
-            expectedEndTime = expectedEndDateTime.toLocalTime();
-        }
-        
-        assertParsesAs(
-            input,
-            expectedStartDate,
-            expectedStartTime,
-            expectedEndDate,
-            expectedEndTime
-        );
-    }
-
-    protected void assertParsesAs(String input, LocalDate expectedStartDate) {
-        assertParsesAs(input, expectedStartDate, null);
-    }
-
-    protected void assertParsesAs(String input, LocalTime expectedStartTime) {
-        assertParsesAs(input, expectedStartTime, null);
-    }
-
-    protected void assertParsesAs(String input, LocalDateTime expectedStartDateTime) {
-        assertParsesAs(input, expectedStartDateTime, null);
+    protected void assertParsesAs(String input, LocalDateTime expectedDateTime) {
+        assertParsesAs(input, expectedDateTime.toLocalDate(), expectedDateTime.toLocalTime());
     }
 }

@@ -46,7 +46,7 @@ public abstract class WeekdayParser extends Parser {
         LocalDate result = reference.toLocalDate().with(adjuster);
 
         return Optional.of(
-            new ParsedComponentBuilder(reference, source, match).start(result).build()
+            new ParsedComponentBuilder(reference, source, match).date(result).build()
         );
     }
 }

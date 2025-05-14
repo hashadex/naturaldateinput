@@ -30,7 +30,7 @@ public abstract class RelativeWordParser extends Parser {
         );
 
         return Optional.of(
-            new ParsedComponentBuilder(reference, source, match).start(result).build()
+            new ParsedComponentBuilder(reference, source, match).date(result).build()
         );
     }
 }

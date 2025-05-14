@@ -67,7 +67,7 @@ public class ENMonthDayYearParserTest extends ParserTest{
         ParsedComponent result = parser.parse("august 32", reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(result.getStartDate().get().getDayOfMonth(), 1),
+            () -> assertEquals(result.getDate().get().getDayOfMonth(), 1),
             () -> assertEquals(result.getEndIndex(), 6)
         );
     }
@@ -93,8 +93,8 @@ public class ENMonthDayYearParserTest extends ParserTest{
         ParsedComponent result = parser.parse("march 32 2024", reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(result.getStartDate().get().getYear(), 2026),
-            () -> assertEquals(result.getStartDate().get().getDayOfMonth(), 1),
+            () -> assertEquals(result.getDate().get().getYear(), 2026),
+            () -> assertEquals(result.getDate().get().getDayOfMonth(), 1),
             () -> assertEquals(result.getEndIndex(), 5)
         );
     }

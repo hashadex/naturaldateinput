@@ -80,7 +80,7 @@ public abstract class MonthNameParser extends Parser {
 
         // Return the date
         return Optional.of(
-            new ParsedComponentBuilder(reference, source, startIndex, endIndex).start(result).build()
+            new ParsedComponentBuilder(reference, source, startIndex, endIndex).date(result).build()
         );
     }
 }

@@ -67,7 +67,7 @@ public class ENDayMonthYearParserTest extends ParserTest {
         ParsedComponent result = parser.parse("32 august", reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(result.getStartDate().get().getDayOfMonth(), 1),
+            () -> assertEquals(result.getDate().get().getDayOfMonth(), 1),
             () -> assertEquals(result.getStartIndex(), 3)
         );
     }

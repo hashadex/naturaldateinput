@@ -32,9 +32,9 @@ public abstract class ChronoUnitLaterParser extends Parser {
 
         ParsedComponentBuilder builder = new ParsedComponentBuilder(reference, source, match);
         if (unit.isDateBased()) {
-            builder.start(result.toLocalDate());
+            builder.date(result.toLocalDate());
         } else {
-            builder.start(result);
+            builder.dateTime(result);
         }
 
         return Optional.of(builder.build());

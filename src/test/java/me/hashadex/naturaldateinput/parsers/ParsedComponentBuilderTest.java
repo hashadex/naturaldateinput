@@ -25,13 +25,10 @@ public class ParsedComponentBuilderTest {
     private final int startIndex = 0;
     private final int endIndex = 7;
 
-    private final LocalDate startDate = LocalDate.of(2025, 4, 12);
-    private final LocalTime startTime = LocalTime.of(17, 35);
-    private final LocalDate endDate = LocalDate.of(2025, 4, 13);
-    private final LocalTime endTime = LocalTime.of(18, 35);
+    private final LocalDate date = LocalDate.of(2025, 4, 12);
+    private final LocalTime time = LocalTime.of(17, 35);
 
-    private final LocalDateTime startDateTime = startDate.atTime(startTime);
-    private final LocalDateTime endDateTime = endDate.atTime(endTime);
+    private final LocalDateTime dateTime = date.atTime(time);
 
     private MatchResult matchResult;
 
@@ -70,15 +67,13 @@ public class ParsedComponentBuilderTest {
     void build_AllDateTimeFieldsNotNull_ReturnsParsedComponent() {
         ParsedComponentBuilder builder = new ParsedComponentBuilder(reference, source, matchResult);
 
-        builder.start(startDateTime).end(endDateTime);
+        builder.dateTime(dateTime);
 
         ParsedComponent component = builder.build();
 
         assertAll(
-            () -> assertEquals(startDate, component.getStartDate().get()),
-            () -> assertEquals(startTime, component.getStartTime().get()),
-            () -> assertEquals(endDate, component.getEndDate().get()),
-            () -> assertEquals(endTime, component.getEndTime().get())
+            () -> assertEquals(date, component.getDate().get()),
+            () -> assertEquals(time, component.getTime().get())
         );
     }
 
@@ -86,12 +81,12 @@ public class ParsedComponentBuilderTest {
     void build_OneDateTimeFieldNotNull_ReturnsParsedComponent() {
         ParsedComponentBuilder builder = new ParsedComponentBuilder(reference, source, matchResult);
 
-        builder.start(startDate);
+        builder.date(date);
 
         ParsedComponent component = builder.build();
 
         assertAll(
-            () -> assertEquals(startDate, component.getStartDate().get())
+            () -> assertEquals(date, component.getDate().get())
         );
     }
 

@@ -76,7 +76,7 @@ public class FormalFormatParser extends Parser {
 
                     if (block3 <= yearMonth.lengthOfMonth()) {
                         return Optional.of(
-                            new ParsedComponentBuilder(reference, source, match).start(yearMonth.atDay(block3)).build()
+                            new ParsedComponentBuilder(reference, source, match).date(yearMonth.atDay(block3)).build()
                         );
                     } else {
                         return Optional.empty();
@@ -144,7 +144,7 @@ public class FormalFormatParser extends Parser {
         }
 
         return Optional.of(
-            new ParsedComponentBuilder(reference, source, match).start(result).build()
+            new ParsedComponentBuilder(reference, source, match).date(result).build()
         );
     }
 }

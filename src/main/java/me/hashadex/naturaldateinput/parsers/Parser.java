@@ -56,11 +56,8 @@ public abstract class Parser {
         private final int startIndex;
         private final int endIndex;
     
-        private final LocalDate startDate;
-        private final LocalTime startTime;
-    
-        private final LocalDate endDate;
-        private final LocalTime endTime;
+        private final LocalDate date;
+        private final LocalTime time;
 
         private ParsedComponent(ParsedComponentBuilder builder) {
             this.reference = builder.reference;
@@ -69,11 +66,8 @@ public abstract class Parser {
             this.startIndex = builder.startIndex;
             this.endIndex = builder.endIndex;
 
-            this.startDate = builder.startDate;
-            this.startTime = builder.startTime;
-
-            this.endDate = builder.endDate;
-            this.endTime = builder.endTime;
+            this.date = builder.date;
+            this.time = builder.time;
         }
     
         public LocalDateTime getReference() {
@@ -100,20 +94,12 @@ public abstract class Parser {
             return source.substring(startIndex, endIndex);
         }
     
-        public Optional<LocalDate> getStartDate() {
-            return Optional.ofNullable(startDate);
+        public Optional<LocalDate> getDate() {
+            return Optional.ofNullable(date);
         }
     
-        public Optional<LocalTime> getStartTime() {
-            return Optional.ofNullable(startTime);
-        }
-    
-        public Optional<LocalDate> getEndDate() {
-            return Optional.ofNullable(endDate);
-        }
-    
-        public Optional<LocalTime> getEndTime() {
-            return Optional.ofNullable(endTime);
+        public Optional<LocalTime> getTime() {
+            return Optional.ofNullable(time);
         }
 
         @Override
@@ -131,11 +117,8 @@ public abstract class Parser {
                 startIndex == component.getStartIndex() &&
                 endIndex == component.getEndIndex() &&
 
-                getStartDate().equals(component.getStartDate()) &&
-                getStartTime().equals(component.getStartTime()) &&
-
-                getEndDate().equals(component.getEndDate()) &&
-                getEndTime().equals(component.getEndTime())
+                getDate().equals(component.getDate()) &&
+                getTime().equals(component.getTime())
             );
         }
 
@@ -148,43 +131,38 @@ public abstract class Parser {
             result = prime * result + ((source == null) ? 0 : source.hashCode());
             result = prime * result + startIndex;
             result = prime * result + endIndex;
-            result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-            result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
-            result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-            result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-            
+            result = prime * result + ((date == null) ? 0 : date.hashCode());
+            result = prime * result + ((time == null) ? 0 : time.hashCode());
+
             return result;
         }
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder(
-                "'%s' -> ".formatted(source.substring(startIndex, endIndex))
-            );
+            StringBuilder sb = new StringBuilder(source);
 
-            getStartDate().ifPresentOrElse(
-                startDate -> sb.append(startDate),
-                () -> sb.append("???")
-            );
-            getStartTime().ifPresent(
-                startTime -> {
-                    sb.append("T");
-                    sb.append(startTime);
-                }
-            );
+            // Wrap matched area in brackets
+            sb.insert(startIndex, '[');
+            sb.insert(endIndex, ']');
 
-            sb.append("-");
+            // Wrap source in quotation marks
+            sb.insert(0, '"');
+            sb.append('"');
 
-            getEndDate().ifPresentOrElse(
-                endDate -> sb.append(endDate),
-                () -> sb.append("???")
-            );
-            getEndTime().ifPresent(
-                endTime -> {
-                    sb.append("T");
-                    sb.append(endTime);
-                }
-            );
+            sb.append(" -> ");
+
+            // Append date and time
+            if (date != null) {
+                sb.append(date);
+            }
+
+            if (date != null && time != null) {
+                sb.append(' ');
+            }
+
+            if (time != null) {
+                sb.append(time);
+            }
 
             return sb.toString();
         }
@@ -197,11 +175,8 @@ public abstract class Parser {
         private int startIndex;
         private int endIndex;
     
-        private LocalDate startDate;
-        private LocalTime startTime;
-    
-        private LocalDate endDate;
-        private LocalTime endTime;
+        private LocalDate date;
+        private LocalTime time;
 
         public ParsedComponentBuilder(LocalDateTime reference, String source, int startIndex, int endIndex) {
             this.reference = Objects.requireNonNull(reference, "reference must not be null");
@@ -220,45 +195,27 @@ public abstract class Parser {
             );
         }
 
-        public ParsedComponentBuilder start(LocalDate date) {
-            this.startDate = date;
+        public ParsedComponentBuilder date(LocalDate date) {
+            this.date = date;
+
             return this;
         }
 
-        public ParsedComponentBuilder start(LocalTime time) {
-            this.startTime = time;
+        public ParsedComponentBuilder time(LocalTime time) {
+            this.time = time;
+            
             return this;
         }
 
-        public ParsedComponentBuilder start(LocalDateTime dateTime) {
-            this.start(dateTime.toLocalDate());
-            this.start(dateTime.toLocalTime());
-            return this;
-        }
+        public ParsedComponentBuilder dateTime(LocalDateTime dateTime) {
+            date(dateTime.toLocalDate());
+            time(dateTime.toLocalTime());
 
-        public ParsedComponentBuilder end(LocalDate date) {
-            this.endDate = date;
-            return this;
-        }
-
-        public ParsedComponentBuilder end(LocalTime time) {
-            this.endTime = time;
-            return this;
-        }
-
-        public ParsedComponentBuilder end(LocalDateTime dateTime) {
-            this.end(dateTime.toLocalDate());
-            this.end(dateTime.toLocalTime());
             return this;
         }
 
         public ParsedComponent build() {
-            if (
-                this.startDate == null &&
-                this.startTime == null &&
-                this.endDate == null &&
-                this.endTime == null
-            ) {
+            if (this.date == null && this.time == null) {
                 throw new IllegalArgumentException("At least one date/time field must be non-null");
             }
 
