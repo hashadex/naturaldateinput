@@ -341,7 +341,7 @@ public class ENWeekdayParserTest extends ParserTest {
         "sun",
         "french fries"
     })
-    void parse_InvalidInputs_ReturnsEmptyArrayList(String input) {
+    void parse_InvalidInputs_ReturnsNoResults(String input) {
         reference = ThisWeek.MONDAY.date.atStartOfDay();
 
         assertDoesNotParse(input);
