@@ -143,7 +143,7 @@ public abstract class Parser {
 
             // Wrap matched area in brackets
             sb.insert(startIndex, '[');
-            sb.insert(endIndex, ']');
+            sb.insert(endIndex + 1, ']');
 
             // Wrap source in quotation marks
             sb.insert(0, '"');
