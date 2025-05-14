@@ -2,11 +2,9 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -325,11 +323,9 @@ public class ENWeekdayParserTest extends ParserTest {
 
         String testString = "on the next sunday";
 
-        Optional<ParsedComponent> result = parser.parse(testString, reference).findAny();
-        
-        assertTrue(result.isPresent(), "Parser returned empty stream");
+        ParsedComponent result = parser.parse(testString, reference).findAny().get();
 
-        assertEquals(testString.length(), result.get().getLength());
+        assertEquals(testString.length(), result.getLength());
     }
 
     @ParameterizedTest
