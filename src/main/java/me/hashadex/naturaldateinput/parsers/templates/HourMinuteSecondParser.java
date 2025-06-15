@@ -7,12 +7,12 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public class HourMinuteParser extends Parser {
-    public HourMinuteParser(String regex, int flags) {
+public class HourMinuteSecondParser extends Parser {
+    public HourMinuteSecondParser(String regex, int flags) {
         super(regex, flags);
     }
 
-    public HourMinuteParser(String regex) {
+    public HourMinuteSecondParser(String regex) {
         super(regex);
     }
 
