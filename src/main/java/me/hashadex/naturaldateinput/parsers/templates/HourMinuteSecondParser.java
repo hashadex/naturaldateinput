@@ -42,6 +42,8 @@ public class HourMinuteSecondParser extends Parser {
 
         int hour = 0;
         if (match.namedGroups().containsKey("hour") && match.group("hour") != null) {
+            hour = Integer.parseInt(match.group("hour"));
+            
             if (am || pm) {
                 if (!isWithin12HourRange(hour)) {
                     return Optional.empty();
