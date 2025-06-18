@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import me.hashadex.naturaldateinput.constants.ENConstants;
 import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 

@@ -1,6 +1,5 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
-import me.hashadex.naturaldateinput.constants.ENConstants;
 import me.hashadex.naturaldateinput.parsers.templates.MonthNameParser;
 
 public class ENMonthDayYearParser extends MonthNameParser{

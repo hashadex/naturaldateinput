@@ -1,4 +1,4 @@
-package me.hashadex.naturaldateinput.constants;
+package me.hashadex.naturaldateinput.parsers.en;
 
 import static java.time.Month.JANUARY;
 import static java.time.Month.FEBRUARY;
@@ -39,7 +39,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Set;
 
-public class ENConstants {
+class ENConstants {
     public static final Map<String, Month> monthMap;
     public static final Map<String, Integer> relativeWordOffsetMap;
     public static final Map<String, ChronoUnit> chronoUnitMap;
