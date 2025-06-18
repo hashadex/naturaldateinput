@@ -23,26 +23,6 @@ public abstract class Parser {
         this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
     }
 
-    protected static boolean is4DigitNumber(int number) {
-        return number >= 1000 && number <= 9999;
-    }
-
-    protected static boolean isWithinMonthRange(int month) {
-        return month >= 1 && month <= 12;
-    }
-
-    protected static boolean isWithinDayRange(int day) {
-        return day >= 1 && day <= 31;
-    }
-
-    protected static int normalizeYear(int year) {
-        if (year < 100) {
-            return 2000 + year;
-        } else {
-            return year;
-        }
-    }
-
     protected static String toRegexAlternate(Collection<String> collection) {
         return collection.stream()
             .map(Pattern::quote)
