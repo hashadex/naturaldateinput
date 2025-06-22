@@ -34,6 +34,7 @@ import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -101,6 +102,20 @@ class ENConstants {
         "tomorrow", 1,
         "tmrw", 1,
         "tmr", 1
+    );
+
+    public static final Map<String, LocalTime> timeOfDayWordMap = Map.of(
+        // 00:00
+        "midnight", LocalTime.of(0, 0),
+        // 06:00
+        "morning", LocalTime.of(6, 0),
+        // 12:00
+        "noon", LocalTime.of(12, 0),
+        "midday", LocalTime.of(12, 0),
+        // 15:00
+        "afternoon", LocalTime.of(15, 0),
+        // 20:00
+        "evening", LocalTime.of(20, 0)
     );
 
     public static final Map<String, ChronoUnit> chronoUnitMap = Map.of(
