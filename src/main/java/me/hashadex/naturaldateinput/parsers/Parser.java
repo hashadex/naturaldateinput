@@ -137,7 +137,7 @@ public abstract class Parser {
             }
 
             if (date != null && time != null) {
-                sb.append(' ');
+                sb.append('T');
             }
 
             if (time != null) {
