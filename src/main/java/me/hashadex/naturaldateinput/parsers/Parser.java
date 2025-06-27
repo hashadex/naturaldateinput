@@ -119,15 +119,9 @@ public abstract class Parser {
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder(source);
-
-            // Wrap matched area in brackets
-            sb.insert(startIndex, '[');
-            sb.insert(endIndex + 1, ']');
-
-            // Wrap source in quotation marks
-            sb.insert(0, '"');
-            sb.append('"');
+            StringBuilder sb = new StringBuilder();
+            
+            sb.append('"' + getText() + '"');
 
             sb.append(" -> ");
 
@@ -143,6 +137,10 @@ public abstract class Parser {
             if (time != null) {
                 sb.append(time);
             }
+
+            // Wrap string in "ParsedComponent[...]"
+            sb.insert(0, this.getClass().getSimpleName() + '[');
+            sb.append(']');
 
             return sb.toString();
         }
