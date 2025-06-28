@@ -11,7 +11,7 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
-public class FormalFormatParser extends Parser {
+public final class FormalFormatParser extends Parser {
     public enum DateFormat {
         DAY_MONTH,
         MONTH_DAY

@@ -2,7 +2,7 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.ChronoUnitLaterParser;
 
-public class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
+public final class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
     public ENChronoUnitLaterParser() {
         super(
             """

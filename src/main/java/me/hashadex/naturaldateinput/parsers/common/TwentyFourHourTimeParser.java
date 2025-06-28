@@ -2,7 +2,7 @@ package me.hashadex.naturaldateinput.parsers.common;
 
 import me.hashadex.naturaldateinput.parsers.templates.HourMinuteSecondParser;
 
-public class TwentyFourHourTimeParser extends HourMinuteSecondParser {
+public final class TwentyFourHourTimeParser extends HourMinuteSecondParser {
     public TwentyFourHourTimeParser() {
         super(
             """

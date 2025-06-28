@@ -2,7 +2,7 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.WeekdayParser;
 
-public class ENWeekdayParser extends WeekdayParser {
+public final class ENWeekdayParser extends WeekdayParser {
     public ENWeekdayParser() {
         super(
             """

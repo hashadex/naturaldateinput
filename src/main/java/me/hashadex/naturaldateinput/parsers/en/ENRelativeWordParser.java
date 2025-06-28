@@ -2,7 +2,7 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.RelativeWordParser;
 
-public class ENRelativeWordParser extends RelativeWordParser {
+public final class ENRelativeWordParser extends RelativeWordParser {
     public ENRelativeWordParser() {
         super(
             """

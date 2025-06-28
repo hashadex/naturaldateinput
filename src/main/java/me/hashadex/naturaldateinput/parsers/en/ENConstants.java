@@ -40,7 +40,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Set;
 
-class ENConstants {
+final class ENConstants {
     public static final Map<String, Month> monthMap = Map.ofEntries(
         // January
         entry("january", JANUARY),

@@ -2,7 +2,7 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.MonthNameParser;
 
-public class ENMonthDayYearParser extends MonthNameParser{
+public final class ENMonthDayYearParser extends MonthNameParser{
     public ENMonthDayYearParser() {
         super(
             """
