@@ -24,7 +24,7 @@ public final class ENTwelveHourTimeParser extends HourMinuteSecondParser {
                     (?<pm>p\\.?m\\.?) # Match PM or P.M.
                 )
             )
-            (?=$|\\s)                 # Left boundary check
+            (?=$|\\s)                 # Right boundary check
             """
         );
     }
