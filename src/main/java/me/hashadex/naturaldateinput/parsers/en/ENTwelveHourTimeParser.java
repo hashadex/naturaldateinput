@@ -8,11 +8,13 @@ public class ENTwelveHourTimeParser extends HourMinuteSecondParser {
             """
             (?<=^|\\s)                # Left boundary check
             (?<hour>\\d{1,2})         # Hour
-            :                         # Delimeter
-            (?<minute>\\d{2})         # Minute
-            (?:                       # Optional seconds component
+            (?:                       # Optional minute component
                 :                     # Delimeter
-                (?<second>\\d{2})     # Second
+                (?<minute>\\d{2})     # Minute
+                (?:                   # Optionally match second if minute is present
+                    :                 # Delimeter
+                    (?<second>\\d{2}) # Second
+                )?
             )?
             (?:                       # AM/PM component
                 \\s                   # Whitespace

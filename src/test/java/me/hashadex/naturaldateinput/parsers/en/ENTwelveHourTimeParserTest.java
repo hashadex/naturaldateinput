@@ -32,6 +32,11 @@ public class ENTwelveHourTimeParserTest extends ParserTest {
     }
 
     @Test
+    void parse_Hour_ReturnsCorrectTimeWith0Minutes0Seconds() {
+        assertParsesAs("6 am", LocalTime.of(6, 0));
+    }
+
+    @Test
     void parse_Before12AM_ReturnsSameAs24H() {
         assertParsesAs("6:30 am", LocalTime.of(6, 30));
     }
