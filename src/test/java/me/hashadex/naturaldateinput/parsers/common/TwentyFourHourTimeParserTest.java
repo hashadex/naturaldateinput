@@ -5,8 +5,6 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 
@@ -38,18 +36,28 @@ public class TwentyFourHourTimeParserTest extends ParserTest {
         assertParsesAs("9:30:00", LocalTime.of(9, 30, 0));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "invalid",
-        "invalid9:30",
-        "9:30invalid",
-        "invalid9:30invalid",
-        "99:10:10",
-        "10:99:10",
-        "10:10:99",
-        "59:59:59"
-    })
-    void parse_InvalidInputs_ReturnsNoResults(String input) {
-        assertDoesNotParse(input);
+    @Test
+    void parse_OutOfRangeHour_ReturnsNoResults() {
+        assertDoesNotParse("25:10:10");
+    }
+
+    @Test
+    void parse_OutOfRangeMinute_ReturnsNoResults() {
+        assertDoesNotParse("10:61:10");
+    }
+
+    @Test
+    void parse_OutOfRangeSecond_ReturnsNoResults() {
+        assertDoesNotParse("10:10:61");
+    }
+
+    @Test
+    void parse_InvalidCharactersBeforeTime_DoesNotParse() {
+        assertDoesNotParse("invalid9:30");
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterTime_DoesNotParse() {
+        assertDoesNotParse("9:30invalid");
     }
 }

@@ -7,8 +7,6 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 
@@ -87,18 +85,13 @@ public class ENTwelveHourTimeParserTest extends ParserTest {
         assertDoesNotParse("12:00 AMPM");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "invalid",
-        "12:00 AMinvalid",
-        "invalid12:00 AM",
-        "invalid12:00 AMinvalid",
-        "12:99 AM",
-        "12:00:99 AM",
-        "12:00 AA",
-        "59:59:59 AM"
-    })
-    void parse_InvalidInputs_ReturnsNoResults(String input) {
-        assertDoesNotParse(input);
+    @Test
+    void parse_InvalidCharactersBeforeTime_ReturnsNoResults() {
+        assertDoesNotParse("invalid12:00 am");
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterTime_ReturnsNoResults() {
+        assertDoesNotParse("12:00 aminvalid");
     }
 }

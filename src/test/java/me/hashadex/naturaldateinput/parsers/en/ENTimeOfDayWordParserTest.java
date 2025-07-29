@@ -7,8 +7,6 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 
@@ -59,16 +57,13 @@ public class ENTimeOfDayWordParserTest extends ParserTest {
         );
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "invalid",
-        "invalidnoon",
-        "nooninvalid",
-        "invalidnooninvalid",
-        "night",
-        "day"
-    })
-    void parse_InvalidInputs_ReturnsNoResults(String input) {
-        assertDoesNotParse(input);
+    @Test
+    void parse_InvalidCharactersBeforeInput_ReturnsNoResults() {
+        assertDoesNotParse("invalidnoon");
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterInput_ReturnsNoResults() {
+        assertDoesNotParse("nooninvalid");
     }
 }

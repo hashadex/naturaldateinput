@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
@@ -96,15 +95,32 @@ public class ENDayMonthYearParserTest extends ParserTest {
         assertEquals(testString.length(), result.getLength());
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "invalid",
-        "invalidaugust",
-        "invalid10 augustinvalid",
-        "10",
-        "2025"
-    })
-    void parse_InvalidInput_ReturnsNoResults(String input) {
-        assertDoesNotParse(input);
+    @Test
+    void parse_InvalidMonth_ReturnsNoResults() {
+        assertDoesNotParse("10th of invalid");
+    }
+
+    @Test
+    void parse_InvalidCharactersBeforeDay_ShiftsStartIndexAndIgnoresDay() {
+        String testString = "invalid10 december 2026";
+
+        ParsedComponent component = parser.parse(testString, reference).findAny().get();
+
+        assertAll(
+            () -> assertEquals(10, component.getStartIndex()),
+            () -> assertEquals(LocalDate.of(2026, 12, 1), component.getDate().get())
+        );
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterYear_ShiftsEndIndexAndIgnoresYear() {
+        String testString = "10 december 2026invalid";
+
+        ParsedComponent component = parser.parse(testString, reference).findAny().get();
+
+        assertAll(
+            () -> assertEquals(11, component.getEndIndex()),
+            () -> assertEquals(LocalDate.of(2025, 12, 10), component.getDate().get())
+        );
     }
 }

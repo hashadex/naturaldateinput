@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
 import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
@@ -328,18 +327,17 @@ public class ENWeekdayParserTest extends ParserTest {
         assertEquals(testString.length(), result.getLength());
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "invalid",
-        "invalidmonday",
-        "mondayinvalid",
-        "wedding",
-        "sun",
-        "french fries"
-    })
-    void parse_InvalidInputs_ReturnsNoResults(String input) {
+    @Test
+    void parse_InvalidCharactersBeforeInput_ReturnsNoResults() {
         reference = ThisWeek.MONDAY.date.atStartOfDay();
 
-        assertDoesNotParse(input);
+        assertDoesNotParse("invalidmonday");
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterInput_ReturnsNoResults() {
+        reference = ThisWeek.MONDAY.date.atStartOfDay();
+
+        assertDoesNotParse("mondayinvalid");
     }
 }

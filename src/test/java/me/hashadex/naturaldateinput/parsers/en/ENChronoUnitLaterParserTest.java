@@ -1,6 +1,8 @@
 package me.hashadex.naturaldateinput.parsers.en;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
+import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
 
 public class ENChronoUnitLaterParserTest extends ParserTest {
     private LocalDate referenceDate;
@@ -89,27 +91,73 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
     }
 
     @Test
+    void parse_OptionalInBeforeInput_IncludedInMatch() {
+        String testString = "in 1 day";
+
+        ParsedComponent component = parser.parse(testString, reference).findAny().get();
+
+        assertEquals(testString.length(), component.getLength());
+    }
+
+    @Test
+    void parse_OptionalAfterBeforeInput_IncludedInMatch() {
+        String testString = "after 1 day";
+
+        ParsedComponent component = parser.parse(testString, reference).findAny().get();
+
+        assertEquals(testString.length(), component.getLength());
+    }
+
+    @Test
+    void parse_OptionalLaterAfterInput_IncludedInMatch() {
+        String testString = "1 day later";
+
+        ParsedComponent component = parser.parse(testString, reference).findAny().get();
+
+        assertEquals(testString.length(), component.getLength());
+    }
+
+    @Test
+    void parse_OptionalAfterAfterInput_IncludedInMatch() {
+        String testString = "1 day after";
+
+        ParsedComponent component = parser.parse(testString, reference).findAny().get();
+
+        assertEquals(testString.length(), component.getLength());
+    }
+
+    @Test
     void parse_UppercaseUnit_Parses() {
         assertParses("10 DAYS");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "invalid",
-        "1 invaliddays",
-        "1 invalidweeks",
-        "1 invalidmonths",
-        "1 invalidyears",
-        "1 daysinvalid",
-        "1 weeksinvalid",
-        "1 monthsinvalid",
-        "1 yearsinvalid",
-        "-1 days",
-        "-1 weeks",
-        "-1 months",
-        "-1 years"
-    })
-    void parse_InvalidInputs_ReturnsNoResults(String input) {
-        assertDoesNotParse(input);
+    @Test
+    void parse_OutOfIntRangeAmount_DoesNotThrowAnything() {
+        assertDoesNotThrow(() -> parser.parse("2147483648 days", reference).toList());
+    }
+
+    @Test
+    void parse_OutOfRangeDate_DoesNotThrowAnything() {
+        assertDoesNotThrow(() -> parser.parse("2147483647 decades", reference).toList());
+    }
+
+    @Test
+    void parse_NegativeAmount_ReturnsNoResults() {
+        assertDoesNotParse("-1 days");
+    }
+
+    @Test
+    void parse_InvalidChronoUnit_ReturnsNoResults() {
+        assertDoesNotParse("1 invalid");
+    }
+
+    @Test
+    void parse_InvalidCharactersBeforeInput_ReturnsNoResults() {
+        assertDoesNotParse("invalid1 day");
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterInput_ReturnsNoResults() {
+        assertDoesNotParse("1 dayinvalid");
     }
 }

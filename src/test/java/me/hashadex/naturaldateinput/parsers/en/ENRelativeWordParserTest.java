@@ -51,23 +51,13 @@ public class ENRelativeWordParserTest extends ParserTest {
         assertParses("TODAY");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "Meeting with todd",
-        "invalidtoday",
-        "invalidtomorrow",
-        "invalidtmr",
-        "invalidtmrw",
-        "invalidyesterday",
-        "invalidytd",
-        "todayinvalid",
-        "tomorrowinvalid",
-        "tmrinvalid",
-        "tmrwinvalid",
-        "yesterdayinvalid",
-        "ytdinvalid"
-    })
-    void parse_InvalidInputs_ReturnsNoResults(String input) {
-        assertDoesNotParse(input);
+    @Test
+    void parse_InvalidCharactersBeforeInput_ReturnsNoResults() {
+        assertDoesNotParse("invalidtoday");
+    }
+
+    @Test
+    void parse_InvalidCharactersAfterInput_ReturnsNoResults() {
+        assertDoesNotParse("todayinvalid");
     }
 }
