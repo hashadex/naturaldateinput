@@ -1,5 +1,6 @@
 package me.hashadex.naturaldateinput.parsers.templates;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -34,7 +35,12 @@ public abstract class ChronoUnitLaterParser extends Parser {
 
         ChronoUnit unit = chronoUnitMap.get(match.group("unit").toLowerCase());
 
-        LocalDateTime result = reference.plus(amount, unit);
+        LocalDateTime result;
+        try {
+            result = reference.plus(amount, unit);
+        } catch (DateTimeException e) {
+            return Optional.empty();
+        }
 
         ParsedComponentBuilder builder = new ParsedComponentBuilder(reference, source, match);
         if (unit.isDateBased()) {
