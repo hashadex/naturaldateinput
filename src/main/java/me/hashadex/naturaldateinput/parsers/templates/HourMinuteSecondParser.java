@@ -39,6 +39,7 @@ public class HourMinuteSecondParser extends Parser {
         if (match.namedGroups().containsKey("pm") && match.group("pm") != null) {
             pm = true;
         }
+        // If the regex is working correctly, either am or pm can be true.
 
         int hour = 0;
         if (match.namedGroups().containsKey("hour") && match.group("hour") != null) {
