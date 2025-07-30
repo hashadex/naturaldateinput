@@ -50,35 +50,35 @@ public abstract class Parser {
             this.time = builder.time;
         }
     
-        public LocalDateTime getReference() {
+        public LocalDateTime reference() {
             return reference;
         }
     
-        public String getSource() {
+        public String source() {
             return source;
         }
     
-        public int getStartIndex() {
+        public int startIndex() {
             return startIndex;
         }
     
-        public int getEndIndex() {
+        public int endIndex() {
             return endIndex;
         }
 
-        public int getLength() {
+        public int length() {
             return endIndex - startIndex;
         }
     
-        public String getText() {
+        public String text() {
             return source.substring(startIndex, endIndex);
         }
     
-        public Optional<LocalDate> getDate() {
+        public Optional<LocalDate> date() {
             return Optional.ofNullable(date);
         }
     
-        public Optional<LocalTime> getTime() {
+        public Optional<LocalTime> time() {
             return Optional.ofNullable(time);
         }
 
@@ -91,14 +91,14 @@ public abstract class Parser {
             ParsedComponent component = (ParsedComponent) obj;
 
             return (
-                reference.equals(component.getReference()) &&
+                reference.equals(component.reference()) &&
 
-                source.equals(component.getSource()) &&
-                startIndex == component.getStartIndex() &&
-                endIndex == component.getEndIndex() &&
+                source.equals(component.source()) &&
+                startIndex == component.startIndex() &&
+                endIndex == component.endIndex() &&
 
-                getDate().equals(component.getDate()) &&
-                getTime().equals(component.getTime())
+                date().equals(component.date()) &&
+                time().equals(component.time())
             );
         }
 
@@ -121,7 +121,7 @@ public abstract class Parser {
         public String toString() {
             StringBuilder sb = new StringBuilder();
             
-            sb.append('"' + getText() + '"');
+            sb.append('"' + text() + '"');
 
             sb.append(" -> ");
 

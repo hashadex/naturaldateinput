@@ -96,7 +96,7 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
 
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
-        assertEquals(testString.length(), component.getLength());
+        assertEquals(testString.length(), component.length());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
 
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
-        assertEquals(testString.length(), component.getLength());
+        assertEquals(testString.length(), component.length());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
 
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
-        assertEquals(testString.length(), component.getLength());
+        assertEquals(testString.length(), component.length());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
 
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
-        assertEquals(testString.length(), component.getLength());
+        assertEquals(testString.length(), component.length());
     }
 
     @Test

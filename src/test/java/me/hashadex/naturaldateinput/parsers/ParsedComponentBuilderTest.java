@@ -72,8 +72,8 @@ public class ParsedComponentBuilderTest {
         ParsedComponent component = builder.build();
 
         assertAll(
-            () -> assertEquals(date, component.getDate().get()),
-            () -> assertEquals(time, component.getTime().get())
+            () -> assertEquals(date, component.date().get()),
+            () -> assertEquals(time, component.time().get())
         );
     }
 
@@ -86,7 +86,7 @@ public class ParsedComponentBuilderTest {
         ParsedComponent component = builder.build();
 
         assertAll(
-            () -> assertEquals(date, component.getDate().get())
+            () -> assertEquals(date, component.date().get())
         );
     }
 

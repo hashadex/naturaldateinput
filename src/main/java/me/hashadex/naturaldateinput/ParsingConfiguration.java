@@ -116,7 +116,7 @@ public abstract class ParsingConfiguration {
             // Collect the texts of all components into a single string, e.g.
             // ""tomorrow", "at 5 am"""
             String componentTexts = components.stream()
-                .map(c -> '"' + c.getText() + '"')
+                .map(c -> '"' + c.text() + '"')
                 .collect(Collectors.joining(", "));
             
             StringBuilder sb = new StringBuilder();
@@ -158,16 +158,16 @@ public abstract class ParsingConfiguration {
             // so that components that appear later in the string
             // would be first in the stream
             (c1, c2) -> {
-                if (c1.getEndIndex() > c2.getEndIndex()) {
+                if (c1.endIndex() > c2.endIndex()) {
                     return -1;
-                } else if (c1.getEndIndex() < c2.getEndIndex()) {
+                } else if (c1.endIndex() < c2.endIndex()) {
                     return 1;
                 } else { // end indexes are equal
                     // If the end indexes of two components are equal,
                     // put the component with the biggest length first.
-                    if (c1.getLength() > c2.getLength()) {
+                    if (c1.length() > c2.length()) {
                         return -1;
-                    } else if (c1.getLength() < c2.getLength()) {
+                    } else if (c1.length() < c2.length()) {
                         return 1;
                     } else {
                         return 0;
@@ -184,21 +184,21 @@ public abstract class ParsingConfiguration {
         LocalTime time = null;
 
         for (ParsedComponent component : components) {
-            if (component.getDate().isPresent() && component.getTime().isPresent()) {
+            if (component.date().isPresent() && component.time().isPresent()) {
                 // Use a component that has both time and date only if both
                 // time and date "slots" are null
                 if (time == null && date == null) {
-                    date = component.getDate().get();
-                    time = component.getTime().get();
+                    date = component.date().get();
+                    time = component.time().get();
 
                     usedComponents.add(component);
                 }
-            } else if (component.getDate().isPresent() && date == null) {
-                date = component.getDate().get();
+            } else if (component.date().isPresent() && date == null) {
+                date = component.date().get();
 
                 usedComponents.add(component);
-            } else if (component.getTime().isPresent() && time == null) {
-                time = component.getTime().get();
+            } else if (component.time().isPresent() && time == null) {
+                time = component.time().get();
 
                 usedComponents.add(component);
             }

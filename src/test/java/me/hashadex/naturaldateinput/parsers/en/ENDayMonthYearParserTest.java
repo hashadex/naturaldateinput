@@ -65,8 +65,8 @@ public class ENDayMonthYearParserTest extends ParserTest {
         ParsedComponent result = parser.parse("32 august", reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(result.getDate().get().getDayOfMonth(), 1),
-            () -> assertEquals(result.getStartIndex(), 3)
+            () -> assertEquals(result.date().get().getDayOfMonth(), 1),
+            () -> assertEquals(result.startIndex(), 3)
         );
     }
 
@@ -92,7 +92,7 @@ public class ENDayMonthYearParserTest extends ParserTest {
 
         ParsedComponent result = parser.parse("30th of march of 2025", reference).findAny().get();
 
-        assertEquals(testString.length(), result.getLength());
+        assertEquals(testString.length(), result.length());
     }
 
     @Test
@@ -107,8 +107,8 @@ public class ENDayMonthYearParserTest extends ParserTest {
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(10, component.getStartIndex()),
-            () -> assertEquals(LocalDate.of(2026, 12, 1), component.getDate().get())
+            () -> assertEquals(10, component.startIndex()),
+            () -> assertEquals(LocalDate.of(2026, 12, 1), component.date().get())
         );
     }
 
@@ -119,8 +119,8 @@ public class ENDayMonthYearParserTest extends ParserTest {
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(11, component.getEndIndex()),
-            () -> assertEquals(LocalDate.of(2025, 12, 10), component.getDate().get())
+            () -> assertEquals(11, component.endIndex()),
+            () -> assertEquals(LocalDate.of(2025, 12, 10), component.date().get())
         );
     }
 }

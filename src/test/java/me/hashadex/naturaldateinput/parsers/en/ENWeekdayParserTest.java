@@ -324,7 +324,7 @@ public class ENWeekdayParserTest extends ParserTest {
 
         ParsedComponent result = parser.parse(testString, reference).findAny().get();
 
-        assertEquals(testString.length(), result.getLength());
+        assertEquals(testString.length(), result.length());
     }
 
     @Test

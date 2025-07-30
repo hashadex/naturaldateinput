@@ -42,8 +42,8 @@ public abstract class ParserTest {
         ParsedComponent result = results.get(0);
 
         assertAll(
-            () -> assertEquals(expectedDate, result.getDate().orElse(null)),
-            () -> assertEquals(expectedTime, result.getTime().orElse(null))
+            () -> assertEquals(expectedDate, result.date().orElse(null)),
+            () -> assertEquals(expectedTime, result.time().orElse(null))
         );
     }
 
