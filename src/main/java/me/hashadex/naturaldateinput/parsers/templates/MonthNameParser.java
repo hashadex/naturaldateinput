@@ -28,10 +28,10 @@ public abstract class MonthNameParser extends Parser {
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
-        Month month = monthMap.get(match.group("month").toLowerCase());
-
         int startIndex = match.start();
         int endIndex = match.end();
+
+        Month month = monthMap.get(match.group("month").toLowerCase());
 
         int year = reference.getYear();
         boolean yearSetExplicitly = false;
@@ -45,12 +45,16 @@ public abstract class MonthNameParser extends Parser {
             day = Integer.parseInt(match.group("day"));
 
             if (!YearMonth.of(year, month).isValidDay(day)) {
+                // If the day is invalid, (e.g. April 32nd) ignore the day
+                // by shifting indexes so the invalid day would not get included
+                // in the ParsedComponent
+                // e.g. [32 Apr 2025] => 32 [Apr 2025]
                 day = 1;
 
                 Map<String, Integer> namedGroups = pattern.namedGroups();
 
-                // Shift indexes to not include invalid day
-                // e.g. [32 Apr 2025] => 32 [Apr 2025]
+                // Figure out the layout of capturing groups in the regex by comparing
+                // the capturing groups' group numbers
                 if (namedGroups.get("day") < namedGroups.get("month")) {
                     // Day capturing group is before the month
                     // Shift start index to start index of the capturing group that is after the day group
@@ -61,8 +65,8 @@ public abstract class MonthNameParser extends Parser {
                     endIndex = match.end(namedGroups.get("day") - 1);
                 }
 
-                // If the year is not adjacent to month (e.g. April 8, 2025)
-                // act as if the year capturing group is null
+                // If the year is not adjacent to month, (e.g. April 8, 2025)
+                // then also ignore the year
                 // [April 32, 2025] => [April] 32, 2025
                 if (Math.abs(namedGroups.get("month") - namedGroups.get("year")) > 1) {
                     year = reference.getYear();
