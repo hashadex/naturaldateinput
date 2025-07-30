@@ -11,7 +11,7 @@ public final class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
                 (?:in|after)    # Optionally match "in" or "after" (e.g "in 10 days")
                 \\s
             )?
-            (?<amount>\\d+)     # Amount of units we need to add to reference date
+            (?<amount>%s|\\d+)  # Amount of units we need to add to reference date, can be a digit or cardinal number
             \\s
             (?<unit>%s)s?       # Units (e.g. days, weeks, months)
             (?:
@@ -20,9 +20,11 @@ public final class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
             )?
             (?=$|\\s)           # Right boundary check
             """.formatted(
+                toRegexAlternate(ENConstants.cardinalNumberMap.keySet()),
                 toRegexAlternate(ENConstants.chronoUnitMap.keySet())
             ),
-            ENConstants.chronoUnitMap
+            ENConstants.chronoUnitMap,
+            ENConstants.cardinalNumberMap
         );
     }
 }

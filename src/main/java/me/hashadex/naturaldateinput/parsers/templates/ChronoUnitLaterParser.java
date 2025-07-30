@@ -11,26 +11,46 @@ import me.hashadex.naturaldateinput.parsers.Parser;
 
 public abstract class ChronoUnitLaterParser extends Parser {
     private final Map<String, ChronoUnit> chronoUnitMap;
+    private final Map<String, Integer> cardinalNumberMap;
 
-    protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap, int flags) {
+    protected ChronoUnitLaterParser(
+        String regex,
+        Map<String, ChronoUnit> chronoUnitMap,
+        Map<String, Integer> cardinalNumberMap,
+        int flags
+    ) {
         super(regex, flags);
 
         this.chronoUnitMap = chronoUnitMap;
+        this.cardinalNumberMap = cardinalNumberMap;
     }
 
-    protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap) {
+    protected ChronoUnitLaterParser(
+        String regex,
+        Map<String, ChronoUnit> chronoUnitMap,
+        Map<String, Integer> cardinalNumberMap
+    ) {
         super(regex);
 
         this.chronoUnitMap = chronoUnitMap;
+        this.cardinalNumberMap = cardinalNumberMap;
+    }
+
+    protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap) {
+        this(regex, chronoUnitMap, Map.of());
     }
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         int amount;
-        try {
-            amount = Integer.parseInt(match.group("amount")); // TODO: support for cardinal numbers (one, two, etc.)
-        } catch (NumberFormatException e) {
-            return Optional.empty();
+        if (cardinalNumberMap.containsKey(match.group("amount"))) {
+            amount = cardinalNumberMap.get(match.group("amount"));
+        } else {
+            try {
+                amount = Integer.parseInt(match.group("amount"));
+            } catch (NumberFormatException e) {
+                return Optional.empty();
+            }
         }
 
         ChronoUnit unit = chronoUnitMap.get(match.group("unit").toLowerCase());

@@ -7,11 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import me.hashadex.naturaldateinput.parsers.ParserTest;
@@ -29,65 +30,73 @@ public class ENChronoUnitLaterParserTest extends ParserTest {
         referenceDate = reference.toLocalDate();
     }
 
-    public static IntStream provideAmounts() {
-        return IntStream.of(0, 1, 2, 10, 365);
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideAmounts")
-    void parse_Decades_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s decades".formatted(amount), referenceDate.plus(amount, ChronoUnit.DECADES));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideAmounts")
-    void parse_Years_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s years".formatted(amount), referenceDate.plusYears(amount));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideAmounts")
-    void parse_Months_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s months".formatted(amount), referenceDate.plusMonths(amount));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideAmounts")
-    void parse_Weeks_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s weeks".formatted(amount), referenceDate.plusWeeks(amount));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideAmounts")
-    void parse_Days_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s days".formatted(amount), referenceDate.plusDays(amount));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideAmounts")
-    void parse_Halfdays_ReturnsCorrectDate(int amount) {
-        assertAll(
-            () -> assertParsesAs("%s half-days".formatted(amount), reference.plus(amount, ChronoUnit.HALF_DAYS)),
-            () -> assertParsesAs("%s halfdays".formatted(amount), reference.plus(amount, ChronoUnit.HALF_DAYS))
+    public static Stream<Arguments> provideAmounts() {
+        return Stream.of(
+            Arguments.of("0", 0),
+            Arguments.of("1", 1),
+            Arguments.of("2", 2),
+            Arguments.of("10", 10),
+            Arguments.of("365", 365),
+            Arguments.of("four", 4),
+            Arguments.of("twenty", 20)
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideAmounts")
-    void parse_Hours_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s hours".formatted(amount), reference.plusHours(amount));
+    void parse_Decades_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " decades", referenceDate.plus(expectedAmount, ChronoUnit.DECADES));
     }
 
     @ParameterizedTest
     @MethodSource("provideAmounts")
-    void parse_Minutes_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s minutes".formatted(amount), reference.plusMinutes(amount));
+    void parse_Years_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " years", referenceDate.plusYears(expectedAmount));
     }
 
     @ParameterizedTest
     @MethodSource("provideAmounts")
-    void parse_Seconds_ReturnsCorrectDate(int amount) {
-        assertParsesAs("%s seconds".formatted(amount), reference.plusSeconds(amount));
+    void parse_Months_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " months", referenceDate.plusMonths(expectedAmount));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAmounts")
+    void parse_Weeks_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " weeks", referenceDate.plusWeeks(expectedAmount));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAmounts")
+    void parse_Days_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " days", referenceDate.plusDays(expectedAmount));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAmounts")
+    void parse_Halfdays_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertAll(
+            () -> assertParsesAs(testString + " half-days", reference.plus(expectedAmount, ChronoUnit.HALF_DAYS)),
+            () -> assertParsesAs(testString + " halfdays", reference.plus(expectedAmount, ChronoUnit.HALF_DAYS))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAmounts")
+    void parse_Hours_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " hours", reference.plusHours(expectedAmount));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAmounts")
+    void parse_Minutes_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " minutes", reference.plusMinutes(expectedAmount));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAmounts")
+    void parse_Seconds_ReturnsCorrectDate(String testString, int expectedAmount) {
+        assertParsesAs(testString + " seconds", reference.plusSeconds(expectedAmount));
     }
 
     @Test
