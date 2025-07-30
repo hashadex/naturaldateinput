@@ -50,23 +50,23 @@ public abstract class ParsingConfiguration {
             this.source = source;
         }
 
-        public List<ParsedComponent> getComponents() {
+        public List<ParsedComponent> components() {
             return components;
         }
 
-        public Optional<LocalDate> getDate() {
+        public Optional<LocalDate> date() {
             return Optional.ofNullable(date);
         }
 
-        public Optional<LocalTime> getTime() {
+        public Optional<LocalTime> time() {
             return Optional.ofNullable(time);
         }
 
-        public LocalDateTime getReference() {
+        public LocalDateTime reference() {
             return reference;
         }
 
-        public String getSource() {
+        public String source() {
             return source;
         }
 
@@ -101,13 +101,13 @@ public abstract class ParsingConfiguration {
             ParseResult result = (ParseResult) obj;
 
             return (
-                components.equals(result.getComponents()) &&
+                components.equals(result.components()) &&
 
-                getDate().equals(result.getDate()) &&
-                getTime().equals(result.getTime()) &&
+                date().equals(result.date()) &&
+                time().equals(result.time()) &&
 
-                reference.equals(result.getReference()) &&
-                source.equals(result.getSource())
+                reference.equals(result.reference()) &&
+                source.equals(result.source())
             );
         }
 

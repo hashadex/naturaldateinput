@@ -85,7 +85,7 @@ public class ParsingConfigurationTest {
 
         ParseResult result = conf.parse(exampleSource, reference);
 
-        assertEquals(expectedCorrectDate, result.getDate().get());
+        assertEquals(expectedCorrectDate, result.date().get());
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ParsingConfigurationTest {
 
         ParseResult result = conf.parse(exampleSource, reference);
 
-        assertEquals(expectedCorrectDate, result.getDate().get());
+        assertEquals(expectedCorrectDate, result.date().get());
     }
 
     @Test
@@ -170,8 +170,8 @@ public class ParsingConfigurationTest {
 
         ParseResult result = conf.parse(exampleSource, reference);
 
-        LocalDate resultDate = result.getDate().get();
-        LocalTime resultTime = result.getTime().get();
+        LocalDate resultDate = result.date().get();
+        LocalTime resultTime = result.time().get();
 
         assertAll(
             () -> assertEquals(exampleDate, resultDate),
