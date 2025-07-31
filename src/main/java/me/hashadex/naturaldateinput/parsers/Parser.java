@@ -194,7 +194,7 @@ public abstract class Parser {
 
         public ParsedComponent build() {
             if (this.date == null && this.time == null) {
-                throw new IllegalArgumentException("At least one date/time field must be non-null");
+                throw new NullPointerException("Both time and date fields can not be null");
             }
 
             return new ParsedComponent(this);
