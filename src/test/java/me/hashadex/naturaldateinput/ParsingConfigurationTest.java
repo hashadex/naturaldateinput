@@ -32,7 +32,7 @@ public class ParsingConfigurationTest {
     }
 
     @Test
-    void parseAll_NullParameters_ThrowsNullPointerException() {
+    void parse_NullParameters_ThrowsNullPointerException() {
         class MockParsingConfiguration extends ParsingConfiguration {
             MockParsingConfiguration() {
                 super(Set.of());
@@ -42,8 +42,8 @@ public class ParsingConfigurationTest {
         ParsingConfiguration conf = new MockParsingConfiguration();
 
         assertAll(
-            () -> assertThrows(NullPointerException.class, () -> conf.parseAll(null, LocalDateTime.of(2025, 7, 2, 12, 0, 0))),
-            () -> assertThrows(NullPointerException.class, () -> conf.parseAll("test", null))
+            () -> assertThrows(NullPointerException.class, () -> conf.parse(null, LocalDateTime.of(2025, 7, 2, 12, 0, 0))),
+            () -> assertThrows(NullPointerException.class, () -> conf.parse("test", null))
         );
     }
 

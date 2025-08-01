@@ -157,36 +157,35 @@ public abstract class ParsingConfiguration {
         }
     }
 
-    public final Stream<ParsedComponent> parseAll(String input, LocalDateTime reference) {
+    public final ParseResult parse(String input, LocalDateTime reference) {
         Objects.requireNonNull(input, "input must not be null");
         Objects.requireNonNull(reference, "reference must not be null");
 
-        return parsers.stream().flatMap(parser -> parser.parse(input, reference));
-    }
-
-    public final ParseResult parse(String input, LocalDateTime reference) {
-        List<ParsedComponent> components = parseAll(input, reference).sorted(
-            // Sort components by their end index,
-            // so that components that appear later in the string
-            // would be first in the stream
-            (c1, c2) -> {
-                if (c1.endIndex() > c2.endIndex()) {
-                    return -1;
-                } else if (c1.endIndex() < c2.endIndex()) {
-                    return 1;
-                } else { // end indexes are equal
-                    // If the end indexes of two components are equal,
-                    // put the component with the biggest length first.
-                    if (c1.length() > c2.length()) {
+        List<ParsedComponent> components = parsers.stream()
+            .flatMap(parser -> parser.parse(input, reference))
+            .sorted(
+                // Sort components by their end index,
+                // so that components that appear later in the string
+                // would be first in the stream
+                (c1, c2) -> {
+                    if (c1.endIndex() > c2.endIndex()) {
                         return -1;
-                    } else if (c1.length() < c2.length()) {
+                    } else if (c1.endIndex() < c2.endIndex()) {
                         return 1;
-                    } else {
-                        return 0;
+                    } else { // end indexes are equal
+                        // If the end indexes of two components are equal,
+                        // put the component with the biggest length first.
+                        if (c1.length() > c2.length()) {
+                            return -1;
+                        } else if (c1.length() < c2.length()) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
                     }
                 }
-            }
-        ).toList();
+            )
+            .toList();
         
         // Iterate through the sorted list and obtain date and time
         // from the latest components
