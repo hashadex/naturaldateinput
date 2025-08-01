@@ -22,7 +22,7 @@ public abstract class ParsingConfiguration {
 
         for (Parser parser : parsers) {
             if (parser == null) {
-                throw new IllegalArgumentException("Parser set must not contain null elements");
+                throw new NullPointerException("Parser set must not contain null elements");
             }
         }
 
