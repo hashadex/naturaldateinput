@@ -14,10 +14,22 @@ import java.util.stream.Stream;
 import me.hashadex.naturaldateinput.parsers.Parser;
 import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
 
+/**
+ * Base abstract class for parsing configurations. A parsing configuration is a
+ * set of multiple {@link me.hashadex.naturaldateinput.parsers.Parser Parsers}.
+ * <p>
+ * The {@link #parse(String, LocalDateTime) parse} method parses a string using
+ * all parsers in the set and combines the
+ * {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponents}
+ * into a single, final {@link ParseResult}.
+ * 
+ * @author hashadex
+ * @since 1.0.0
+ */
 public abstract class ParsingConfiguration {
     private final Set<Parser> parsers;
 
-    protected ParsingConfiguration(Set<Parser> parsers) {
+    public ParsingConfiguration(Set<Parser> parsers) {
         Objects.requireNonNull(parsers, "parsers must not be null");
 
         for (Parser parser : parsers) {
