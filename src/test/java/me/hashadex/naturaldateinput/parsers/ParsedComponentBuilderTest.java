@@ -95,7 +95,7 @@ public class ParsedComponentBuilderTest {
         ParsedComponentBuilder builder = new ParsedComponentBuilder(reference, source, matchResult);
 
         assertThrows(
-            IllegalArgumentException.class,
+            NullPointerException.class,
             () -> builder.build()
         );
     }
