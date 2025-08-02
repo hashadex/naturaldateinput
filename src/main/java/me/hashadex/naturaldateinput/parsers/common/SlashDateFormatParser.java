@@ -34,20 +34,6 @@ public class SlashDateFormatParser extends Parser {
         this.preferredDayMonthOrder = preferredDayMonthOrder;
     }
 
-    // private static DayMonthOrder resolveOrderFromLocale(Locale locale) {
-    //     LocalDate date = LocalDate.of(9999, 12, 31);
-
-    //     DateTimeFormatter localizedFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale);
-
-    //     String formattedDate = date.format(localizedFormatter);
-
-    //     if (formattedDate.startsWith("31")) {
-    //         return DayMonthOrder.DAY_MONTH;
-    //     } else if (formattedDate.startsWith("12")) {
-    //         return DayMonthOrder.MONTH_DAY;
-    //     }
-    // }
-
     private static boolean isWithinDayRange(int num) {
         return num >= 1 && num <= 31;
     }
