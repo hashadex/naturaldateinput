@@ -40,7 +40,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class containing various English language constants.
+ * 
+ * @author hashadex
+ * @since 1.0.0
+ */
 final class ENConstants {
+    /**
+     * Unmodifiable map of English month names and their respective
+     * {@link java.time.Month Months}. Also contains short forms of month names,
+     * like "jan".
+     * 
+     * @since 1.0.0
+     */
     public static final Map<String, Month> monthMap = Map.ofEntries(
         // January
         entry("january", JANUARY),
@@ -91,6 +104,12 @@ final class ENConstants {
         entry("dec", DECEMBER)
     );
 
+    /**
+     * Map of English relative words like "today" and "tomorrow" and their offsets.
+     * For use with {@link me.hashadex.naturaldateinput.parsers.en.ENRelativeWordParser}
+     * 
+     * @since 1.0.0
+     */
     public static final Map<String, Integer> relativeWordOffsetMap = Map.of(
         // yesterday
         "yesterday", -1,
@@ -104,6 +123,11 @@ final class ENConstants {
         "tmr", 1
     );
 
+    /**
+     * Map of English time-of-day words and their meanings as <code>LocalTimes</code>.
+     * 
+     * @since 1.0.0
+     */
     public static final Map<String, LocalTime> timeOfDayWordMap = Map.of(
         // 00:00
         "midnight", LocalTime.of(0, 0),
@@ -118,6 +142,12 @@ final class ENConstants {
         "evening", LocalTime.of(20, 0)
     );
 
+    /**
+     * Map of English names of timeunits and their respective
+     * {@link java.time.temporal.ChronoUnit ChronoUnits}.
+     * 
+     * @since 1.0.0
+     */
     public static final Map<String, ChronoUnit> chronoUnitMap = Map.of(
         "decade", DECADES,
         "year", YEARS,
@@ -131,6 +161,12 @@ final class ENConstants {
         "seconds", SECONDS
     );
 
+    /**
+     * Map of English cardinal numbers and their respective meanings as an
+     * integer.
+     * 
+     * @since 1.0.0
+     */
     public static final Map<String, Integer> cardinalNumberMap = Map.ofEntries(
         entry("zero", 0),
         entry("one", 1),
@@ -155,6 +191,13 @@ final class ENConstants {
         entry("twenty", 20)
     );
     
+    /**
+     * Map of English names of weekdays and their respective
+     * {@link java.time.DayOfWeek}. "sun" is not in the map to avoid confustion
+     * with the Sun (the star).
+     * 
+     * @since 1.0.0
+     */
     public static final Map<String, DayOfWeek> weekdayMap = Map.ofEntries(
         // Monday
         entry("monday", MONDAY),
@@ -179,5 +222,10 @@ final class ENConstants {
         // "sun" is not in the map to avoid confusion with the Sun (the star)
     );
     
+    /**
+     * Set of English ordinal indicators: "th", "st", "nd", "rd".
+     * 
+     * @since 1.0.0
+     */
     public static final Set<String> ordinalIndicators = Set.of("th", "st", "nd", "rd");
 }

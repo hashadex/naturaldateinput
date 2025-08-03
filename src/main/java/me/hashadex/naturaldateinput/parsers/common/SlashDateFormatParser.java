@@ -8,14 +8,55 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
+/**
+ * {@link me.hashadex.naturaldateinput.parsers.Parser Parser} for DMY and MDY
+ * dates, such as 31.12.2025 and 6/20/2020. This parser supports two
+ * delimeters, dot (<code>.</code>) and slash (<code>/</code>) and can parse
+ * dates without a year, such as 07/04. In that case, the year is implied from
+ * the reference date.
+ * <p>
+ * Parsing of ambiguous dates like 2025-12-10 is determined by the preferred
+ * {@link DayMonthOrder}, set with the
+ * {@link #SlashDateFormatParser(DayMonthOrder) constructor}. For example, if
+ * the parser was created with the {@link DayMonthOrder#DAY_MONTH DAY_MONTH}
+ * order, then "10.12.2025" is parsed as December 10th, 2025. Otherwise, if the
+ * parser was created with the {@link DayMonthOrder#MONTH_DAY MONTH_DAY} order,
+ * then "10.12.2025" is parsed as October 12th, 2025. The chosen order does not
+ * affect the parsing of non-ambiguous dates like "31.12.2025".
+ * 
+ * @author hashadex
+ * @see me.hashadex.naturaldateinput.parsers.common.ISODateParser ISODateParser
+ * @since 1.0.0
+ */
 public class SlashDateFormatParser extends Parser {
+    /**
+     * Order in which day and month is placed.
+     * 
+     * @see me.hashadex.naturaldateinput.parsers.common.SlashDateFormatParser#SlashDateFormatParser(DayMonthOrder)
+     * @since 1.0.0
+     */
     public static enum DayMonthOrder {
+        /**
+         * "Little endian" order, used in the DMY format.
+         */
         DAY_MONTH,
+
+        /**
+         * "Middle endian" order, used in the YMD and MDY formats.
+         */
         MONTH_DAY
     }
 
     private final DayMonthOrder preferredDayMonthOrder;
 
+    /**
+     * Constructs the parser and sets the preferred day-month order. See
+     * {@link me.hashadex.naturaldateinput.parsers.common.SlashDateFormatParser class doc comment}
+     * for explanation on what the preferred day-month order affects.
+     * 
+     * @param preferredDayMonthOrder Preferred day-month order
+     * @since 1.0.0
+     */
     public SlashDateFormatParser(DayMonthOrder preferredDayMonthOrder) {
         super(
             """

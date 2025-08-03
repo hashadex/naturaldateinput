@@ -2,7 +2,20 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.RelativeWordParser;
 
+/**
+ * English parser that handles relative words like "today", "tomorrow" and
+ * "yesterday". Abbreviations of these words are also supported: "ytd" for
+ * yesterday, "tod" for today, "tmrw" and "tmr" for tomorrow.
+ * 
+ * @author
+ * @since 1.0.0
+ */
 public final class ENRelativeWordParser extends RelativeWordParser {
+    /**
+     * Constructs the parser
+     * 
+     * @since 1.0.0
+     */
     public ENRelativeWordParser() {
         super(
             """

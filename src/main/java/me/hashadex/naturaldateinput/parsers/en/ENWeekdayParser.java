@@ -2,7 +2,18 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.WeekdayParser;
 
+/**
+ * English parser that handles expressions like "on sunday", "on the next friday".
+ * 
+ * @author hashadex
+ * @since 1.0.0
+ */
 public final class ENWeekdayParser extends WeekdayParser {
+    /**
+     * Constructs the parser
+     * 
+     * @since 1.0.0
+     */
     public ENWeekdayParser() {
         super(
             """

@@ -9,19 +9,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
 
 /**
  * Base abstract class for parsing configurations. A parsing configuration is a
- * set of multiple {@link me.hashadex.naturaldateinput.parsers.Parser Parsers}.
- * <p>
- * The {@link #parse(String, LocalDateTime) parse} method parses a string using
- * all parsers in the set and combines the
+ * set of multiple {@link me.hashadex.naturaldateinput.parsers.Parser Parsers},
+ * that allows you to easily parse a string with multiple parsers at once.
  * {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponents}
- * into a single, final {@link ParseResult}.
+ * returned by parsers during the parsing operation are combined into a single
+ * {@link me.hashadex.naturaldateinput.ParsingConfiguration.ParseResult ParseResult}.
  * 
  * @author hashadex
  * @since 1.0.0
@@ -29,6 +27,16 @@ import me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
 public abstract class ParsingConfiguration {
     private final Set<Parser> parsers;
 
+    /**
+     * Constructs a ParsingConfiguration containing the specified
+     * <code>Set</code> of {@link me.hashadex.naturaldateinput.parsers.Parser Parsers}.
+     * Parser set must not contain null elements.
+     * 
+     * @param parsers <code>Parser</code> set, not null
+     * @throws NullPointerException if <code>parsers</code> is null or contains
+     *                              null elements
+     * @since 1.0.0
+     */
     public ParsingConfiguration(Set<Parser> parsers) {
         Objects.requireNonNull(parsers, "parsers must not be null");
 
@@ -41,6 +49,18 @@ public abstract class ParsingConfiguration {
         this.parsers = parsers;
     }
 
+    /**
+     * Immutable data class representing a final result of parsing using a
+     * parsing configuration, combined from multiple
+     * {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponents}.
+     * <p>
+     * Unlike <code>ParsedComponent</code>, <code>ParseResult</code> may contain
+     * neither time or date. Use {@link #isEmpty()} and {@link #isPresent()} to
+     * check if a <code>ParseResult</code> is empty.
+     * 
+     * @author hashadex
+     * @since 1.0.0
+     */
     public final class ParseResult {
         private final List<ParsedComponent> components;
 
@@ -62,34 +82,101 @@ public abstract class ParsingConfiguration {
             this.source = source;
         }
 
+        /**
+         * Returns a list of
+         * {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponents}
+         * from which the date and time of this <code>ParseResult</code> were
+         * extracted.
+         * 
+         * @return <code>List</code> of <code>ParsedComponents</code>
+         * @see #date()
+         * @see #time()
+         * @since 1.0.0
+         */
         public List<ParsedComponent> components() {
             return components;
         }
 
+        /**
+         * Returns the date extracted from the latest (by occurrence in source
+         * string) {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponent}
+         * that contains a date.
+         * 
+         * @return <code>Optional</code> containing a <code>LocalDate</code> if
+         *         a date was able to be parsed from the source string
+         * @see me.hashadex.naturaldateinput.ParsingConfiguration#parse(String, LocalDateTime)
+         * @since 1.0.0
+         */ 
         public Optional<LocalDate> date() {
             return Optional.ofNullable(date);
         }
 
+        /**
+         * Returns the time extracted from the latest (by occurrence in source
+         * string) {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponent}
+         * that contains a time.
+         * 
+         * @return <code>Optional</code> containing a <code>LocalTime</code> if
+         *         a time was able to be parsed from the source string
+         * @see me.hashadex.naturaldateinput.ParsingConfiguration#parse(String, LocalDateTime)
+         * @since 1.0.0
+         */ 
         public Optional<LocalTime> time() {
             return Optional.ofNullable(time);
         }
 
+        /**
+         * Returns the reference datetime used during the parsing operation.
+         * 
+         * The reference datetime serves as a reference point for some parsers
+         * that deal with relative date/time expressions, like
+         * {@link me.hashadex.naturaldateinput.parsers.en.ENRelativeWordParser ENRelativeWordParser}
+         * The reference datetime is typically the timestamp that is made when
+         * the parsing operation starts.
+         * 
+         * @return Reference datetime
+         * @since 1.0.0
+         */
         public LocalDateTime reference() {
             return reference;
         }
 
+        /**
+         * Returns the source string used during the parsing operation.
+         * 
+         * @return Source string
+         * @since 1.0.0
+         */
         public String source() {
             return source;
         }
 
+        /**
+         * Checks if this <code>ParseResult</code> contains neither time or date.
+         * 
+         * @return <code>true</code> if both date and time are <code>null</code>
+         * @since 1.0.0
+         */
         public boolean isEmpty() {
             return date == null && time == null;
         }
 
+        /**
+         * Checks if this <code>ParseResult</code> contains a time or a date.
+         * 
+         * @return <code>true</code> if time or date is not <code>null</code>
+         * @since 1.0.0
+         */
         public boolean isPresent() {
             return date != null || time != null;
         }
 
+        /**
+         * Returns the hash code for this <code>ParseResult</code>.
+         * 
+         * @return Hash code integer
+         * @since 1.0.0
+         */
         @Override
         public int hashCode() {
             final int prime = 31;
@@ -104,6 +191,19 @@ public abstract class ParsingConfiguration {
             return result;
         }
 
+        /**
+         * Compares this <code>ParseResult</code> to the specified object.
+         * <p>
+         * Returns <code>true</code> if the specified object is a
+         * <code>ParseResult</code> and all fields (components, date, time,
+         * reference, source) are equal.
+         * 
+         * @param obj Object to compare, <code>null</code> returns
+         *            <code>false</code>
+         * @return <code>true</code> if this <code>ParseResult</code> is equal
+         *         to the specified object
+         * @since 1.0.0
+         */
         @Override
         public boolean equals(Object obj) {
             if (!(obj instanceof ParseResult)) {
@@ -123,6 +223,12 @@ public abstract class ParsingConfiguration {
             );
         }
 
+        /**
+         * Returns a string representation of this <code>ParseResult</code>
+         * 
+         * @return String in the format 
+         *         {@code "ParseResult["<component text>", "<component text>" -> <date>T<time>]"}
+         */
         @Override
         public String toString() {
             // Collect the texts of all components into a single string, e.g.
@@ -157,6 +263,32 @@ public abstract class ParsingConfiguration {
         }
     }
 
+    /**
+     * Parses the provided string using all
+     * {@link me.hashadex.naturaldateinput.parsers.Parser Parsers} in the
+     * configuration and combines returned
+     * {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponents}
+     * into a single {@link ParseResult}.
+     * <p>
+     * Only up to last (by occurrence in text) two <code>ParsedComponents</code>
+     * are used for the <code>ParseResult</code> {@link ParseResult#date() date}
+     * and {@link ParseResult#time() time} fields. Meaning, if there are
+     * multiple <code>ParsedComponents</code> containing a date returned by the
+     * parsers, then only the last component is used for the date field in the
+     * <code>ParseResult</code>.
+     * <p>
+     * Use the {@link #parse(String)} method to automatically use
+     * {@link java.time.LocalDateTime#now()} as reference datetime.
+     * 
+     * @param input     String to be parsed
+     * @param reference <code>LocalDateTime</code> that serves as a reference
+     *                  point for parsers that deal with relative date/time
+     *                  expressions, such as
+     *                  {@link me.hashadex.naturaldateinput.parsers.en.ENRelativeWordParser ENRelativeWordParser}
+     * @return <code>ParseResult</code> composed from all returned <code>
+     *         ParsedComponents</code>. Might be empty.
+     * @since 1.0.0
+     */
     public final ParseResult parse(String input, LocalDateTime reference) {
         Objects.requireNonNull(input, "input must not be null");
         Objects.requireNonNull(reference, "reference must not be null");
@@ -222,6 +354,29 @@ public abstract class ParsingConfiguration {
         return new ParseResult(usedComponents, date, time, reference, input);
     }
 
+    /**
+     * Parses the provided string using
+     * {@link java.time.LocalDateTime#now()} as reference datetime with all
+     * {@link me.hashadex.naturaldateinput.parsers.Parser Parsers} in the
+     * configuration and combines returned
+     * {@link me.hashadex.naturaldateinput.parsers.Parser.ParsedComponent ParsedComponents}
+     * into a single {@link ParseResult}.
+     * <p>
+     * Only up to last (by occurrence in text) two <code>ParsedComponents</code>
+     * are used for the <code>ParseResult</code> {@link ParseResult#date() date}
+     * and {@link ParseResult#time() time} fields. Meaning, if there are multiple
+     * <code>ParsedComponents</code> containing a date returned by the parsers,
+     * then only the last component is used for the date field in the <code>
+     * ParseResult</code>.
+     * <p>
+     * Use the {@link #parse(String, LocalDateTime)} method to use a different
+     * <code>LocalDateTime</code> as reference.
+     * 
+     * @param input String to be parsed
+     * @return <code>ParseResult</code> composed from all returned <code>
+     *         ParsedComponents</code>. Might be empty.
+     * @since 1.0.0
+     */
     public final ParseResult parse(String input) {
         return parse(input, LocalDateTime.now());
     }

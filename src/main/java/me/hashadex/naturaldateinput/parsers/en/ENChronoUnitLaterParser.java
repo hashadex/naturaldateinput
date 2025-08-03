@@ -2,7 +2,33 @@ package me.hashadex.naturaldateinput.parsers.en;
 
 import me.hashadex.naturaldateinput.parsers.templates.ChronoUnitLaterParser;
 
+/**
+ * English parser that handles expressions like "in 10 days". The amount can be
+ * written as an integer or as a cardinal number, such as "ten". Cardinal
+ * numbers are supported from 0 through 20.
+ * <p>
+ * The supported timeunits are:
+ * <ul>
+ * <li>decades
+ * <li>years
+ * <li>months
+ * <li>weeks
+ * <li>days
+ * <li>half-days
+ * <li>hours
+ * <li>minutes
+ * <li>seconds
+ * </ul>
+ * 
+ * @author hashadex
+ * @since 1.0.0
+ */
 public final class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
+    /**
+     * Constructs the parser.
+     * 
+     * @since 1.0.0
+     */
     public ENChronoUnitLaterParser() {
         super(
             """

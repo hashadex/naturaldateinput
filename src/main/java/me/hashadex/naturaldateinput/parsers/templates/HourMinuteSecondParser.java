@@ -7,11 +7,45 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
+/**
+ * Base for parsers that handle time in formats like HH:MM:SS with support for
+ * AM/PM.
+ * <p>
+ * The regex may have <code>hour</code>, <code>minute</code> and
+ * <code>second</code> named capturing groups, however none of these groups are
+ * required. If any of these groups are missing, then their respective field is
+ * always assumed to be 0. These groups must only match digits.
+ * <p>
+ * Both 24-hour time and 12-hour time is supported. The parser uses 24-hour by
+ * default, unless either the <code>am</code> or <code>pm</code> optional
+ * capturing group captures anything. If the <code>am</code> group captures
+ * anything, then the parser works in AM mode and vice versa, however both of
+ * these groups must not be active at once.
+ * 
+ * @author hashadex
+ * @since 1.0.0
+ */
 public class HourMinuteSecondParser extends Parser {
+    /**
+     * Constructs the parser using custom regex flags. See the
+     * {@link HourMinuteSecondParser class doc comment} for requirements for
+     * the regexes and maps.
+     * 
+     * @param regex Regex for the parser
+     * @param flags Bit mask of the regex flags that will be passed
+     *              to {@link java.util.regex.Pattern#compile(String, int)}
+     */
     public HourMinuteSecondParser(String regex, int flags) {
         super(regex, flags);
     }
 
+    /**
+     * Constructs the parser using default regex flags. See the
+     * {@link HourMinuteSecondParser class doc comment} for requirements for
+     * the regexes and maps.
+     * 
+     * @param regex Regex for the parser
+     */
     public HourMinuteSecondParser(String regex) {
         super(regex);
     }

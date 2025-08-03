@@ -8,7 +8,20 @@ import java.util.regex.MatchResult;
 
 import me.hashadex.naturaldateinput.parsers.Parser;
 
+/**
+ * Parser for the ISO 8601 (YYYY-MM-DD) date format. Supports the dash delimeter
+ * (<code>-</code>), dot delimeter (<code>.</code>) and no delimeter (basic
+ * format, <code>"20250802"</code>).
+ * 
+ * @author hashadex
+ * @since 1.0.0
+ */
 public class ISODateParser extends Parser {
+    /**
+     * Constructs the parser.
+     * 
+     * @since 1.0.0
+     */
     public ISODateParser() {
         super(
             """
