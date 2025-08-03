@@ -35,13 +35,13 @@ public abstract class MonthNameParser extends Parser {
 
         int year = reference.getYear();
         boolean yearSetExplicitly = false;
-        if (match.group("year") != null) {
+        if (match.namedGroups().containsKey("year") && match.group("year") != null) {
             year = Integer.parseInt(match.group("year"));
             yearSetExplicitly = true;
         }
 
         int day = 1;
-        if (match.group("day") != null) {
+        if (match.namedGroups().containsKey("day") && match.group("day") != null) {
             day = Integer.parseInt(match.group("day"));
 
             if (!YearMonth.of(year, month).isValidDay(day)) {
