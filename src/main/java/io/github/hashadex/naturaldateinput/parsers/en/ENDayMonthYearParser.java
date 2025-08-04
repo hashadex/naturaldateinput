@@ -16,6 +16,11 @@ import io.github.hashadex.naturaldateinput.parsers.templates.MonthNameParser;
  * @since 1.0.0
  */
 public final class ENDayMonthYearParser extends MonthNameParser {
+    /**
+     * Constructs the parser.
+     * 
+     * @since 1.0.0
+     */
     public ENDayMonthYearParser() {
         super(
             """
