@@ -7,7 +7,7 @@ import io.github.hashadex.naturaldateinput.parsers.templates.RelativeWordParser;
  * "yesterday". Abbreviations of these words are also supported: "ytd" for
  * yesterday, "tod" for today, "tmrw" and "tmr" for tomorrow.
  * 
- * @author
+ * @author hashadex
  * @since 1.0.0
  */
 public final class ENRelativeWordParser extends RelativeWordParser {
