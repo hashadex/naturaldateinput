@@ -3,8 +3,9 @@ package io.github.hashadex.naturaldateinput.parsers.common;
 import io.github.hashadex.naturaldateinput.parsers.templates.HourMinuteSecondParser;
 
 /**
- * {@link io.github.hashadex.naturaldateinput.parsers.Parser Parser} for parsing
- * twenty-four hour time, with or without seconds, like <code>"22:20:48"</code>.
+ * {@link io.github.hashadex.naturaldateinput.parsers.Parser Parser} for
+ * parsing twenty-four hour time, with or without seconds, like <code>
+ * "22:20:48"</code>.
  * 
  * @author hashadex
  * @since 1.0.0

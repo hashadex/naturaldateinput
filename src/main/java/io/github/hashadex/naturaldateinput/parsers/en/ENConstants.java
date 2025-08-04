@@ -106,7 +106,8 @@ final class ENConstants {
 
     /**
      * Map of English relative words like "today" and "tomorrow" and their offsets.
-     * For use with {@link io.github.hashadex.naturaldateinput.parsers.en.ENRelativeWordParser}
+     * For use with
+     * {@link io.github.hashadex.naturaldateinput.parsers.en.ENRelativeWordParser}.
      * 
      * @since 1.0.0
      */

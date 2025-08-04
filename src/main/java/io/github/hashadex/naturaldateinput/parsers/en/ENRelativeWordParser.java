@@ -12,7 +12,7 @@ import io.github.hashadex.naturaldateinput.parsers.templates.RelativeWordParser;
  */
 public final class ENRelativeWordParser extends RelativeWordParser {
     /**
-     * Constructs the parser
+     * Constructs the parser.
      * 
      * @since 1.0.0
      */

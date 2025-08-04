@@ -19,7 +19,7 @@ import io.github.hashadex.naturaldateinput.parsers.templates.TimeOfDayWordParser
  */
 public final class ENTimeOfDayWordParser extends TimeOfDayWordParser {
     /**
-     * Constructs the parser
+     * Constructs the parser.
      * 
      * @since 1.0.0
      */

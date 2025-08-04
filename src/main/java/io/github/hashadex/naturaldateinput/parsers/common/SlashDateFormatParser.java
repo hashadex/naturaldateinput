@@ -9,8 +9,8 @@ import java.util.regex.MatchResult;
 import io.github.hashadex.naturaldateinput.parsers.Parser;
 
 /**
- * {@link io.github.hashadex.naturaldateinput.parsers.Parser Parser} for DMY and MDY
- * dates, such as 31.12.2025 and 6/20/2020. This parser supports two
+ * {@link io.github.hashadex.naturaldateinput.parsers.Parser Parser} for DMY
+ * and MDY dates, such as 31.12.2025 and 6/20/2020. This parser supports two
  * delimeters, dot (<code>.</code>) and slash (<code>/</code>) and can parse
  * dates without a year, such as 07/04. In that case, the year is implied from
  * the reference date.

@@ -10,7 +10,7 @@ import io.github.hashadex.naturaldateinput.parsers.templates.WeekdayParser;
  */
 public final class ENWeekdayParser extends WeekdayParser {
     /**
-     * Constructs the parser
+     * Constructs the parser.
      * 
      * @since 1.0.0
      */

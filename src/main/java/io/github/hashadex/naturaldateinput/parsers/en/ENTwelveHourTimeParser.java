@@ -13,7 +13,7 @@ import io.github.hashadex.naturaldateinput.parsers.templates.HourMinuteSecondPar
  */
 public final class ENTwelveHourTimeParser extends HourMinuteSecondParser {
     /**
-     * Constructs the parser
+     * Constructs the parser.
      * 
      * @since 1.0.0
      */
