@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import io.github.hashadex.naturaldateinput.parsers.ParserTest;
 import io.github.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
-import io.github.hashadex.naturaldateinput.parsers.en.ENWeekdayParser;
 
 public class ENWeekdayParserTest extends ParserTest {
     public static enum ThisWeek {

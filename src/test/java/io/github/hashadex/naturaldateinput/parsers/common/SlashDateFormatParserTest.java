@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import io.github.hashadex.naturaldateinput.parsers.ParserTest;
-import io.github.hashadex.naturaldateinput.parsers.common.SlashDateFormatParser;
 import io.github.hashadex.naturaldateinput.parsers.common.SlashDateFormatParser.DayMonthOrder;
 
 public class SlashDateFormatParserTest extends ParserTest {

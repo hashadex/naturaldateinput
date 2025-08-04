@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.hashadex.naturaldateinput.ParsingConfiguration;
 import io.github.hashadex.naturaldateinput.ParsingConfiguration.ParseResult;
 import io.github.hashadex.naturaldateinput.parsers.Parser;
 

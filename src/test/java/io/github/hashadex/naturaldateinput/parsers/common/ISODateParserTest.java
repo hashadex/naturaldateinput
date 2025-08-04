@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.hashadex.naturaldateinput.parsers.ParserTest;
-import io.github.hashadex.naturaldateinput.parsers.common.ISODateParser;
 
 public class ISODateParserTest extends ParserTest {
     @Override

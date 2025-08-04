@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import io.github.hashadex.naturaldateinput.parsers.ParserTest;
-import io.github.hashadex.naturaldateinput.parsers.en.ENRelativeWordParser;
 
 public class ENRelativeWordParserTest extends ParserTest {
     private LocalDate referenceDate;

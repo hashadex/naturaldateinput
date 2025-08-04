@@ -16,8 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.hashadex.naturaldateinput.parsers.ParserTest;
 import io.github.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
-import io.github.hashadex.naturaldateinput.parsers.en.ENConstants;
-import io.github.hashadex.naturaldateinput.parsers.en.ENYearMonthDayParser;
 
 public class ENYearMonthDayParserTest extends ParserTest {
     private LocalDate referenceDate;

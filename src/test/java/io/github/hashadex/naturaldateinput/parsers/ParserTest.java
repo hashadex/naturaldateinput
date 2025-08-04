@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import io.github.hashadex.naturaldateinput.parsers.Parser;
 import io.github.hashadex.naturaldateinput.parsers.Parser.ParsedComponent;
 
 public abstract class ParserTest {
