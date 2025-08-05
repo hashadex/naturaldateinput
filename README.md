@@ -3,6 +3,8 @@
 Java library for parsing human, natural language dates, inspired by
 [Chrono.js](https://github.com/wanasit/chrono/) and Todoist's smart date recognition.
 
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.hashadex.naturaldateinput/naturaldateinput?label=maven%20central)](https://central.sonatype.com/artifact/io.github.hashadex.naturaldateinput/naturaldateinput)
+
 This library supports the parsing of various date formats and expressions:
 
 * `2025-08-04` / `04.08.2025` / `8/4/2025`
@@ -14,6 +16,25 @@ This library supports the parsing of various date formats and expressions:
 * `next friday`
 
 Currently, the only supported language is English.
+
+## Installation
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>io.github.hashadex.naturaldateinput</groupId>
+    <artifactId>naturaldateinput</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### Gradle
+
+<!-- markdownlint-disable MD040 -->
+```
+implementation 'io.github.hashadex.naturaldateinput:naturaldateinput:1.0.0'
+```
 
 ## Usage
 
