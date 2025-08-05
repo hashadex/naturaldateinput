@@ -3,6 +3,18 @@
 Java library for parsing human, natural language dates, inspired by
 [Chrono.js](https://github.com/wanasit/chrono/) and Todoist's smart date recognition.
 
+This library supports the parsing of various date formats and expressions:
+
+* `2025-08-04` / `04.08.2025` / `8/4/2025`
+* `18:00` / `6:00 pm`
+* `in three days`
+* `4th of August, 2025` / `August 4th, 2025` / `2025 August 4`
+* `tomorrow` / `today` / `yesterday`
+* `noon` / `morning` etc.
+* `next friday`
+
+Currently, the only supported language is English.
+
 ## Usage
 
 Simply load a pre-made `ParsingConfiguration` and use the `parse` method:
