@@ -38,6 +38,9 @@ implementation 'io.github.hashadex.naturaldateinput:naturaldateinput:1.0.0'
 
 ## Usage
 
+> [!TIP]
+> API documentation is available on [GitHub Pages](https://hashadex.github.io/naturaldateinput/apidocs/).
+
 Simply load a pre-made `ParsingConfiguration` and use the `parse` method:
 
 ```java
