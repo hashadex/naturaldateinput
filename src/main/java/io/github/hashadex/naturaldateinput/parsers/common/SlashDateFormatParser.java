@@ -3,6 +3,7 @@ package io.github.hashadex.naturaldateinput.parsers.common;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
@@ -69,7 +70,8 @@ public class SlashDateFormatParser extends Parser {
                 (?<year>\\d{4}|\\d{2}) # Year, four digit or two digit
             )?
             (?<=$|\\s)                 # Right boundary check
-            """
+            """,
+            Map.of("num1", 1, "delimeter", 2, "num2", 3, "year", 4)
         );
 
         this.preferredDayMonthOrder = preferredDayMonthOrder;
@@ -87,8 +89,8 @@ public class SlashDateFormatParser extends Parser {
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         boolean yearSetExplicitly = false;
         int year = reference.getYear();
-        if (match.group("year") != null) {
-            String yearString = match.group("year");
+        if (match.group(namedGroupMap.get("year")) != null) {
+            String yearString = match.group(namedGroupMap.get("year"));
 
             if (yearString.length() == 2) {
                 yearString = "20" + yearString;
@@ -98,8 +100,8 @@ public class SlashDateFormatParser extends Parser {
             yearSetExplicitly = true;
         }
 
-        int num1 = Integer.parseInt(match.group("num1"));
-        int num2 = Integer.parseInt(match.group("num2"));
+        int num1 = Integer.parseInt(match.group(namedGroupMap.get("num1")));
+        int num2 = Integer.parseInt(match.group(namedGroupMap.get("num2")));
 
         int day;
         int month;

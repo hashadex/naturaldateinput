@@ -1,5 +1,7 @@
 package io.github.hashadex.naturaldateinput.parsers.en;
 
+import java.util.Map;
+
 import io.github.hashadex.naturaldateinput.parsers.templates.WeekdayParser;
 
 /**
@@ -28,6 +30,7 @@ public final class ENWeekdayParser extends WeekdayParser {
             """.formatted(
                 toRegexAlternate(ENConstants.weekdayMap.keySet())
             ),
+            Map.of("nextmodifier", 1, "weekday", 2),
             ENConstants.weekdayMap
         );
     }

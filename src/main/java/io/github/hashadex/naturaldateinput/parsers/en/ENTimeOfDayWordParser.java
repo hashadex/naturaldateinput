@@ -1,5 +1,7 @@
 package io.github.hashadex.naturaldateinput.parsers.en;
 
+import java.util.Map;
+
 import io.github.hashadex.naturaldateinput.parsers.templates.TimeOfDayWordParser;
 
 /**
@@ -32,6 +34,7 @@ public final class ENTimeOfDayWordParser extends TimeOfDayWordParser {
             """.formatted(
                 toRegexAlternate(ENConstants.timeOfDayWordMap.keySet())
             ),
+            Map.of("word", 1),
             ENConstants.timeOfDayWordMap
         );
     }

@@ -41,14 +41,21 @@ public abstract class MonthNameParser extends Parser {
      * {@link MonthNameParser class doc comment} for requirements for the
      * regexes and maps.
      * 
-     * @param regex    Regex for the parser
-     * @param monthMap Map of names of months in your language to elements of
-     *                 the {@link java.time.Month} enum.
-     * @param flags    Bit mask of the regex flags that will be passed
-     *                 to {@link java.util.regex.Pattern#compile(String, int)}
+     * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @param monthMap      Map of names of months in your language to elements
+     *                      of the {@link java.time.Month} enum.
+     * @param flags         Bit mask of the regex flags that will be passed
+     *                      to {@link java.util.regex.Pattern#compile(String, int)}
+     * @since 2.0.0
      */
-    protected MonthNameParser(String regex, Map<String, Month> monthMap, int flags) {
-        super(regex, flags);
+    protected MonthNameParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, Month> monthMap,
+        int flags
+    ) {
+        super(regex, namedGroupMap, flags);
 
         this.monthMap = monthMap;
     }
@@ -58,12 +65,18 @@ public abstract class MonthNameParser extends Parser {
      * {@link MonthNameParser class doc comment} for requirements for the
      * regexes and maps.
      * 
-     * @param regex    Regex for the parser
-     * @param monthMap Map of names of months in your language to elements of
-     *                 the {@link java.time.Month} enum.
+     * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @param monthMap      Map of names of months in your language to elements
+     *                      of the {@link java.time.Month} enum.
+     * @since 2.0.0
      */
-    protected MonthNameParser(String regex, Map<String, Month> monthMap) {
-        super(regex);
+    protected MonthNameParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, Month> monthMap
+    ) {
+        super(regex, namedGroupMap);
 
         this.monthMap = monthMap;
     }
@@ -73,18 +86,18 @@ public abstract class MonthNameParser extends Parser {
         int startIndex = match.start();
         int endIndex = match.end();
 
-        Month month = monthMap.get(match.group("month").toLowerCase());
+        Month month = monthMap.get(match.group(namedGroupMap.get("month")).toLowerCase());
 
         int year = reference.getYear();
         boolean yearSetExplicitly = false;
-        if (match.namedGroups().containsKey("year") && match.group("year") != null) {
-            year = Integer.parseInt(match.group("year"));
+        if (namedGroupMap.containsKey("year") && match.group(namedGroupMap.get("year")) != null) {
+            year = Integer.parseInt(match.group(namedGroupMap.get("year")));
             yearSetExplicitly = true;
         }
 
         int day = 1;
-        if (match.namedGroups().containsKey("day") && match.group("day") != null) {
-            day = Integer.parseInt(match.group("day"));
+        if (namedGroupMap.containsKey("day") && match.group(namedGroupMap.get("day")) != null) {
+            day = Integer.parseInt(match.group(namedGroupMap.get("day")));
 
             if (!YearMonth.of(year, month).isValidDay(day)) {
                 // If the day is invalid, (e.g. April 32nd) ignore the day
@@ -93,24 +106,22 @@ public abstract class MonthNameParser extends Parser {
                 // e.g. [32 Apr 2025] => 32 [Apr 2025]
                 day = 1;
 
-                Map<String, Integer> namedGroups = pattern.namedGroups();
-
                 // Figure out the layout of capturing groups in the regex by comparing
                 // the capturing groups' group numbers
-                if (namedGroups.get("day") < namedGroups.get("month")) {
+                if (namedGroupMap.get("day") < namedGroupMap.get("month")) {
                     // Day capturing group is before the month
                     // Shift start index to start index of the capturing group that is after the day group
-                    startIndex = match.start(namedGroups.get("day") + 1);
+                    startIndex = match.start(namedGroupMap.get("day") + 1);
                 } else {
                     // Day capturing group is after the month
                     // Shift end index to end index of the capturing group that is before the day group
-                    endIndex = match.end(namedGroups.get("day") - 1);
+                    endIndex = match.end(namedGroupMap.get("day") - 1);
                 }
 
                 // If the year is not adjacent to month, (e.g. April 8, 2025)
                 // then also ignore the year
                 // [April 32, 2025] => [April] 32, 2025
-                if (Math.abs(namedGroups.get("month") - namedGroups.get("year")) > 1) {
+                if (Math.abs(namedGroupMap.get("month") - namedGroupMap.get("year")) > 1) {
                     year = reference.getYear();
                     yearSetExplicitly = false;
                 }

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.MatchResult;
@@ -56,7 +57,7 @@ public class ParsingConfigurationTest {
 
         class MockParser extends Parser {
             MockParser() {
-                super("");
+                super("", Map.of());
             }
 
             @Override
@@ -97,7 +98,7 @@ public class ParsingConfigurationTest {
 
         class MockParser extends Parser {
             MockParser() {
-                super("");
+                super("", Map.of());
             }
 
             @Override
@@ -140,7 +141,7 @@ public class ParsingConfigurationTest {
 
         class MockParser extends Parser {
             MockParser() {
-                super("");
+                super("", Map.of());
             }
 
             @Override

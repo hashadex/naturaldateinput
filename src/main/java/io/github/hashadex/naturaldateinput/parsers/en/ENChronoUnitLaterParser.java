@@ -1,5 +1,7 @@
 package io.github.hashadex.naturaldateinput.parsers.en;
 
+import java.util.Map;
+
 import io.github.hashadex.naturaldateinput.parsers.templates.ChronoUnitLaterParser;
 
 /**
@@ -49,6 +51,7 @@ public final class ENChronoUnitLaterParser extends ChronoUnitLaterParser {
                 toRegexAlternate(ENConstants.cardinalNumberMap.keySet()),
                 toRegexAlternate(ENConstants.chronoUnitMap.keySet())
             ),
+            Map.of("amount", 1, "unit", 2),
             ENConstants.chronoUnitMap,
             ENConstants.cardinalNumberMap
         );

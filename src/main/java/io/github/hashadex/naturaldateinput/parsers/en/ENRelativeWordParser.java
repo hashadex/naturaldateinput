@@ -1,5 +1,7 @@
 package io.github.hashadex.naturaldateinput.parsers.en;
 
+import java.util.Map;
+
 import io.github.hashadex.naturaldateinput.parsers.templates.RelativeWordParser;
 
 /**
@@ -25,6 +27,7 @@ public final class ENRelativeWordParser extends RelativeWordParser {
             """.formatted(
                 toRegexAlternate(ENConstants.relativeWordOffsetMap.keySet())
             ),
+            Map.of("word", 1),
             ENConstants.relativeWordOffsetMap
         );
     }

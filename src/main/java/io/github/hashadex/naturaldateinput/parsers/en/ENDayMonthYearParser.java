@@ -1,5 +1,7 @@
 package io.github.hashadex.naturaldateinput.parsers.en;
 
+import java.util.Map;
+
 import io.github.hashadex.naturaldateinput.parsers.templates.MonthNameParser;
 
 /**
@@ -43,6 +45,7 @@ public final class ENDayMonthYearParser extends MonthNameParser {
                 toRegexAlternate(ENConstants.ordinalIndicators),
                 toRegexAlternate(ENConstants.monthMap.keySet())
             ),
+            Map.of("day", 1, "month", 2, "year", 3),
             ENConstants.monthMap
         );
     }

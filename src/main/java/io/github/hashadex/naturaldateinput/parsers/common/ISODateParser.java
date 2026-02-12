@@ -3,6 +3,7 @@ package io.github.hashadex.naturaldateinput.parsers.common;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
@@ -36,25 +37,26 @@ public class ISODateParser extends Parser {
                 )?
             )?
             (?<=$|\\s) # Right boundary check
-            """
+            """,
+            Map.of("year", 1, "delimeter", 2, "month", 3, "day", 4)
         );
     }
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
-        int year = Integer.parseInt(match.group("year"));
+        int year = Integer.parseInt(match.group(namedGroupMap.get("year")));
 
         int month = 1;
-        if (match.group("month") != null) {
-            month = Integer.parseInt(match.group("month"));
+        if (match.group(namedGroupMap.get("month")) != null) {
+            month = Integer.parseInt(match.group(namedGroupMap.get("month")));
         }
         if (!(month >= 1 && month <= 12)) {
             return Optional.empty();
         }
 
         int day = 1;
-        if (match.group("day") != null) {
-            day = Integer.parseInt(match.group("day"));
+        if (match.group(namedGroupMap.get("day")) != null) {
+            day = Integer.parseInt(match.group(namedGroupMap.get("day")));
         }
         if (!YearMonth.of(year, month).isValidDay(day)) {
             return Optional.empty();

@@ -43,14 +43,21 @@ public abstract class WeekdayParser extends Parser {
      * {@link WeekdayParser class doc comment} for requirements for the regexes
      * and maps.
      * 
-     * @param regex      Regex for the parser
-     * @param weekdayMap Map of names of weekdays in your language to their
-     *                   <code>DayOfWeek</code>
-     * @param flags      Bit mask of the regex flags that will be passed
-     *                   to {@link java.util.regex.Pattern#compile(String, int)}
+     * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @param weekdayMap    Map of names of weekdays in your language to their
+     *                      <code>DayOfWeek</code>
+     * @param flags         Bit mask of the regex flags that will be passed
+     *                      to {@link java.util.regex.Pattern#compile(String, int)}
+     * @since 2.0.0
      */
-    protected WeekdayParser(String regex, Map<String, DayOfWeek> weekdayMap, int flags) {
-        super(regex, flags);
+    protected WeekdayParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, DayOfWeek> weekdayMap,
+        int flags
+    ) {
+        super(regex, namedGroupMap, flags);
 
         this.weekdayMap = weekdayMap;
     }
@@ -60,12 +67,18 @@ public abstract class WeekdayParser extends Parser {
      * {@link WeekdayParser class doc comment} for requirements for the regexes
      * and maps.
      * 
-     * @param regex      Regex for the parser
-     * @param weekdayMap Map of names of weekdays in your language to their
-     *                   <code>DayOfWeek</code>
+     * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @param weekdayMap    Map of names of weekdays in your language to their
+     *                      <code>DayOfWeek</code>
+     * @since 2.0.0
      */
-    protected WeekdayParser(String regex, Map<String, DayOfWeek> weekdayMap) {
-        super(regex);
+    protected WeekdayParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, DayOfWeek> weekdayMap
+    ) {
+        super(regex, namedGroupMap);
 
         this.weekdayMap = weekdayMap;
     }
@@ -74,11 +87,11 @@ public abstract class WeekdayParser extends Parser {
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         boolean nextModifier = false;
 
-        if (match.namedGroups().containsKey("nextmodifier") && match.group("nextmodifier") != null) {
+        if (namedGroupMap.containsKey("nextmodifier") && match.group(namedGroupMap.get("nextmodifier")) != null) {
             nextModifier = true;
         }
 
-        DayOfWeek weekday = weekdayMap.get(match.group("weekday").toLowerCase());
+        DayOfWeek weekday = weekdayMap.get(match.group(namedGroupMap.get("weekday")).toLowerCase());
 
         TemporalAdjuster adjuster;
         if (nextModifier) {

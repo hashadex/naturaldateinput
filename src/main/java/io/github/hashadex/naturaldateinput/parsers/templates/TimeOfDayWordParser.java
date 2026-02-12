@@ -30,13 +30,20 @@ public class TimeOfDayWordParser extends Parser {
      * regexes and maps.
      * 
      * @param regex            Regex for the parser
+     * @param namedGroupMap    Map of capturing groups' names to their indexes
      * @param timeOfDayWordMap Map of time-of-day words to their meanings, as
      *                         <code>LocalDate</code>
      * @param flags            Bit mask of the regex flags that will be passed
      *                         to {@link java.util.regex.Pattern#compile(String, int)}
+     * @since 2.0.0
      */
-    public TimeOfDayWordParser(String regex, Map<String, LocalTime> timeOfDayWordMap, int flags) {
-        super(regex, flags);
+    public TimeOfDayWordParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, LocalTime> timeOfDayWordMap,
+        int flags
+    ) {
+        super(regex, namedGroupMap, flags);
 
         this.timeOfDayWordMap = timeOfDayWordMap;
     }
@@ -47,18 +54,24 @@ public class TimeOfDayWordParser extends Parser {
      * regexes and maps.
      * 
      * @param regex            Regex for the parser
+     * @param namedGroupMap    Map of capturing groups' names to their indexes
      * @param timeOfDayWordMap Map of time-of-day words to their meanings, as
      *                         <code>LocalDate</code>
+     * @since 2.0.0
      */
-    public TimeOfDayWordParser(String regex, Map<String, LocalTime> timeOfDayWordMap) {
-        super(regex);
+    public TimeOfDayWordParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, LocalTime> timeOfDayWordMap
+    ) {
+        super(regex, namedGroupMap);
 
         this.timeOfDayWordMap = timeOfDayWordMap;
     }
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
-        LocalTime result = timeOfDayWordMap.get(match.group("word").toLowerCase());
+        LocalTime result = timeOfDayWordMap.get(match.group(namedGroupMap.get("word")).toLowerCase());
 
         return Optional.of(
             new ParsedComponentBuilder(reference, source, match).time(result).build()

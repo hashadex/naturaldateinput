@@ -1,5 +1,7 @@
 package io.github.hashadex.naturaldateinput.parsers.common;
 
+import java.util.Map;
+
 import io.github.hashadex.naturaldateinput.parsers.templates.HourMinuteSecondParser;
 
 /**
@@ -27,7 +29,8 @@ public final class TwentyFourHourTimeParser extends HourMinuteSecondParser {
                 :(?<second>\\d{2})
             )?
             (?=$|\\s) # Right boundary check
-            """
+            """,
+            Map.of("hour", 1, "minute", 2, "second", 3)
         );
     }   
 }

@@ -43,6 +43,7 @@ public abstract class ChronoUnitLaterParser extends Parser {
      * for the regexes and maps.
      * 
      * @param regex             Regex for the parser
+     * @param namedGroupMap     Map of capturing groups' names to their indexes
      * @param chronoUnitMap     Map of the names of timeunits in your language to
      *                          their respective
      *                          {@link java.time.temporal.ChronoUnit ChronoUnits}
@@ -50,15 +51,16 @@ public abstract class ChronoUnitLaterParser extends Parser {
      *                          language to their respective integers
      * @param flags             Bit mask of the regex flags that will be passed
      *                          to {@link java.util.regex.Pattern#compile(String, int)}
-     * @since 1.0.0
+     * @since 2.0.0
      */
     protected ChronoUnitLaterParser(
         String regex,
+        Map<String, Integer> namedGroupMap,
         Map<String, ChronoUnit> chronoUnitMap,
         Map<String, Integer> cardinalNumberMap,
         int flags
     ) {
-        super(regex, flags);
+        super(regex, namedGroupMap, flags);
 
         this.chronoUnitMap = chronoUnitMap;
         this.cardinalNumberMap = cardinalNumberMap;
@@ -70,19 +72,21 @@ public abstract class ChronoUnitLaterParser extends Parser {
      * requirements for the regexes and maps.
      * 
      * @param regex             Regex for the parser
+     * @param namedGroupMap     Map of capturing groups' names to their indexes
      * @param chronoUnitMap     Map of the names of timeunits in your language to
      *                          their respective
      *                          {@link java.time.temporal.ChronoUnit ChronoUnits}
      * @param cardinalNumberMap Map of the names of cardinal numbers in your
      *                          language to their respective integers
-     * @since 1.0.0
+     * @since 2.0.0
      */
     protected ChronoUnitLaterParser(
         String regex,
+        Map<String, Integer> namedGroupMap,
         Map<String, ChronoUnit> chronoUnitMap,
         Map<String, Integer> cardinalNumberMap
     ) {
-        super(regex);
+        super(regex, namedGroupMap);
 
         this.chronoUnitMap = chronoUnitMap;
         this.cardinalNumberMap = cardinalNumberMap;
@@ -94,29 +98,34 @@ public abstract class ChronoUnitLaterParser extends Parser {
      * requirements for the regexes and maps.
      * 
      * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
      * @param chronoUnitMap Map of the names of timeunits in your language to
      *                      their respective
      *                      {@link java.time.temporal.ChronoUnit ChronoUnits}
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    protected ChronoUnitLaterParser(String regex, Map<String, ChronoUnit> chronoUnitMap) {
-        this(regex, chronoUnitMap, Map.of());
+    protected ChronoUnitLaterParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, ChronoUnit> chronoUnitMap
+    ) {
+        this(regex, namedGroupMap, chronoUnitMap, Map.of());
     }
 
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         int amount;
-        if (cardinalNumberMap.containsKey(match.group("amount"))) {
-            amount = cardinalNumberMap.get(match.group("amount"));
+        if (cardinalNumberMap.containsKey(match.group(namedGroupMap.get("amount")))) {
+            amount = cardinalNumberMap.get(match.group(namedGroupMap.get("amount")));
         } else {
             try {
-                amount = Integer.parseInt(match.group("amount"));
+                amount = Integer.parseInt(match.group(namedGroupMap.get("amount")));
             } catch (NumberFormatException e) {
                 return Optional.empty();
             }
         }
 
-        ChronoUnit unit = chronoUnitMap.get(match.group("unit").toLowerCase());
+        ChronoUnit unit = chronoUnitMap.get(match.group(namedGroupMap.get("unit")).toLowerCase());
 
         LocalDateTime result;
         try {

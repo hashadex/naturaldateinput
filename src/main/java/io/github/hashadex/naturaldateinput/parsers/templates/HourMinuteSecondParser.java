@@ -2,6 +2,7 @@ package io.github.hashadex.naturaldateinput.parsers.templates;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.MatchResult;
 
@@ -31,12 +32,14 @@ public class HourMinuteSecondParser extends Parser {
      * {@link HourMinuteSecondParser class doc comment} for requirements for
      * the regexes and maps.
      * 
-     * @param regex Regex for the parser
-     * @param flags Bit mask of the regex flags that will be passed
-     *              to {@link java.util.regex.Pattern#compile(String, int)}
+     * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @param flags         Bit mask of the regex flags that will be passed
+     *                      to {@link java.util.regex.Pattern#compile(String, int)}
+     * @since 2.0.0
      */
-    public HourMinuteSecondParser(String regex, int flags) {
-        super(regex, flags);
+    public HourMinuteSecondParser(String regex, Map<String, Integer> namedGroupMap, int flags) {
+        super(regex, namedGroupMap, flags);
     }
 
     /**
@@ -44,10 +47,12 @@ public class HourMinuteSecondParser extends Parser {
      * {@link HourMinuteSecondParser class doc comment} for requirements for
      * the regexes and maps.
      * 
-     * @param regex Regex for the parser
+     * @param regex         Regex for the parser
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @since 2.0.0
      */
-    public HourMinuteSecondParser(String regex) {
-        super(regex);
+    public HourMinuteSecondParser(String regex, Map<String, Integer> namedGroupMap) {
+        super(regex, namedGroupMap);
     }
 
     private static boolean isWithin24HourRange(int hour) {
@@ -65,19 +70,19 @@ public class HourMinuteSecondParser extends Parser {
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         boolean am = false;
-        if (match.namedGroups().containsKey("am") && match.group("am") != null) {
+        if (namedGroupMap.containsKey("am") && match.group(namedGroupMap.get("am")) != null) {
             am = true;
         }
 
         boolean pm = false;
-        if (match.namedGroups().containsKey("pm") && match.group("pm") != null) {
+        if (namedGroupMap.containsKey("pm") && match.group(namedGroupMap.get("pm")) != null) {
             pm = true;
         }
         // If the regex is working correctly, either am or pm can be true.
 
         int hour = 0;
-        if (match.namedGroups().containsKey("hour") && match.group("hour") != null) {
-            hour = Integer.parseInt(match.group("hour"));
+        if (namedGroupMap.containsKey("hour") && match.group(namedGroupMap.get("hour")) != null) {
+            hour = Integer.parseInt(match.group(namedGroupMap.get("hour")));
             
             if (am || pm) {
                 if (!isWithin12HourRange(hour)) {
@@ -100,8 +105,8 @@ public class HourMinuteSecondParser extends Parser {
         }
 
         int minute = 0;
-        if (match.namedGroups().containsKey("minute") && match.group("minute") != null) {
-            minute = Integer.parseInt(match.group("minute"));
+        if (namedGroupMap.containsKey("minute") && match.group(namedGroupMap.get("minute")) != null) {
+            minute = Integer.parseInt(match.group(namedGroupMap.get("minute")));
 
             if (!isWithinMinuteSecondRange(minute)) {
                 return Optional.empty();
@@ -109,8 +114,8 @@ public class HourMinuteSecondParser extends Parser {
         }
 
         int second = 0;
-        if (match.namedGroups().containsKey("second") && match.group("second") != null) {
-            second = Integer.parseInt(match.group("second"));
+        if (namedGroupMap.containsKey("second") && match.group(namedGroupMap.get("second")) != null) {
+            second = Integer.parseInt(match.group(namedGroupMap.get("second")));
 
             if (!isWithinMinuteSecondRange(second)) {
                 return Optional.empty();

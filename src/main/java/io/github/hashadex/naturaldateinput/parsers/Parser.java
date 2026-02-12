@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.MatchResult;
@@ -50,6 +51,17 @@ public abstract class Parser {
     protected final Pattern pattern;
 
     /**
+     * Map of capturing groups' names to their indexes. This field is set in the
+     * {@link #Parser(String, int) constructor}.
+     * 
+     * This map is used as a hacky way to backport Java 20+ named group
+     * functionality to Java 17.
+     * 
+     * @since 2.0.0
+     */
+    protected final Map<String, Integer> namedGroupMap;
+
+    /**
      * Constructs the class and compiles the provided <code>regex</code> using
      * {@link java.util.regex.Pattern#compile(String, int)} with the provided
      * <code>flags</code>.
@@ -57,15 +69,17 @@ public abstract class Parser {
      * The {@link #Parser(String)} constructor should be used if the concrete
      * parser wishes to use the default match flags.
      * 
-     * @param regex Regular expression which will be used by the parser to locate
-     *              date/time expressions and process them
-     * @param flags A bit mask representing match flags that will be passed to
-     *              <code>Pattern.compile</code>
+     * @param regex         Regular expression which will be used by the parser
+     *                      to locate date/time expressions and process them
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @param flags         A bit mask representing match flags that will be
+     *                      passed to <code>Pattern.compile</code>
      * @see java.util.regex.Pattern
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    protected Parser(String regex, int flags) {
+    protected Parser(String regex, Map<String, Integer> namedGroupMap, int flags) {
         pattern = Pattern.compile(regex, flags);
+        this.namedGroupMap = namedGroupMap;
     }
 
     /**
@@ -79,12 +93,17 @@ public abstract class Parser {
      * Use the {@link #Parser(String, int)} constructor to override the default
      * flags.
      * 
-     * @param regex Regular expression which will be used by the parser to locate
-     *              date/time expressions and process them
-     * @since 1.0.0
+     * @param regex         Regular expression which will be used by the parser
+     *                      to locate date/time expressions and process them
+     * @param namedGroupMap Map of capturing groups' names to their indexes
+     * @since 2.0.0
      */
-    protected Parser(String regex) {
-        this(regex, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
+    protected Parser(String regex, Map<String, Integer> namedGroupMap) {
+        this(
+            regex,
+            namedGroupMap,
+            Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS
+        );
     }
 
     /**

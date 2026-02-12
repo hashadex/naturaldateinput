@@ -35,13 +35,19 @@ public abstract class RelativeWordParser extends Parser {
      * regexes and maps.
      * 
      * @param regex                 Regex for the parser
+     * @param namedGroupMap         Map of capturing groups' names to their indexes
      * @param relativeWordOffsetMap Map of relative words to their offsets
      * @param flags                 Bit mask of the regex flags that will be passed
      *                              to {@link java.util.regex.Pattern#compile(String, int)}
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    protected RelativeWordParser(String regex, Map<String, Integer> relativeWordOffsetMap, int flags) {
-        super(regex, flags);
+    protected RelativeWordParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, Integer> relativeWordOffsetMap,
+        int flags
+    ) {
+        super(regex, namedGroupMap, flags);
 
         this.relativeWordOffsetMap = relativeWordOffsetMap;
     }
@@ -52,11 +58,16 @@ public abstract class RelativeWordParser extends Parser {
      * regexes and maps.
      * 
      * @param regex                 Regex for the parser
+     * @param namedGroupMap         Map of capturing groups' names to their indexes
      * @param relativeWordOffsetMap Map of relative words to their offsets
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    protected RelativeWordParser(String regex, Map<String, Integer> relativeWordOffsetMap) {
-        super(regex);
+    protected RelativeWordParser(
+        String regex,
+        Map<String, Integer> namedGroupMap,
+        Map<String, Integer> relativeWordOffsetMap
+    ) {
+        super(regex, namedGroupMap);
 
         this.relativeWordOffsetMap = relativeWordOffsetMap;
     }
@@ -64,7 +75,7 @@ public abstract class RelativeWordParser extends Parser {
     @Override
     protected Optional<ParsedComponent> parseMatch(MatchResult match, LocalDateTime reference, String source) {
         LocalDate result = reference.toLocalDate().plusDays(
-            relativeWordOffsetMap.get(match.group("word").toLowerCase())
+            relativeWordOffsetMap.get(match.group(namedGroupMap.get("word")).toLowerCase())
         );
 
         return Optional.of(
