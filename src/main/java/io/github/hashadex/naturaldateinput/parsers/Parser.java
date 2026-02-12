@@ -44,7 +44,7 @@ public abstract class Parser {
     /**
      * Compiled regex, used by {@link #parse(String, LocalDateTime) parse}.
      * The regex is compiled and the field is set in the
-     * {@link #Parser(String, int) constructor}.
+     * {@link #Parser(String, Map, int) constructor}.
      * 
      * @since 1.0.0
      */
@@ -52,7 +52,7 @@ public abstract class Parser {
 
     /**
      * Map of capturing groups' names to their indexes. This field is set in the
-     * {@link #Parser(String, int) constructor}.
+     * {@link #Parser(String, Map, int) constructor}.
      * 
      * This map is used as a hacky way to backport Java 20+ named group
      * functionality to Java 17.
@@ -66,7 +66,7 @@ public abstract class Parser {
      * {@link java.util.regex.Pattern#compile(String, int)} with the provided
      * <code>flags</code>.
      * <p>
-     * The {@link #Parser(String)} constructor should be used if the concrete
+     * The {@link #Parser(String, Map)} constructor should be used if the concrete
      * parser wishes to use the default match flags.
      * 
      * @param regex         Regular expression which will be used by the parser
@@ -90,7 +90,7 @@ public abstract class Parser {
      * {@link java.util.regex.Pattern#UNICODE_CASE UNICODE_CASE} and
      * {@link java.util.regex.Pattern#COMMENTS COMMENTS}.
      * <p>
-     * Use the {@link #Parser(String, int)} constructor to override the default
+     * Use the {@link #Parser(String, Map, int)} constructor to override the default
      * flags.
      * 
      * @param regex         Regular expression which will be used by the parser
