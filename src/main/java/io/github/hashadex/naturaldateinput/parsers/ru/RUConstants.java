@@ -1,5 +1,18 @@
 package io.github.hashadex.naturaldateinput.parsers.ru;
 
+import static java.time.Month.JANUARY;
+import static java.time.Month.FEBRUARY;
+import static java.time.Month.MARCH;
+import static java.time.Month.APRIL;
+import static java.time.Month.MAY;
+import static java.time.Month.JUNE;
+import static java.time.Month.JULY;
+import static java.time.Month.AUGUST;
+import static java.time.Month.SEPTEMBER;
+import static java.time.Month.OCTOBER;
+import static java.time.Month.NOVEMBER;
+import static java.time.Month.DECEMBER;
+
 import static java.time.temporal.ChronoUnit.DECADES;
 import static java.time.temporal.ChronoUnit.YEARS;
 import static java.time.temporal.ChronoUnit.MONTHS;
@@ -11,6 +24,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import static java.util.Map.entry;
 
+import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
@@ -21,6 +35,74 @@ import java.util.Map;
  * @since 2.1.0
  */
 final class RUConstants {
+    /**
+     * Unmodifiable map of Russian month names and their respective
+     * {@link java.time.Month Months}. Also contains short forms of month names,
+     * like "янв".
+     * 
+     * @since 2.1.0
+     */
+    public static final Map<String, Month> monthMap = Map.ofEntries(
+        // January
+        entry("январь", JANUARY),
+        entry("января", JANUARY),
+        entry("янв.", JANUARY),
+        entry("янв", JANUARY),
+        // February
+        entry("февраль", FEBRUARY),
+        entry("февраля", FEBRUARY),
+        entry("фев.", FEBRUARY),
+        entry("фев", FEBRUARY),
+        // March
+        entry("март", MARCH),
+        entry("марта", MARCH),
+        entry("мар.", MARCH),
+        entry("мар", MARCH),
+        // April
+        entry("апрель", APRIL),
+        entry("апреля", APRIL),
+        entry("апр.", APRIL),
+        entry("апр", APRIL),
+        // May
+        entry("май", MAY),
+        entry("мая", MAY),
+        // June
+        entry("июнь", JUNE),
+        entry("июня", JUNE),
+        entry("июн.", JUNE),
+        entry("июн", JUNE),
+        // July
+        entry("июль", JULY),
+        entry("июля", JULY),
+        entry("июл.", JULY),
+        entry("июл", JULY),
+        // August
+        entry("август", AUGUST),
+        entry("августа", AUGUST),
+        entry("авг.", AUGUST),
+        entry("авг", AUGUST),
+        // September
+        entry("сентябрь", SEPTEMBER),
+        entry("сентября", SEPTEMBER),
+        entry("сен.", SEPTEMBER),
+        entry("сен", SEPTEMBER),
+        // October
+        entry("октябрь", OCTOBER),
+        entry("октября", OCTOBER),
+        entry("окт.", OCTOBER),
+        entry("окт", OCTOBER),
+        // November
+        entry("ноябрь", NOVEMBER),
+        entry("ноября", NOVEMBER),
+        entry("ноя.", NOVEMBER),
+        entry("ноя", NOVEMBER),
+        // December
+        entry("декабрь", DECEMBER),
+        entry("декабря", DECEMBER),
+        entry("дек.", DECEMBER),
+        entry("дек", DECEMBER)
+    );
+
     /**
      * Map of Russian names of timeunits and their respective
      * {@link java.time.temporal.ChronoUnit ChronoUnits}.
