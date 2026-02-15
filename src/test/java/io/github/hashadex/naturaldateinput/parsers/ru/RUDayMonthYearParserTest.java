@@ -119,7 +119,7 @@ public class RUDayMonthYearParserTest extends ParserTest {
         ParsedComponent component = parser.parse(testString, reference).findAny().get();
 
         assertAll(
-            () -> assertEquals(11, component.endIndex()),
+            () -> assertEquals(10, component.endIndex()),
             () -> assertEquals(LocalDate.of(2025, 12, 10), component.date().get())
         );
     }
