@@ -24,6 +24,15 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import static java.util.Map.entry;
 
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.TUESDAY;
+import static java.time.DayOfWeek.WEDNESDAY;
+import static java.time.DayOfWeek.THURSDAY;
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
+
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
@@ -216,5 +225,38 @@ final class RUConstants {
         entry("восемнадцать", 18),
         entry("девятнадцать", 19),
         entry("двадцать", 20)
+    );
+
+    /**
+     * Map of Russian names of weekdays and their respective
+     * {@link java.time.DayOfWeek}.
+     * 
+     * @since 2.1.0
+     */
+    public static final Map<String, DayOfWeek> weekdayMap = Map.ofEntries(
+        // Monday
+        entry("понедельник", MONDAY),
+        entry("пн", MONDAY),
+        // Tuesday
+        entry("вторник", TUESDAY),
+        entry("вт", TUESDAY),
+        // Wednesday
+        entry("среда", WEDNESDAY),
+        entry("среду", WEDNESDAY),
+        entry("ср", WEDNESDAY),
+        // Thursday
+        entry("четверг", THURSDAY),
+        entry("чт", THURSDAY),
+        // Friday
+        entry("пятница", FRIDAY),
+        entry("пятницу", FRIDAY),
+        entry("пт", FRIDAY),
+        // Saturday
+        entry("суббота", SATURDAY),
+        entry("субботу", SATURDAY),
+        entry("сб", SATURDAY),
+        // Sunday
+        entry("воскресенье", SUNDAY),
+        entry("вс", SUNDAY)
     );
 }
