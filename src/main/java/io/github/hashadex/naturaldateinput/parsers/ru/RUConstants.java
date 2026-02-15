@@ -104,6 +104,26 @@ final class RUConstants {
     );
 
     /**
+     * Map of Russian relative words like "сегодня" ("today") and "завтра"
+     * ("tomorrow") and their offsets. For use with
+     * {@link io.github.hashadex.naturaldateinput.parsers.ru.RURelativeWordParser}.
+     * 
+     * @since 2.1.0
+     */
+    public static final Map<String, Integer> relativeWordOffsetMap = Map.of(
+        // ereyesterday
+        "позавчера", -2,
+        // yesterday
+        "вчера", -1,
+        // today
+        "сегодня", 0,
+        // tomorrow
+        "завтра", 1,
+        // overmorrow
+        "послезавтра", 2
+    );
+
+    /**
      * Map of Russian names of timeunits and their respective
      * {@link java.time.temporal.ChronoUnit ChronoUnits}.
      * 
