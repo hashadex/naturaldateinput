@@ -15,7 +15,7 @@ This library supports the parsing of various date formats and expressions:
 * `noon` / `morning` etc.
 * `next friday`
 
-Currently, the only supported language is English.
+Currently, the only supported languages are English and Russian.
 
 ## Installation
 
