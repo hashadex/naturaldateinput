@@ -90,7 +90,7 @@ public class ENDayMonthYearParserTest extends ParserTest {
     void parse_OrdinalIndicatorAndOf_MatchIncludesOrdinalIndicatorAndOf() {
         String testString = "30th of march of 2025";
 
-        ParsedComponent result = parser.parse("30th of march of 2025", reference).findAny().get();
+        ParsedComponent result = parser.parse(testString, reference).findAny().get();
 
         assertEquals(testString.length(), result.length());
     }
