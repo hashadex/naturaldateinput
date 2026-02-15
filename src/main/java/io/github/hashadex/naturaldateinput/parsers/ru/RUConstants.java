@@ -24,6 +24,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 import static java.util.Map.entry;
 
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -121,6 +122,24 @@ final class RUConstants {
         "завтра", 1,
         // overmorrow
         "послезавтра", 2
+    );
+
+    /**
+     * Map of Russian time-of-day words and their meanings as <code>LocalTimes</code>.
+     * 
+     * @since 2.1.0
+     */
+    public static final Map<String, LocalTime> timeOfDayWordMap = Map.of(
+        // 00:00
+        "полночь", LocalTime.of(0, 0),
+        // 06:00
+        "утро", LocalTime.of(6, 0),
+        "утром", LocalTime.of(6, 0),
+        // 12:00
+        "полдень", LocalTime.of(12, 0),
+        // 20:00
+        "вечер", LocalTime.of(20, 0),
+        "вечером", LocalTime.of(20, 0)
     );
 
     /**
